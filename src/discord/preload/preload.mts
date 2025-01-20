@@ -20,7 +20,7 @@ async function load() {
         await import("./capturer.js");
     }
 }
-load()
+load();
 const version = ipcRenderer.sendSync("displayVersion") as string;
 
 declare global {
