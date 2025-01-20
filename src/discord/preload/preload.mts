@@ -50,19 +50,20 @@ switch (ipcRenderer.sendSync("getConfig", "windowStyle")) {
 if (ipcRenderer.sendSync("getConfig", "mobileMode")) {
     injectMobileStuff();
 }
-await sleep(5000).then(() => {
-    // dirty hack to make clicking notifications focus Legcord
-    if (
-        document.getElementById("window-title") == null &&
-        ipcRenderer.sendSync("getConfig", "windowStyle") === "default"
-    ) {
-        console.warn("Custom titlebar is missing. Switching to native");
-        ipcRenderer.send("setConfig", "windowStyle", "native");
-        void sleep(2000).then(() => {
-            ipcRenderer.send("restart");
-        });
-    }
-    addScript(`
+async function inject() {
+    await sleep(5000).then(() => {
+        // dirty hack to make clicking notifications focus Legcord
+        if (
+            document.getElementById("window-title") == null &&
+            ipcRenderer.sendSync("getConfig", "windowStyle") === "default"
+        ) {
+            console.warn("Custom titlebar is missing. Switching to native");
+            ipcRenderer.send("setConfig", "windowStyle", "native");
+            void sleep(2000).then(() => {
+                ipcRenderer.send("restart");
+            });
+        }
+        addScript(`
         (() => {
         const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
         Object.defineProperty(Notification.prototype, "onclick", {
@@ -77,30 +78,32 @@ await sleep(5000).then(() => {
         })();
         `);
 
-    // remove the annoying "download the app" button
-    addScript(
-        "document.querySelector('.guilds_a4d4d9 .scroller_fea3ef').lastChild.previousSibling.style.display = 'none';",
-    );
-    addScript(`
+        // remove the annoying "download the app" button
+        addScript(
+            "document.querySelector('.guilds_a4d4d9 .scroller_fea3ef').lastChild.previousSibling.style.display = 'none';",
+        );
+        addScript(`
         shelter.plugins.removePlugin("armcord-settings")
         shelter.plugins.removePlugin("armcord-screenshare")
     `);
-    if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
-        addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
-    }
-    addScript(readFileSync(join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"));
-    const cssPath = join(import.meta.dirname, "../", "/css/discord.css");
-    addStyle(readFileSync(cssPath, "utf8"));
-});
+        if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
+            addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
+        }
+        addScript(readFileSync(join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"));
+        const cssPath = join(import.meta.dirname, "../", "/css/discord.css");
+        addStyle(readFileSync(cssPath, "utf8"));
+    });
 
-// Settings info version injection
-setInterval(() => {
-    const host = document.querySelector('[class*="sidebar"] [class*="info"]');
-    if (!host || host.querySelector("#ac-ver")) {
-        return;
-    }
-    const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
-    el.id = "ac-ver";
-    el.textContent = `Legcord Version: ${version}`;
-    host.append(el);
-}, 1000);
+    // Settings info version injection
+    setInterval(() => {
+        const host = document.querySelector('[class*="sidebar"] [class*="info"]');
+        if (!host || host.querySelector("#ac-ver")) {
+            return;
+        }
+        const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
+        el.id = "ac-ver";
+        el.textContent = `Legcord Version: ${version}`;
+        host.append(el);
+    }, 1000);
+}
+inject();

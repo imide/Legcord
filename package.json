@@ -1,6 +1,6 @@
 {
     "name": "legcord",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
     "main": "ts-out/main.js",
     "engines": {
@@ -39,7 +39,7 @@
         "@types/ws": "^8.5.13",
         "@uwu/lune": "^1.4.2",
         "@uwu/shelter-defs": "^1.4.1",
-        "electron": "33.3.0",
+        "electron": "33.3.1",
         "electron-builder": "^25.1.8",
         "rollup": "^4.27.4",
         "rollup-plugin-copy": "^3.5.0",

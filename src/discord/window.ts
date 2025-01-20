@@ -328,7 +328,7 @@ export function createWindow() {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
-            preload: path.join(import.meta.dirname, "discord/preload.mjs"),
+            preload: path.join(import.meta.dirname, "discord/preload.cjs"),
             spellcheck: getConfig("spellcheck"),
         },
     };

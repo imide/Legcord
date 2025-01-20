@@ -62,8 +62,8 @@ export default defineConfig([
         input: "src/splash/preload.mts",
         output: {
             dir: "ts-out/splash",
-            format: "esm",
-            entryFileNames: "[name].mjs",
+            format: "cjs",
+            entryFileNames: "[name].cjs",
             sourcemap: true,
         },
         external: electronExternals,
