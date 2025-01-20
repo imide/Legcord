@@ -51,8 +51,8 @@ export default defineConfig([
         input: "src/discord/preload/preload.mts",
         output: {
             dir: "ts-out/discord",
-            entryFileNames: "[name].mjs",
-            format: "esm",
+            entryFileNames: "[name].cjs",
+            format: "cjs",
             sourcemap: true,
         },
         external: electronExternals,
@@ -62,8 +62,8 @@ export default defineConfig([
         input: "src/splash/preload.mts",
         output: {
             dir: "ts-out/splash",
-            format: "cjs",
-            entryFileNames: "[name].cjs",
+            format: "esm",
+            entryFileNames: "[name].mjs",
             sourcemap: true,
         },
         external: electronExternals,
