@@ -27,7 +27,7 @@ export function injectTitlebar(isOverlay?: boolean): void {
             elem.innerHTML = titlebarHTML;
         }
         document.body.prepend(elem);
-        const titlebarcssPath = join(import.meta.dirname, "../", "/css/titlebar.css");
+        const titlebarcssPath = join(__dirname, "../", "/css/titlebar.css");
         addStyle(readFileSync(titlebarcssPath, "utf8"));
         document.body.setAttribute("customTitlebar", "");
 

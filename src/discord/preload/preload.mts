@@ -90,10 +90,10 @@ async function inject() {
         shelter.plugins.removePlugin("armcord-screenshare")
     `);
         if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
-            addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
+            addScript(readFileSync(join(__dirname, "../", "/js/disableAutogain.js"), "utf8"));
         }
-        addScript(readFileSync(join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"));
-        const cssPath = join(import.meta.dirname, "../", "/css/discord.css");
+        addScript(readFileSync(join(__dirname, "../", "/js/rpc.js"), "utf8"));
+        const cssPath = join(__dirname, "../", "/css/discord.css");
         addStyle(readFileSync(cssPath, "utf8"));
     });
 
