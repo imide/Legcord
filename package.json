@@ -57,7 +57,7 @@
     },
     "dependencies": {
         "arrpc": "https://github.com/Legcord/arrpc.git",
-        "electron-context-menu": "^4.0.4",
+        "electron-context-menu": "^4.0.5",
         "electron-is-dev": "^3.0.1",
         "electron-updater": "^6.6.2",
         "ws": "^8.18.0"
