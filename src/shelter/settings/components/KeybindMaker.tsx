@@ -1,7 +1,8 @@
-import { Show, createSignal } from "solid-js";
+import { Show, createSignal, onCleanup } from "solid-js";
 import type { KeybindActions } from "../../../@types/keybind.js";
 import { Dropdown } from "./Dropdown.jsx";
 import classes from "./KeybindMaker.module.css";
+
 const {
     ui: {
         ModalRoot,
@@ -12,57 +13,64 @@ const {
         TextBox,
         Button,
         ButtonSizes,
+        ButtonColors,
         Header,
         HeaderTags,
         Divider,
         SwitchItem,
-        genId,
-        showToast,
+        genId
     },
     plugin: { store },
 } = shelter;
+
 export const KeybindMaker = (props: { close: () => void }) => {
+    const [recording, setRecording] = createSignal(false);
     const [accelerator, setAccelerator] = createSignal("");
     const [global, setGlobal] = createSignal(true);
     const [action, setAction] = createSignal<KeybindActions>("mute");
     const [javascriptCode, setJavascriptCode] = createSignal("");
     const [enabled, setEnabled] = createSignal(true);
+
     let logged: string[] = [];
-    let lock = false;
-    function grabKeys() {
-        if (lock) return;
-        lock = true;
+    let containsNonModifier = false;
+    let timeout: NodeJS.Timeout | null = null;
+    function log(event: KeyboardEvent) {
+        const key = event.key.replace(" ", "Space");
+        if (logged.includes(key) || logged.length > 3) {
+            console.log("already in array");
+        } else {
+            console.log(key);
+            logged.unshift(key);
+            if(event.location == 0) containsNonModifier = true;
+            setAccelerator(logged.join("+"));
+        }
+        if(timeout) clearTimeout(timeout);
+        timeout = setTimeout(stopRecording, 3000);
+    };
+    function stopRecording() {
+        if (!recording()) return;
+        setRecording(false);
+        if(timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        };
+
+        document.body.removeEventListener("keyup", log);
+        console.log("Recording stop");
+    };
+    onCleanup(() => recording() && stopRecording());
+
+    function startRecording() {
+        if (recording()) return;
+        setRecording(true);
+
         logged = [];
+        containsNonModifier = false;
         setAccelerator("");
         console.log("Recording start");
-        document.body.addEventListener("keyup", function log(event) {
-            const key = event.key;
-            if (logged.includes(key) || logged.length > 3) {
-                console.log("already in array");
-            } else {
-                key.replace(" ", "Space");
-                console.log(key);
-                logged.push(key);
-                setAccelerator(`${key}+${accelerator()}`);
-            }
-            setTimeout(() => {
-                if (lock) {
-                    lock = false;
-                    document.body.removeEventListener("keyup", log);
-                    console.log("Recording stop");
-                    setAccelerator(accelerator().slice(0, -1));
-                }
-            }, 3000);
-        });
+        document.body.addEventListener("keyup", log);
     }
     function save() {
-        if (lock)
-            return showToast({
-                title: "Slow down!",
-                content: "Pause for a few seconds after recording a keybind before saving it.",
-                duration: 3000,
-            });
-        if (accelerator() === "") return;
         const current = store.settings.keybinds;
         const keybind = {
             accelerator: accelerator(),
@@ -78,18 +86,33 @@ export const KeybindMaker = (props: { close: () => void }) => {
         console.log(store.settings.keybinds);
         window.legcord.settings.addKeybind(keybind);
     }
+
     return (
         <ModalRoot size={ModalSizes.SMALL}>
             <ModalHeader close={props.close}>Add a keybind</ModalHeader>
             <ModalBody>
-                <Header tag={HeaderTags.H5}>Accelerator</Header>
+                <span style="display: flex">
+                    <Header tag={HeaderTags.H5}>
+                        Accelerator
+                    </Header>
+                    <Show when={!recording() && accelerator() && !containsNonModifier}>
+                        <p class={classes.error}>Modifier-only shortcuts are not supported.</p>
+                    </Show>
+                </span>
                 <div class={classes.grabBox}>
                     {/* FIXME -  I have no idea what this `disabled` tag is, its not in the typedefs 
                     // @ts-expect-error*/}
                     <TextBox disabled value={accelerator()} onInput={setAccelerator} />
-                    <Button onClick={grabKeys} size={ButtonSizes.MEDIUM}>
-                        Record
-                    </Button>
+                    { 
+                        recording() ?
+                            <Button class={classes.recBtn} onClick={stopRecording} size={ButtonSizes.SMALL} color={ButtonColors.RED}>
+                                Recording
+                            </Button>
+                        :
+                            <Button class={classes.recBtn} onClick={startRecording} size={ButtonSizes.SMALL}>
+                                Record
+                            </Button>
+                    }
                 </div>
                 <Divider mt mb />
                 <Header tag={HeaderTags.H5}>Action</Header>
@@ -123,7 +146,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
                     <TextBox value={javascriptCode()} onInput={setJavascriptCode} />
                 </Show>
             </ModalBody>
-            <ModalConfirmFooter confirmText="Add" onConfirm={save} close={props.close} />
+            <ModalConfirmFooter confirmText="Add" onConfirm={save} close={props.close} disabled={recording() || !accelerator() || !containsNonModifier} />
         </ModalRoot>
     );
 };
