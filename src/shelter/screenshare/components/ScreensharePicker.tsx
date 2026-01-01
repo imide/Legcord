@@ -1,9 +1,9 @@
 import type { Node } from "@vencord/venmic";
 import { For, Show, createSignal } from "solid-js";
 import { Dropdown } from "../../settings/components/Dropdown.jsx";
+import { SegmentedControl } from "../../settings/components/SegmentedControl.jsx";
 import classes from "./ScreensharePicker.module.css";
 import { type IPCSources, SourceCard } from "./SourceCard.jsx";
-import { SegmentedControl } from "../../settings/components/SegmentedControl.jsx";
 
 const {
     ui: {
@@ -112,7 +112,9 @@ export const ScreensharePicker = (props: {
                     <Divider mt mb />
                     <div class={classes.qualityBox}>
                         <div>
-                            <Header class={classes.header} tag={HeaderTags.H4}>Resolution</Header>
+                            <Header class={classes.header} tag={HeaderTags.H4}>
+                                Resolution
+                            </Header>
                             <SegmentedControl
                                 value={store.resolution}
                                 onChange={(v) => {
@@ -129,14 +131,18 @@ export const ScreensharePicker = (props: {
                         </div>
                         <div>
                             <Show when={window.legcord.platform !== "darwin"}>
-                                <Header class={classes.header} tag={HeaderTags.H4}>Audio</Header>
+                                <Header class={classes.header} tag={HeaderTags.H4}>
+                                    Audio
+                                </Header>
                                 <div class={classes.checkbox}>
                                     <Checkbox checked={audio()} onChange={setAudio} />
                                 </div>
                             </Show>
                         </div>
                         <div>
-                            <Header class={classes.header} tag={HeaderTags.H4}>FPS</Header>
+                            <Header class={classes.header} tag={HeaderTags.H4}>
+                                FPS
+                            </Header>
                             <SegmentedControl
                                 value={store.fps}
                                 onChange={(v) => {
@@ -165,8 +171,10 @@ export const ScreensharePicker = (props: {
                             limitHeight
                             options={[
                                 { label: "Venmic disabled", value: "Venmic disabled" },
-                                ...(props.audioSources?.map((s) => ({ label: s["node.name"], value: s["node.name"] })) ??
-                                    []),
+                                ...(props.audioSources?.map((s) => ({
+                                    label: s["node.name"],
+                                    value: s["node.name"],
+                                })) ?? []),
                             ]}
                         />
                     </Show>

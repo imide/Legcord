@@ -18,7 +18,7 @@ const {
         HeaderTags,
         Divider,
         SwitchItem,
-        genId
+        genId,
     },
     plugin: { store },
 } = shelter;
@@ -41,23 +41,23 @@ export const KeybindMaker = (props: { close: () => void }) => {
         } else {
             console.log(key);
             logged.unshift(key);
-            if(event.location == 0) containsNonModifier = true;
+            if (event.location === 0) containsNonModifier = true;
             setAccelerator(logged.join("+"));
         }
-        if(timeout) clearTimeout(timeout);
+        if (timeout) clearTimeout(timeout);
         timeout = setTimeout(stopRecording, 3000);
-    };
+    }
     function stopRecording() {
         if (!recording()) return;
         setRecording(false);
-        if(timeout) {
+        if (timeout) {
             clearTimeout(timeout);
             timeout = null;
-        };
+        }
 
         document.body.removeEventListener("keyup", log);
         console.log("Recording stop");
-    };
+    }
     onCleanup(() => recording() && stopRecording());
 
     function startRecording() {
@@ -92,9 +92,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
             <ModalHeader close={props.close}>Add a keybind</ModalHeader>
             <ModalBody>
                 <span style="display: flex">
-                    <Header tag={HeaderTags.H5}>
-                        Accelerator
-                    </Header>
+                    <Header tag={HeaderTags.H5}>Accelerator</Header>
                     <Show when={!recording() && accelerator() && !containsNonModifier}>
                         <p class={classes.error}>Modifier-only shortcuts are not supported.</p>
                     </Show>
@@ -103,16 +101,20 @@ export const KeybindMaker = (props: { close: () => void }) => {
                     {/* FIXME -  I have no idea what this `disabled` tag is, its not in the typedefs 
                     // @ts-expect-error*/}
                     <TextBox disabled value={accelerator()} onInput={setAccelerator} />
-                    { 
-                        recording() ?
-                            <Button class={classes.recBtn} onClick={stopRecording} size={ButtonSizes.SMALL} color={ButtonColors.RED}>
-                                Recording
-                            </Button>
-                        :
-                            <Button class={classes.recBtn} onClick={startRecording} size={ButtonSizes.SMALL}>
-                                Record
-                            </Button>
-                    }
+                    {recording() ? (
+                        <Button
+                            class={classes.recBtn}
+                            onClick={stopRecording}
+                            size={ButtonSizes.SMALL}
+                            color={ButtonColors.RED}
+                        >
+                            Recording
+                        </Button>
+                    ) : (
+                        <Button class={classes.recBtn} onClick={startRecording} size={ButtonSizes.SMALL}>
+                            Record
+                        </Button>
+                    )}
                 </div>
                 <Divider mt mb />
                 <Header tag={HeaderTags.H5}>Action</Header>
@@ -146,7 +148,12 @@ export const KeybindMaker = (props: { close: () => void }) => {
                     <TextBox value={javascriptCode()} onInput={setJavascriptCode} />
                 </Show>
             </ModalBody>
-            <ModalConfirmFooter confirmText="Add" onConfirm={save} close={props.close} disabled={recording() || !accelerator() || !containsNonModifier} />
+            <ModalConfirmFooter
+                confirmText="Add"
+                onConfirm={save}
+                close={props.close}
+                disabled={recording() || !accelerator() || !containsNonModifier}
+            />
         </ModalRoot>
     );
 };

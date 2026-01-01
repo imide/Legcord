@@ -12,7 +12,7 @@ export const SegmentedControl = (props: {
                 {(opt) => (
                     <div
                         class={classes.item}
-                        aria-selected={opt.value == props.value}
+                        aria-selected={opt.value === props.value}
                         onClick={() => props.onChange(String(opt.value))}
                     >
                         {opt.label}

@@ -26,7 +26,12 @@ export const DropdownItem = (props: {
                     <LinkButton href={props.link!}> Learn more here.</LinkButton>
                 </Show>
             </div>
-            <Dropdown value={props.value} onChange={props.onChange} options={props.options} limitHeight={props.limitHeight} />
+            <Dropdown
+                value={props.value}
+                onChange={props.onChange}
+                options={props.options}
+                limitHeight={props.limitHeight}
+            />
             <Show when={props.extraItems} keyed>
                 {props.extraItems}
             </Show>
