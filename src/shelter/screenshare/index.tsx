@@ -7,6 +7,7 @@ const {
     flux: {
         stores: { UserStore, MediaEngineStore },
         dispatcher,
+        intercept
     },
     ui: { openModal },
     plugin: { store },
@@ -71,6 +72,19 @@ export function onLoad() {
         openModal(({ close }: { close: () => void }) => (
             <ScreensharePicker sources={sources} close={close} audioSources={audioSources} />
         ));
+    });
+    intercept((dispatch) => {
+        if (dispatch.type === "MEDIA_ENGINE_SET_GO_LIVE_SOURCE") {
+            console.log("Intercepted stream quality change dispatch");
+            console.log(dispatch)
+            dispatch.settings.qualityOptions = {
+                fps: store.fps,
+                resolution: store.resolution,
+                preset: 0
+            };
+            return dispatch;
+        }
+
     });
     dispatcher.subscribe("MEDIA_ENGINE_VIDEO_SOURCE_QUALITY_CHANGED", onStreamQualityChange);
     dispatcher.subscribe("STREAM_DELETE", onStreamEnd);
