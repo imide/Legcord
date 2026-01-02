@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       arrpc:
-        specifier: https://github.com/Legcord/arrpc.git#f7ab641ad3386d44364e227d97ba0dc847de08d1
-        version: https://codeload.github.com/Legcord/arrpc/tar.gz/f7ab641ad3386d44364e227d97ba0dc847de08d1
+        specifier: https://github.com/Legcord/arrpc.git#811ed990be17a10ac5c6e992133f4172c6ec8640
+        version: https://codeload.github.com/Legcord/arrpc/tar.gz/811ed990be17a10ac5c6e992133f4172c6ec8640
       electron-context-menu:
         specifier: ^4.0.4
         version: 4.0.4
@@ -1369,8 +1369,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/f7ab641ad3386d44364e227d97ba0dc847de08d1:
-    resolution: {tarball: https://codeload.github.com/Legcord/arrpc/tar.gz/f7ab641ad3386d44364e227d97ba0dc847de08d1}
+  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/811ed990be17a10ac5c6e992133f4172c6ec8640:
+    resolution: {tarball: https://codeload.github.com/Legcord/arrpc/tar.gz/811ed990be17a10ac5c6e992133f4172c6ec8640}
     version: 3.5.0
     hasBin: true
 
@@ -4495,7 +4495,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/f7ab641ad3386d44364e227d97ba0dc847de08d1:
+  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/811ed990be17a10ac5c6e992133f4172c6ec8640:
     dependencies:
       koffi: 2.15.0
       ws: 8.18.0
