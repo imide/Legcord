@@ -1,5 +1,6 @@
 import path from "node:path";
 import { type BrowserWindow, utilityProcess } from "electron";
+import { getConfig } from "../common/config.js";
 import { getDetectables } from "../common/detectables.js";
 import { createInviteWindow } from "./window.js";
 
@@ -8,7 +9,15 @@ export let processList = [];
 
 export function startRPC(window: BrowserWindow) {
     child = utilityProcess.fork(path.join(import.meta.dirname, "rpc.js"), undefined, {
-        env: { detectables: JSON.stringify(getDetectables()) },
+        env: {
+            detectables: JSON.stringify(getDetectables()),
+            settings: JSON.stringify({
+                processScanning: getConfig("processScanning"),
+                windowsLegacyScanning: getConfig("windowsLegacyScanning"),
+                scanInterval: getConfig("scanInterval"),
+            }),
+        },
+        serviceName: "legcord-rpc",
     });
 
     child.on("spawn", () => {

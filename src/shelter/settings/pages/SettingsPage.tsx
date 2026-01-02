@@ -1,7 +1,6 @@
 import { Show } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
 import { DropdownItem } from "../components/DropdownItem.jsx";
-import { HeroUpdater } from "../components/HeroUpdater.jsx";
 import { TextBoxItem } from "../components/TextBoxItem.jsx";
 import { setConfig, toggleMod } from "../settings.js";
 import classes from "./SettingsPage.module.css";
@@ -16,7 +15,6 @@ const settings = store.settings as Settings;
 export function SettingsPage() {
     return (
         <>
-            <HeroUpdater />
             <Header class={classes.category} tag={HeaderTags.H5}>
                 {store.i18n["settings-category-mods"]}
             </Header>
@@ -40,13 +38,6 @@ export function SettingsPage() {
                 onChange={(e: boolean) => toggleMod("equicord", e)}
             >
                 Equicord
-            </SwitchItem>
-            <SwitchItem
-                note={store.i18n["settings-invitewebsocket-desc"]}
-                value={settings.inviteWebsocket}
-                onChange={(e: boolean) => setConfig("inviteWebsocket", e, true)}
-            >
-                {store.i18n["settings-invitewebsocket"]}
             </SwitchItem>
             <DropdownItem
                 value={settings.windowStyle}
@@ -262,6 +253,40 @@ export function SettingsPage() {
             >
                 {store.i18n["settings-sleepInBackground"]}
             </SwitchItem>
+            <Header class={classes.category} tag={HeaderTags.H5}>
+                arRPC
+            </Header>
+            <SwitchItem
+                note={store.i18n["settings-invitewebsocket-desc"]}
+                value={settings.inviteWebsocket}
+                onChange={(e: boolean) => setConfig("inviteWebsocket", e, true)}
+            >
+                {store.i18n["settings-invitewebsocket"]}
+            </SwitchItem>
+            <Show when={settings.inviteWebsocket === true}>
+                <SwitchItem
+                    note={store.i18n["settings-processScanning-desc"]}
+                    value={settings.processScanning}
+                    onChange={(e: boolean) => setConfig("processScanning", e, true)}
+                >
+                    {store.i18n["settings-processScanning"]}
+                </SwitchItem>
+                <Show when={window.legcord.platform === "win32"}>
+                    <SwitchItem
+                        note={store.i18n["settings-windowsLegacyScanning-desc"]}
+                        value={settings.windowsLegacyScanning}
+                        onChange={(e: boolean) => setConfig("windowsLegacyScanning", e, true)}
+                    >
+                        {store.i18n["settings-windowsLegacyScanning"]}
+                    </SwitchItem>
+                </Show>
+                <TextBoxItem
+                    title={store.i18n["settings-scanInterval"]}
+                    note={store.i18n["settings-scanInterval-desc"]}
+                    value={Number(settings.scanInterval).toString()}
+                    onInput={(v: string) => setConfig("scanInterval", Number(v))}
+                />
+            </Show>
             <Header class={classes.category} tag={HeaderTags.H5}>
                 {store.i18n["settings-category-debug"]}
             </Header>

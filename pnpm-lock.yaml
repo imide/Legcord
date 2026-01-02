@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       arrpc:
-        specifier: https://github.com/Legcord/arrpc.git#015c803a80288e3345ec55f8963015a626509007
-        version: https://codeload.github.com/Legcord/arrpc/tar.gz/015c803a80288e3345ec55f8963015a626509007
+        specifier: https://github.com/Legcord/arrpc.git#f7ab641ad3386d44364e227d97ba0dc847de08d1
+        version: https://codeload.github.com/Legcord/arrpc/tar.gz/f7ab641ad3386d44364e227d97ba0dc847de08d1
       electron-context-menu:
         specifier: ^4.0.4
         version: 4.0.4
@@ -1369,8 +1369,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/015c803a80288e3345ec55f8963015a626509007:
-    resolution: {tarball: https://codeload.github.com/Legcord/arrpc/tar.gz/015c803a80288e3345ec55f8963015a626509007}
+  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/f7ab641ad3386d44364e227d97ba0dc847de08d1:
+    resolution: {tarball: https://codeload.github.com/Legcord/arrpc/tar.gz/f7ab641ad3386d44364e227d97ba0dc847de08d1}
     version: 3.5.0
     hasBin: true
 
@@ -2229,8 +2229,8 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
-  koffi@2.12.0:
-    resolution: {integrity: sha512-J886y/bvoGG4ZhMVstB2Nh6/q9tzAYn0kaH7Ss8DWavGIxP5jOLzUY9IZzw9pMuXArj0SLSpl0MYsKRURPAv7g==}
+  koffi@2.15.0:
+    resolution: {integrity: sha512-174BTuWK7L42Om7nDWy9YOTXj6Dkm14veuFf5yhVS5VU6GjtOI1Wjf+K16Z0JvSuZ3/NpkVzFBjE1oKbthTIEA==}
 
   lazy-val@1.0.5:
     resolution: {integrity: sha512-0/BnGCCfyUMkBpeDgWihanIAF9JmZhHBgUhEqzvf+adhNGLoP6TaiI5oF8oyb3I45P+PcnrqihSf01M0l0G5+Q==}
@@ -4495,9 +4495,9 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/015c803a80288e3345ec55f8963015a626509007:
+  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/f7ab641ad3386d44364e227d97ba0dc847de08d1:
     dependencies:
-      koffi: 2.12.0
+      koffi: 2.15.0
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
@@ -5553,7 +5553,7 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  koffi@2.12.0: {}
+  koffi@2.15.0: {}
 
   lazy-val@1.0.5: {}
 
