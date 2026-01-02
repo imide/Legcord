@@ -9,15 +9,21 @@ export const SegmentedControl = (props: {
     return (
         <div class={classes.container}>
             <For each={props.options}>
-                {(opt) => (
-                    <div
-                        class={classes.item}
-                        aria-selected={opt.value === props.value}
-                        onClick={() => props.onChange(String(opt.value))}
-                    >
-                        {opt.label}
-                    </div>
-                )}
+                {(opt) => {
+                    const isSelected = () => String(opt.value) === String(props.value);
+
+                    return (
+                        // biome-ignore lint/a11y/useFocusableInteractive: FIX-ME
+                        <div
+                            class={classes.item}
+                            role="tab"
+                            aria-selected={isSelected() ? "true" : "false"}
+                            onClick={() => props.onChange(String(opt.value))}
+                        >
+                            {opt.label}
+                        </div>
+                    );
+                }}
             </For>
         </div>
     );
