@@ -7,7 +7,7 @@ const {
     flux: {
         stores: { UserStore, MediaEngineStore },
         dispatcher,
-        intercept
+        intercept,
     },
     ui: { openModal },
     plugin: { store },
@@ -76,15 +76,14 @@ export function onLoad() {
     intercept((dispatch) => {
         if (dispatch.type === "MEDIA_ENGINE_SET_GO_LIVE_SOURCE") {
             console.log("Intercepted stream quality change dispatch");
-            console.log(dispatch)
+            console.log(dispatch);
             dispatch.settings.qualityOptions = {
                 fps: store.fps,
                 resolution: store.resolution,
-                preset: 0
+                preset: 0,
             };
             return dispatch;
         }
-
     });
     dispatcher.subscribe("MEDIA_ENGINE_VIDEO_SOURCE_QUALITY_CHANGED", onStreamQualityChange);
     dispatcher.subscribe("STREAM_DELETE", onStreamEnd);
