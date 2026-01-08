@@ -1,31 +1,29 @@
 import path from "node:path";
-import { type BrowserWindow, utilityProcess } from "electron";
-import { getConfig } from "../common/config.js";
+import { Worker } from "node:worker_threads";
+import type { GameList } from "arrpc";
+import type { BrowserWindow } from "electron";
 import { getDetectables } from "../common/detectables.js";
 import { createInviteWindow } from "./window.js";
 
-let child: Electron.UtilityProcess;
-export let processList = [];
+let rpcWorker: Worker;
+export let processList: GameList[] = [];
 
 export function startRPC(window: BrowserWindow) {
-    child = utilityProcess.fork(path.join(import.meta.dirname, "rpc.js"), undefined, {
+    const rpcPath = path.join(__dirname, "rpc.js");
+
+    rpcWorker = new Worker(rpcPath, {
         env: {
+            ...process.env,
             detectables: JSON.stringify(getDetectables()),
-            settings: JSON.stringify({
-                processScanning: getConfig("processScanning"),
-                windowsLegacyScanning: getConfig("windowsLegacyScanning"),
-                scanInterval: getConfig("scanInterval"),
-            }),
         },
-        serviceName: "legcord-rpc",
     });
 
-    child.on("spawn", () => {
+    rpcWorker.on("online", () => {
         console.log("[arRPC] process started");
-        console.log(child.pid);
+        console.log(rpcWorker.threadId);
     });
 
-    child.on("message", (message) => {
+    rpcWorker.on("message", (message: string) => {
         const json = JSON.parse(message);
         if (json.type === "invite") {
             createInviteWindow(json.code);
@@ -40,12 +38,15 @@ export function startRPC(window: BrowserWindow) {
         }
     });
 
-    child.on("exit", () => {
-        console.log("[arRPC] process exited");
-        console.log(child.pid);
+    rpcWorker.on("error", (err) => {
+        console.error("[arRPC] worker error:", err);
+    });
+
+    rpcWorker.on("exit", (code) => {
+        console.log("[arRPC] worker exited with code", code);
     });
 }
 
 export function refreshProcessList() {
-    child.postMessage({ message: "refreshProcessList" });
+    rpcWorker.postMessage({ message: "refreshProcessList" });
 }
