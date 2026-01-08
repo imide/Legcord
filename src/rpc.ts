@@ -7,7 +7,7 @@ const detectables: GameList = process.env.detectables ? JSON.parse(process.env.d
 const settings: ServerSettings = process.env.settings
     ? JSON.parse(process.env.settings)
     : { processScanning: true, windowsLegacyScanning: false, scanInterval: 5000 };
-const RPC = new RPCServer(detectables, settings);
+const RPC = await new RPCServer(detectables, settings);
 
 RPC.on("activity", (data: string) => {
     console.log(data);
