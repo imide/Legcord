@@ -29,7 +29,7 @@ RPC.on("invite", (code: string) => {
 });
 
 parentPort.once("message", async (e) => {
-    if (e.data.message === "refreshProcessList") {
+    if (e.message === "refreshProcessList") {
         const processes = await RPC.getProcessesList();
         console.log(processes);
         const response = { type: "processList", data: processes };
