@@ -89,6 +89,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                         passedWindow.focus();
                     }
                     if (commandLine && commandLine.length > 0) {
+                        console.log(commandLine);
                         const lastArg = commandLine.pop();
                         if (lastArg?.startsWith("discord://-")) {
                             navigateTo(passedWindow, lastArg.replace("discord://-", ""));
@@ -292,6 +293,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         });
         setForceQuit(true);
     });
+    passedWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
+        if (details.url.includes("ws://127.0.0.1:")) return callback({ cancel: true });
+        return callback({});
+    });
     passedWindow.on("focus", () => {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
     });
@@ -395,35 +400,4 @@ export function createWindow() {
     const mainWindow = new BrowserWindow(browserWindowOptions);
     mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
-}
-
-export function createInviteWindow(code: string): void {
-    inviteWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        title: "Legcord Invite Manager",
-        darkTheme: true,
-        icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
-        frame: true,
-        autoHideMenuBar: getConfig("autoHideMenuBar"),
-        webPreferences: {
-            sandbox: false,
-            spellcheck: getConfig("spellcheck"),
-        },
-    });
-    const formInviteURL = `https://discord.com/invite/${code}`;
-    inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (details.url.includes("ws://")) return callback({ cancel: true });
-        return callback({});
-    });
-    // NOTE - This shouldn't matter, since below we have an event on it
-    void inviteWindow.loadURL(formInviteURL);
-    inviteWindow.webContents.once("did-finish-load", () => {
-        if (!mainWindows[0].webContents.isLoading()) {
-            inviteWindow.show();
-            inviteWindow.webContents.once("will-navigate", () => {
-                inviteWindow.close();
-            });
-        }
-    });
 }

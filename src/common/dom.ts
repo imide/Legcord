@@ -37,4 +37,5 @@ export function navigateTo(passedWindow: BrowserWindow, url: string): void {
         history.pushState({}, null, "${url}");
         window.dispatchEvent(new PopStateEvent("popstate", {}));
     `);
+    passedWindow.focus();
 }
