@@ -16,6 +16,7 @@
 
 .eyebrow {
     margin-bottom: 0px !important;
+    color: var(--text-strong);
 }
 .btn {
     border: none;
