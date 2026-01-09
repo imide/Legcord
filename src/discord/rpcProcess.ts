@@ -47,6 +47,13 @@ export function startRPC(window: BrowserWindow) {
     });
 }
 
+export function stopRPC() {
+    if (rpcWorker) {
+        rpcWorker.terminate();
+        console.log("[arRPC] process terminated");
+    }
+}
+
 export function refreshProcessList() {
     rpcWorker.postMessage({ message: "refreshProcessList" });
 }

@@ -20,7 +20,7 @@ import { init } from "../main.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
 import { setMenu } from "./menu.js";
-import { startRPC } from "./rpcProcess.js";
+import { startRPC, stopRPC } from "./rpcProcess.js";
 import { registerCustomHandler } from "./screenshare.js";
 import { mainTouchBar } from "./touchbar.js";
 import { createTray, tray } from "./tray.js";
@@ -283,6 +283,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         }
     });
     app.on("before-quit", () => {
+        stopRPC();
         const [width, height] = passedWindow.getSize();
         setWindowState({
             width,
