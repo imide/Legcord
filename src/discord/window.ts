@@ -12,6 +12,7 @@ import {
 } from "electron";
 import contextMenu from "electron-context-menu";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
+import { navigateTo } from "../common/dom.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { initQuickCss, injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
@@ -75,7 +76,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         passedWindow.webContents.userAgent = userAgent;
     }
     if (mainWindows.length === 1) {
-        app.on("second-instance", (_event, _commandLine, _workingDirectory, additionalData) => {
+        app.on("second-instance", (_event, commandLine, _workingDirectory, additionalData) => {
             void (async () => {
                 // Print out data received from the second instance.
                 console.log(additionalData);
@@ -86,6 +87,12 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                         if (passedWindow.isMinimized()) passedWindow.restore();
                         passedWindow.show();
                         passedWindow.focus();
+                    }
+                    if (commandLine && commandLine.length > 0) {
+                        const lastArg = commandLine.pop();
+                        if (lastArg?.startsWith("discord://-")) {
+                            navigateTo(passedWindow, lastArg.replace("discord://-", ""));
+                        }
                     }
                 } else {
                     await init();
@@ -211,6 +218,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     }
     initQuickCss(passedWindow);
     passedWindow.setTouchBar(mainTouchBar);
+    app.on("open-url", (_event, url) => {
+        navigateTo(passedWindow, url.replace("discord://-", ""));
+    });
+
     passedWindow.webContents.on("page-title-updated", (e, title) => {
         const legcordSuffix = " - Legcord"; /* identify */
 
