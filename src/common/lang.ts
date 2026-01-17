@@ -21,7 +21,7 @@ export function setLang(language: string): void {
     const toSave = JSON.stringify(parsed, null, 4);
     console.log(`Setting language to ${language}`);
     fs.writeFileSync(langConfigFile, toSave, "utf-8");
-    
+
     // Performance optimization: Invalidate cache when language changes
     languageConfigCache = language;
     languageConfigCacheTime = Date.now();
@@ -31,7 +31,7 @@ let language: string;
 export function getLang(object: string): string {
     // Performance optimization: Use cached language config if available
     const now = Date.now();
-    if (languageConfigCache && (now - languageConfigCacheTime) < LANGUAGE_CACHE_TTL) {
+    if (languageConfigCache && now - languageConfigCacheTime < LANGUAGE_CACHE_TTL) {
         language = languageConfigCache;
     } else if (language === undefined) {
         try {
@@ -53,15 +53,15 @@ export function getLang(object: string): string {
     if (language.length === 2) {
         language = `${language}-${language.toUpperCase()}`;
     }
-    
+
     // Performance optimization: Use cached language file if available
     const normalizedLang = language;
-    if (languageCache && (now - languageCacheTime) < LANGUAGE_CACHE_TTL) {
+    if (languageCache && now - languageCacheTime < LANGUAGE_CACHE_TTL) {
         if (languageCache[object] !== undefined) {
             return languageCache[object];
         }
     }
-    
+
     let langPath = path.join(import.meta.dirname, "../", `/assets/lang/${normalizedLang}.json`);
     if (!fs.existsSync(langPath)) {
         langPath = path.join(import.meta.dirname, "../", "/assets/lang/en-US.json");
@@ -74,20 +74,20 @@ export function getLang(object: string): string {
         rawData = fs.readFileSync(langPath, "utf-8");
         parsed = JSON.parse(rawData) as i18nStrings;
     }
-    
+
     // Update cache
     languageCache = parsed;
     languageCacheTime = now;
-    
+
     return parsed[object];
 }
 export function getRawLang(): i18nStrings {
     // Performance optimization: Use cached result if available
     const now = Date.now();
-    if (languageCache && (now - languageCacheTime) < LANGUAGE_CACHE_TTL) {
+    if (languageCache && now - languageCacheTime < LANGUAGE_CACHE_TTL) {
         return languageCache;
     }
-    
+
     if (language === undefined) {
         try {
             const userDataPath = app.getPath("userData");
@@ -122,20 +122,20 @@ export function getRawLang(): i18nStrings {
             parsed[key] = fallbackParsed[key];
         }
     }
-    
+
     // Update cache
     languageCache = parsed;
     languageCacheTime = now;
-    
+
     return parsed;
 }
 export function getLangName(): string {
     // Performance optimization: Use cached language config if available
     const now = Date.now();
-    if (languageConfigCache && (now - languageConfigCacheTime) < LANGUAGE_CACHE_TTL) {
+    if (languageConfigCache && now - languageConfigCacheTime < LANGUAGE_CACHE_TTL) {
         return languageConfigCache;
     }
-    
+
     if (language === undefined) {
         try {
             const userDataPath = app.getPath("userData");

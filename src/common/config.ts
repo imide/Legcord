@@ -87,13 +87,13 @@ export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     if (process.argv.includes("--safe-mode")) {
         return safeMode[object];
     }
-    
+
     // Performance optimization: Use cached config if available and fresh
     const now = Date.now();
-    if (configCache && (now - configCacheTime) < CONFIG_CACHE_TTL) {
+    if (configCache && now - configCacheTime < CONFIG_CACHE_TTL) {
         return configCache[object];
     }
-    
+
     const rawData = readFileSync(getConfigLocation(), "utf-8");
     const returnData = JSON.parse(rawData) as Settings;
     configCache = returnData;
@@ -106,7 +106,7 @@ export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K
     parsed[object] = toSet;
     const toSave = JSON.stringify(parsed, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
-    
+
     // Performance optimization: Update cache immediately
     configCache = parsed;
     configCacheTime = Date.now();
@@ -124,7 +124,7 @@ export function setConfigBulk(object: Settings): void {
     // Write the merged data back to the file
     const toSave = JSON.stringify(mergedData, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
-    
+
     // Performance optimization: Update cache immediately
     configCache = mergedData as Settings;
     configCacheTime = Date.now();
@@ -163,7 +163,7 @@ export function checkIfConfigIsBroken(): void {
     try {
         const settingsData = readFileSync(getConfigLocation(), "utf-8");
         const settingsObject = JSON.parse(settingsData) as Settings;
-        
+
         // Performance optimization: Update cache after validation
         configCache = settingsObject;
         configCacheTime = Date.now();
@@ -192,7 +192,7 @@ export function checkIfConfigIsBroken(): void {
             console.log(`Missing config root entry ${missingKey}, setting default config for this entry...`);
             setConfig(missingKey, defaults[missingKey]);
         });
-        
+
         // Performance optimization: Ensure cache is updated after fixes
         if (!configWasFine) {
             const updatedData = readFileSync(getConfigLocation(), "utf-8");

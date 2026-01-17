@@ -91,18 +91,18 @@ function parseBDManifest(content: string) {
 function getThemeManifest(themeId: string): ThemeManifest | null {
     const themePath = path.join(themesFolder, themeId);
     const manifestPath = path.join(themePath, "manifest.json");
-    
+
     if (!fs.existsSync(manifestPath)) {
         return null;
     }
-    
+
     // Check cache
     const stats = fs.statSync(manifestPath);
     const cached = themeManifestCache.get(themeId);
     if (cached && cached.mtime === stats.mtimeMs) {
         return cached.manifest;
     }
-    
+
     // Read and cache
     try {
         const manifestContent = fs.readFileSync(manifestPath, "utf8");
@@ -134,7 +134,7 @@ export function injectThemesMain(browserWindow: BrowserWindow): void {
                 try {
                     const themeFile = getThemeManifest(file);
                     if (!themeFile) continue;
-                    
+
                     if (themeFile.enabled === undefined) {
                         const disabledPath = `${userDataPath}/disabled.txt`;
                         if (fs.existsSync(disabledPath) && fs.readFileSync(disabledPath).toString().includes(file)) {
@@ -176,11 +176,9 @@ export function setThemeEnabled(id: string, enabled: boolean) {
     // Performance optimization: Use cached manifest if available
     let manifest = getThemeManifest(id);
     if (!manifest) {
-        manifest = JSON.parse(
-            fs.readFileSync(path.join(themesFolder, id, "/manifest.json"), "utf8"),
-        ) as ThemeManifest;
+        manifest = JSON.parse(fs.readFileSync(path.join(themesFolder, id, "/manifest.json"), "utf8")) as ThemeManifest;
     }
-    
+
     if (enabled !== manifest.enabled) {
         mainWindows.every((passedWindow) => {
             if (enabled) {
@@ -198,7 +196,7 @@ export function setThemeEnabled(id: string, enabled: boolean) {
     }
     manifest.enabled = enabled;
     fs.writeFileSync(`${themesFolder}/${id}/manifest.json`, JSON.stringify(manifest));
-    
+
     // Performance optimization: Invalidate cache
     themeManifestCache.delete(id);
 }
@@ -236,13 +234,13 @@ export function initQuickCss(browserWindow: BrowserWindow) {
         }
         browserWindow.webContents.send("addTheme", "legcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
         console.log("[Theme Manager] Loaded Quick CSS");
-        
+
         // Performance optimization: Use fs.watch instead of fs.watchFile for better performance
         // Clean up existing watcher if any
         if (quickCssWatcher) {
             quickCssWatcher.close();
         }
-        
+
         // Performance optimization: Debounce file changes to avoid excessive updates
         let updateTimeout: NodeJS.Timeout | null = null;
         quickCssWatcher = fs.watch(quickCssPath, (eventType) => {
@@ -255,14 +253,18 @@ export function initQuickCss(browserWindow: BrowserWindow) {
                     try {
                         console.log("[Theme Manager] Quick CSS updated.");
                         browserWindow.webContents.send("removeTheme", "legcord-quick-css");
-                        browserWindow.webContents.send("addTheme", "legcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
+                        browserWindow.webContents.send(
+                            "addTheme",
+                            "legcord-quick-css",
+                            fs.readFileSync(quickCssPath, "utf-8"),
+                        );
                     } catch (err) {
                         console.error("[Theme Manager] Error updating Quick CSS:", err);
                     }
                 }, 300);
             }
         });
-        
+
         // Clean up watcher when window is closed
         browserWindow.on("closed", () => {
             if (quickCssWatcher) {
