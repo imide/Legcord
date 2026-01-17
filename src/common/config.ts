@@ -4,6 +4,11 @@ import { app, dialog } from "electron";
 import type { Settings } from "../@types/settings.js";
 import { getWindowStateLocation } from "./windowState.js";
 export let firstRun: boolean;
+
+// Performance optimization: Cache config to avoid reading file on every call
+let configCache: Settings | null = null;
+let configCacheTime = 0;
+const CONFIG_CACHE_TTL = 1000; // Cache for 1 second
 const defaults: Settings = {
     windowStyle: "default",
     channel: "stable",
@@ -82,8 +87,17 @@ export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     if (process.argv.includes("--safe-mode")) {
         return safeMode[object];
     }
+    
+    // Performance optimization: Use cached config if available and fresh
+    const now = Date.now();
+    if (configCache && (now - configCacheTime) < CONFIG_CACHE_TTL) {
+        return configCache[object];
+    }
+    
     const rawData = readFileSync(getConfigLocation(), "utf-8");
     const returnData = JSON.parse(rawData) as Settings;
+    configCache = returnData;
+    configCacheTime = now;
     return returnData[object];
 }
 export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
@@ -92,6 +106,10 @@ export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K
     parsed[object] = toSet;
     const toSave = JSON.stringify(parsed, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
+    
+    // Performance optimization: Update cache immediately
+    configCache = parsed;
+    configCacheTime = Date.now();
 }
 export function setConfigBulk(object: Settings): void {
     let existingData = {};
@@ -106,6 +124,10 @@ export function setConfigBulk(object: Settings): void {
     // Write the merged data back to the file
     const toSave = JSON.stringify(mergedData, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
+    
+    // Performance optimization: Update cache immediately
+    configCache = mergedData as Settings;
+    configCacheTime = Date.now();
 }
 export function checkIfConfigExists(): void {
     const userDataPath = app.getPath("userData");
@@ -141,6 +163,10 @@ export function checkIfConfigIsBroken(): void {
     try {
         const settingsData = readFileSync(getConfigLocation(), "utf-8");
         const settingsObject = JSON.parse(settingsData) as Settings;
+        
+        // Performance optimization: Update cache after validation
+        configCache = settingsObject;
+        configCacheTime = Date.now();
 
         let configWasFine = true;
         const settingsKeys = Object.keys(settingsObject) as (keyof Settings)[];
@@ -166,6 +192,13 @@ export function checkIfConfigIsBroken(): void {
             console.log(`Missing config root entry ${missingKey}, setting default config for this entry...`);
             setConfig(missingKey, defaults[missingKey]);
         });
+        
+        // Performance optimization: Ensure cache is updated after fixes
+        if (!configWasFine) {
+            const updatedData = readFileSync(getConfigLocation(), "utf-8");
+            configCache = JSON.parse(updatedData) as Settings;
+            configCacheTime = Date.now();
+        }
 
         console.log(configWasFine ? "Config is fine" : "Config is now fine");
     } catch (e) {
