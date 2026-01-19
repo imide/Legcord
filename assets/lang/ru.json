@@ -1,1 +1,12 @@
-{}
+{
+    "loading_screen_start": "Запуск Legcord…",
+    "loading_screen_update": "Доступна новая версия Legcord. Пожалуйста, обновитесь до последней версии.",
+    "setup_question1": "Добро пожаловать в установку Legcord",
+    "setup_offline": "Похоже, вы офлайн. Пожалуйста, подключитесь к интернету и перезапустите Legcord.",
+    "yes": "Да",
+    "no": "Нет",
+    "next": "Далее",
+    "settings-category-mods": "Модификации",
+    "settings-save": "Сохранить настройки",
+    "loading_screen_offline": "Похоже, вы офлайн. Перезапуск через "
+}
