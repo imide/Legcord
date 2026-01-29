@@ -81,6 +81,7 @@ export interface LegcordWindow {
         getProcessList: () => ProcessInfo[];
         refreshProcessList: () => void;
         addDetectable: (e: Game) => void;
+        removeDetectable: (id: string) => void;
         getDetectables: () => GameList;
     };
 }

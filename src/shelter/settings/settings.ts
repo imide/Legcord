@@ -8,6 +8,10 @@ const settings = store.settings as Settings;
 
 export let isRestartRequired = false;
 
+export function setRestartRequired() {
+    isRestartRequired = true;
+}
+
 export function refreshSettings() {
     store.settings = window.legcord.settings.getConfig();
 }

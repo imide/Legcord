@@ -1,6 +1,15 @@
 .addBox {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
     padding: 3px;
     margin-top: 1rem;
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 6px;
+}
+
+.empty {
+    margin-top: 1rem;
+    color: var(--text-muted);
 }

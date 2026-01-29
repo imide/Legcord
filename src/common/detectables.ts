@@ -19,6 +19,11 @@ export function addDetectable(object: Game): void {
     setDetectables(currentDetectables);
 }
 
+export function removeDetectable(id: string): void {
+    const currentDetectables = getDetectables().filter((g) => g.id !== id);
+    setDetectables(currentDetectables);
+}
+
 export function getDetectables(): GameList {
     if (!fs.existsSync(getDetectablesPath())) {
         fs.writeFileSync(getDetectablesPath(), "[]", "utf-8");

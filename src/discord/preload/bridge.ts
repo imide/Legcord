@@ -99,6 +99,7 @@ contextBridge.exposeInMainWorld("legcord", {
         refreshProcessList: () => ipcRenderer.send("refreshProcessList"),
         getProcessList: () => ipcRenderer.sendSync("getProcessList"),
         addDetectable: (detectable: Game) => ipcRenderer.send("addDetectable", detectable),
+        removeDetectable: (id: string) => ipcRenderer.send("removeDetectable", id),
         getDetectables: () => ipcRenderer.sendSync("getDetectables") as Game[],
     },
 } as unknown as LegcordWindow);

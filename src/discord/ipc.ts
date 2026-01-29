@@ -8,7 +8,7 @@ import type { Keybind } from "../@types/keybind.js";
 import type { Settings } from "../@types/settings.js";
 import type { ThemeManifest } from "../@types/themeManifest.js";
 import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
-import { addDetectable, getDetectables } from "../common/detectables.js";
+import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
 import { installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
 import { getDisplayVersion, getVersion } from "../common/version.js";
@@ -313,5 +313,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("addDetectable", (_event, game: Game) => {
         addDetectable(game);
+    });
+    ipcMain.on("removeDetectable", (_event, id: string) => {
+        removeDetectable(id);
     });
 }

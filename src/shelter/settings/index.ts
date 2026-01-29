@@ -14,29 +14,28 @@ const {
 } = shelter;
 
 const settingsPages = [
-    registerSection("section", "legcord-games", "Registered Games", RegisteredGamesPage),
     registerSection("divider"),
     registerSection("header", "Legcord"),
     registerSection("section", "legcord-settings", "Settings", SettingsPage),
     registerSection("section", "legcord-themes", "Themes", ThemesPage),
     registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage),
+    registerSection("section", "legcord-games", "Registered Games", RegisteredGamesPage),
 ];
 
 function restartRequired(payload: { event: string; properties: { origin_pane: string } }) {
     if (payload.event === "settings_pane_viewed" && typeof payload.properties.origin_pane !== "undefined") {
-        if (payload.properties.origin_pane === "legcord-settings") {
-            if (isRestartRequired) {
-                openConfirmationModal({
-                    header: () => store.i18n["settings-restartRequired"],
-                    body: () => store.i18n["settings-restartRequiredBody"],
-                    type: "danger",
-                    confirmText: store.i18n["settings-restart"],
-                    cancelText: store.i18n["settings-restartLater"],
-                }).then(
-                    () => window.legcord.restart(),
-                    () => console.log("restart skipped"),
-                );
-            }
+        const pane = payload.properties.origin_pane;
+        if ((pane === "legcord-settings" || pane === "legcord-games") && isRestartRequired) {
+            openConfirmationModal({
+                header: () => store.i18n["settings-restartRequired"],
+                body: () => store.i18n["settings-restartRequiredBody"],
+                type: "danger",
+                confirmText: store.i18n["settings-restart"],
+                cancelText: store.i18n["settings-restartLater"],
+            }).then(
+                () => window.legcord.restart(),
+                () => console.log("restart skipped"),
+            );
         }
     }
 }
