@@ -29,6 +29,51 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.2.0" date="2026-01-29" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.2.0</url>
+      <description>
+        <p>What’s New in Legcord v1.2.0 ✨</p>
+        <ul>
+          <li>🎮 **Brand-new game detection system**</li>
+        </ul>
+        <ul>
+          <li>🧪 **Legcord Games (Beta)**</li>
+        </ul>
+        <ul>
+          <li>🎨 **Improved Vencord Quick CSS patch**</li>
+        </ul>
+        <ul>
+          <li>🌍 **Localization improvements**</li>
+        </ul>
+        <ul>
+          <li>📺 **Stream quality patch updated**</li>
+        </ul>
+        <ul>
+          <li>⬇️ Fixed the **“Download Apps” button** incorrectly appearing.</li>
+          <li>🪟 **macOS &amp; Windows titlebar styling fixes**.</li>
+          <li>🧩 **Extended plugin abilities (optional)**</li>
+        </ul>
+        <ul>
+          <li>🎨 Numerous **style updates** to match Discord’s settings revamp and rebrand.</li>
+          <li>🎛️ Improved **Touch Bar handling** on macOS.</li>
+          <li>⚡ **Settings are now cached**, improving overall performance.</li>
+          <li>🔗 **Discord deeplinks support** (`discord://`)</li>
+        </ul>
+        <ul>
+          <li>🧯 Fixed arRPC crashing ([https://github.com/Legcord/Legcord/pull/949](https://github.com/Legcord/Legcord/pull/949) by @PONYMODZ)</li>
+          <li>▶️ Fixed YouTube adblock issues ([https://github.com/Legcord/Legcord/pull/979](https://github.com/Legcord/Legcord/pull/979) by @Alangopro)</li>
+          <li>📖 Updated README with Debian installation instructions ([https://github.com/Legcord/Legcord/pull/972](https://github.com/Legcord/Legcord/pull/972) by @khancyr)</li>
+          <li>🧭 Fixed Equicord headerbar button overlap ([https://github.com/Legcord/Legcord/pull/990](https://github.com/Legcord/Legcord/pull/990) by @lbrooney)</li>
+          <li>🎨 Updated CSS variable names used on navigation buttons ([https://github.com/Legcord/Legcord/pull/989](https://github.com/Legcord/Legcord/pull/989) by @lbrooney)</li>
+          <li>📐 Fixed trailing bar collision with the navigation bar ([https://github.com/Legcord/Legcord/pull/993](https://github.com/Legcord/Legcord/pull/993) by @lbrooney)</li>
+          <li>📺 Fixed YouTube embeds in chat and Watch Together activity ([https://github.com/Legcord/Legcord/pull/994](https://github.com/Legcord/Legcord/pull/994) by @MahmodZE)</li>
+          <li>🧩 Refactored and redesigned several UI components ([https://github.com/Legcord/Legcord/pull/995](https://github.com/Legcord/Legcord/pull/995) by @MahmodZE)</li>
+          <li>⌨️ Improved the keybind maker ([https://github.com/Legcord/Legcord/pull/996](https://github.com/Legcord/Legcord/pull/996) by @MahmodZE)</li>
+          <li>🚀 Fixed a launch failure related to global shortcuts ([https://github.com/Legcord/Legcord/pull/1004](https://github.com/Legcord/Legcord/pull/1004) by @MahmodZE)</li>
+          <li>🖥️ Fixed an issue where the screenshare picker modal closes on click-outside and wouldn’t reopen ([https://github.com/Legcord/Legcord/pull/1002](https://github.com/Legcord/Legcord/pull/1002) by @MahmodZE)</li>
+        </ul>
+      </description>
+    </release>
     <release version="v1.1.3" date="2025-05-04" type="stable">
       <url>https://github.com/Legcord/Legcord/releases/tag/v1.1.3</url>
       <description>
