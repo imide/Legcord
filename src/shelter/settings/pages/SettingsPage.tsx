@@ -301,7 +301,7 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-venmic-deviceSelect-desc"]}
                     value={settings.audio.deviceSelect}
-                    onChange={(e) => {
+                    onChange={(e: boolean) => {
                         const audioSettings = structuredClone({ ...settings.audio });
                         audioSettings.deviceSelect = e;
                         setConfig("audio", audioSettings);
@@ -312,7 +312,7 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-venmic-granularSelect-desc"]}
                     value={settings.audio.granularSelect}
-                    onChange={(e) => {
+                    onChange={(e: boolean) => {
                         const audioSettings = structuredClone({ ...settings.audio });
                         audioSettings.granularSelect = e;
                         setConfig("audio", audioSettings);
@@ -323,7 +323,7 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-venmic-workaround-desc"]}
                     value={settings.audio.workaround}
-                    onChange={(e) => {
+                    onChange={(e: boolean) => {
                         const audioSettings = structuredClone({ ...settings.audio });
                         audioSettings.workaround = e;
                         setConfig("audio", audioSettings);
@@ -334,7 +334,7 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-venmic-ignoreVirtual-desc"]}
                     value={settings.audio.ignoreVirtual}
-                    onChange={(e) => {
+                    onChange={(e: boolean) => {
                         const audioSettings = structuredClone({ ...settings.audio });
                         audioSettings.ignoreVirtual = e;
                         setConfig("audio", audioSettings);
@@ -345,7 +345,7 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-venmic-ignoreDevices-desc"]}
                     value={settings.audio.ignoreDevices}
-                    onChange={(e) => {
+                    onChange={(e: boolean) => {
                         const audioSettings = structuredClone({ ...settings.audio });
                         audioSettings.ignoreDevices = e;
                         setConfig("audio", audioSettings);
@@ -356,7 +356,7 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-venmic-ignoreInputMedia-desc"]}
                     value={settings.audio.ignoreInputMedia}
-                    onChange={(e) => {
+                    onChange={(e: boolean) => {
                         const audioSettings = structuredClone({ ...settings.audio });
                         audioSettings.ignoreInputMedia = e;
                         setConfig("audio", audioSettings);
@@ -367,7 +367,7 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-venmic-onlySpeakers-desc"]}
                     value={settings.audio.onlySpeakers}
-                    onChange={(e) => {
+                    onChange={(e: boolean) => {
                         const audioSettings = structuredClone({ ...settings.audio });
                         audioSettings.onlySpeakers = e;
                         setConfig("audio", audioSettings);
@@ -378,7 +378,7 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-venmic-onlyDefaultSpeakers-desc"]}
                     value={settings.audio.onlyDefaultSpeakers}
-                    onChange={(e) => {
+                    onChange={(e: boolean) => {
                         const audioSettings = structuredClone({ ...settings.audio });
                         audioSettings.onlyDefaultSpeakers = e;
                         setConfig("audio", audioSettings);

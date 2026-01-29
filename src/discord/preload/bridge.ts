@@ -49,7 +49,7 @@ contextBridge.exposeInMainWorld("legcord", {
     electron: process.versions.electron,
     translations: ipcRenderer.sendSync("getTranslations") as string,
     getLang: async (toGet: string) =>
-        await ipcRenderer.invoke("getLang", toGet).then((result) => {
+        await ipcRenderer.invoke("getLang", toGet).then((result: string) => {
             return result as string;
         }),
     screenshare: {
@@ -61,19 +61,19 @@ contextBridge.exposeInMainWorld("legcord", {
         start: (source: string, name: string, audio: boolean) =>
             ipcRenderer.send("startScreenshare", source, name, audio),
         venmicStart: async (include: Node[]) =>
-            await ipcRenderer.invoke("venmicStart", include).then((result) => {
+            await ipcRenderer.invoke("venmicStart", include).then((result: venmicListObject) => {
                 return result as venmicListObject;
             }),
         venmicSystemStart: async (exclude: Node[]) =>
-            await ipcRenderer.invoke("venmicSystemStart", exclude).then((result) => {
+            await ipcRenderer.invoke("venmicSystemStart", exclude).then((result: boolean) => {
                 return result as boolean;
             }),
         venmicList: async () =>
-            await ipcRenderer.invoke("venmicList").then((result) => {
+            await ipcRenderer.invoke("venmicList").then((result: undefined) => {
                 return result as undefined;
             }),
         venmicStop: async () =>
-            await ipcRenderer.invoke("venmicStop").then((result) => {
+            await ipcRenderer.invoke("venmicStop").then((result: undefined) => {
                 return result as undefined;
             }),
     },
@@ -128,7 +128,8 @@ contextBridge.exposeInMainWorld("legcord", {
     },
 } as unknown as LegcordWindow);
 
-ipcRenderer.on("rpc", (_event, data: object) => {
+// biome-ignore lint/suspicious/noExplicitAny: FIX-ME
+ipcRenderer.on("rpc", (_event: any, data: object) => {
     console.log(data);
     windowCallback(data);
 });
