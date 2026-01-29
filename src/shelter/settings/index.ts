@@ -19,7 +19,7 @@ const settingsPages = [
     registerSection("section", "legcord-settings", "Settings", SettingsPage),
     registerSection("section", "legcord-themes", "Themes", ThemesPage),
     registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage),
-    registerSection("section", "legcord-games", "Registered Games", RegisteredGamesPage),
+    registerSection("section", "legcord-games", "Games", RegisteredGamesPage),
 ];
 
 function restartRequired(payload: { event: string; properties: { origin_pane: string } }) {

@@ -5,7 +5,9 @@ export const Dropdown = (props: {
     value: string | number;
     onChange: (val: string) => void;
     options: { label: string; value: string | number }[];
+    styles?: { [key: string]: string };
     limitHeight?: boolean | undefined;
+    class?: string;
 }) => {
     const [open, set] = createSignal(false);
     const [maxHeight, setMaxHeight] = createSignal("");
@@ -28,10 +30,16 @@ export const Dropdown = (props: {
     const text = createMemo(() => props.options.find((o) => o.value === props.value)?.label ?? props.value);
 
     return (
-        // biome-ignore lint/a11y/useSemanticElements: FIX-ME
-        <div ref={container} class={classes.container} role="button" tabIndex="0">
-            <div class={classes.valuewrapper} onClick={() => set(!open())}>
-                <div class={classes.value} data-text-variant="text-md/medium">
+        <div
+            ref={container}
+            class={`${classes.container} ${props.class ?? ""}`.trim()}
+            // biome-ignore lint/a11y/useSemanticElements: FIX-ME
+            role="button"
+            tabIndex="0"
+            style={props.styles?.container}
+        >
+            <div class={classes.valuewrapper} onClick={() => set(!open())} style={props.styles?.valuewrapper}>
+                <div class={classes.value} data-text-variant="text-md/medium" style={props.styles?.value}>
                     {text()}
                 </div>
                 <div>
@@ -52,7 +60,10 @@ export const Dropdown = (props: {
                 </div>
             </div>
             {open() && (
-                <div class={classes.list} style={props.limitHeight ? { "max-height": maxHeight() } : {}}>
+                <div
+                    class={classes.list}
+                    style={props.limitHeight ? { "max-height": maxHeight() } : props.styles?.list}
+                >
                     <For each={props.options}>
                         {(opt) => (
                             <option

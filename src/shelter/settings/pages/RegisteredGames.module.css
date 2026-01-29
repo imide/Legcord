@@ -8,7 +8,10 @@
     border: 1px solid var(--background-modifier-accent);
     border-radius: 6px;
 }
-
+.dropdown {
+    width: 100%;
+    margin-bottom: 5px !important;
+}
 .empty {
     margin-top: 1rem;
     color: var(--text-muted);

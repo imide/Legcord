@@ -47,6 +47,7 @@ export function RegisteredGamesPage() {
             <Divider mt mb />
             <div class={classes.addBox}>
                 <Dropdown
+                    class={classes.dropdown}
                     value={selectedDetectable()}
                     onChange={(v) => {
                         if (v === "refresh") {
