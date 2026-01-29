@@ -93,14 +93,15 @@ export const KeybindMaker = (props: { close: () => void }) => {
         window.legcord.settings.addKeybind(keybind);
     }
 
+    const t = store.i18n;
     return (
         <ModalRoot size={ModalSizes.SMALL}>
-            <ModalHeader close={props.close}>Add a keybind</ModalHeader>
+            <ModalHeader close={props.close}>{t["keybind-addKeybind"]}</ModalHeader>
             <ModalBody>
                 <span style="display: flex">
-                    <Header tag={HeaderTags.H5}>Accelerator</Header>
+                    <Header tag={HeaderTags.H5}>{t["keybind-accelerator"]}</Header>
                     <Show when={containsNumpadKey || (!recording() && accelerator() && !containsNonModifier)}>
-                        <p class={classes.error}>This key combination is invalid or not supported.</p>
+                        <p class={classes.error}>{t["keybind-invalidCombo"]}</p>
                     </Show>
                 </span>
                 <div class={classes.grabBox}>
@@ -114,48 +115,44 @@ export const KeybindMaker = (props: { close: () => void }) => {
                             size={ButtonSizes.SMALL}
                             color={ButtonColors.RED}
                         >
-                            Recording
+                            {t["keybind-recording"]}
                         </Button>
                     ) : (
                         <Button class={classes.recBtn} onClick={startRecording} size={ButtonSizes.SMALL}>
-                            Record
+                            {t["keybind-record"]}
                         </Button>
                     )}
                 </div>
                 <Divider mt mb />
-                <Header tag={HeaderTags.H5}>Action</Header>
+                <Header tag={HeaderTags.H5}>{t["keybind-action"]}</Header>
                 <Dropdown
                     value={action()}
                     onChange={(v) => setAction(v as KeybindActions)}
                     limitHeight
                     options={[
-                        { label: "Mute", value: "mute" },
-                        { label: "Deafen", value: "deafen" },
-                        { label: "Leave call", value: "leaveCall" },
-                        { label: "Navigate forward", value: "navigateForward" },
-                        { label: "Navigate back", value: "navigateBack" },
-                        { label: "Run Javascript", value: "runJavascript" },
-                        { label: "Open Quick CSS", value: "openQuickCss" },
+                        { label: t["keybind-mute"], value: "mute" },
+                        { label: t["keybind-deafen"], value: "deafen" },
+                        { label: t["keybind-leaveCall"], value: "leaveCall" },
+                        { label: t["keybind-navigateForward"], value: "navigateForward" },
+                        { label: t["keybind-navigateBack"], value: "navigateBack" },
+                        { label: t["keybind-runJavascript"], value: "runJavascript" },
+                        { label: t["keybind-openQuickCss"], value: "openQuickCss" },
                     ]}
                 />
-                <SwitchItem
-                    note="Allows you to assign a specific keyboard shortcut that can be used across different applications and programs."
-                    value={global()}
-                    onChange={setGlobal}
-                >
-                    Global
+                <SwitchItem note={t["keybind-globalNote"]} value={global()} onChange={setGlobal}>
+                    {t["keybind-global"]}
                 </SwitchItem>
                 <SwitchItem hideBorder value={enabled()} onChange={setEnabled}>
-                    Enabled
+                    {t["keybind-enabled"]}
                 </SwitchItem>
                 <Show when={action() === "runJavascript"}>
                     <Divider mt mb />
-                    <Header tag={HeaderTags.H5}>Javascript code</Header>
+                    <Header tag={HeaderTags.H5}>{t["keybind-jsCode"]}</Header>
                     <TextBox value={javascriptCode()} onInput={setJavascriptCode} />
                 </Show>
             </ModalBody>
             <ModalConfirmFooter
-                confirmText="Add"
+                confirmText={t["keybind-add"]}
                 onConfirm={save}
                 close={props.close}
                 disabled={recording() || !accelerator() || !containsNonModifier || containsNumpadKey}

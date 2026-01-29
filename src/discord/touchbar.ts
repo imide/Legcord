@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { TouchBar, app, nativeImage } from "electron";
 import { navigateTo } from "../common/dom.js";
 import { deafenToggle, leaveCall, muteToggle } from "../common/keybindActions.js";
+import { getLang } from "../common/lang.js";
 import { mainWindows } from "./window.js";
 
 const { TouchBarButton, TouchBarSpacer, TouchBarPopover, TouchBarScrubber } = TouchBar;
@@ -96,5 +97,5 @@ export const voiceTouchBar = new TouchBar({
 });
 
 export const mainTouchBar = new TouchBar({
-    items: [new TouchBarPopover({ label: "Servers", showCloseButton: true, items: scrollableList })],
+    items: [new TouchBarPopover({ label: getLang("touchbar-servers"), showCloseButton: true, items: scrollableList })],
 });

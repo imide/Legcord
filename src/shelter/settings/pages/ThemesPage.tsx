@@ -20,35 +20,36 @@ export function ThemesPage() {
             refreshThemes();
         }, 1000);
         showToast({
-            title: "Success!",
-            content: "BD theme successfully installed!",
+            title: store.i18n["themes-success"],
+            content: store.i18n["themes-bdInstalled"],
             duration: 3000,
         });
     }
 
+    const t = store.i18n;
     return (
         <>
             <Header tag={HeaderTags.H1}>Themes</Header>
             <Divider mt mb />
             <div class={classes.buttonBox}>
                 <Button size={ButtonSizes.LARGE} onClick={window.legcord.themes.openQuickCss}>
-                    Open Quick CSS file
+                    {t["themes-openQuickCss"]}
                 </Button>
                 <Button size={ButtonSizes.LARGE} onClick={window.legcord.themes.openImportPicker}>
-                    Import from file
+                    {t["themes-importFromFile"]}
                 </Button>
                 <Button size={ButtonSizes.LARGE} onClick={window.legcord.settings.openThemesFolder}>
-                    Open themes folder
+                    {t["themes-openThemesFolder"]}
                 </Button>
             </div>
             <div class={classes.addBox}>
                 <TextBox
                     value={downloadUrl()}
                     onInput={setDownloadUrl}
-                    placeholder="https://raw.githubusercontent.com/... [.theme.css]"
+                    placeholder={t["themes-importUrlPlaceholder"]}
                 />
                 <Button size={ButtonSizes.MEDIUM} onClick={installTheme}>
-                    Import
+                    {t["themes-import"]}
                 </Button>
             </div>
             <For each={store.themes}>{(theme: ThemeManifest) => <ThemesCard theme={theme} />}</For>

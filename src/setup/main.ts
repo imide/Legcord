@@ -4,7 +4,7 @@ import path from "node:path";
 import { BrowserWindow, type BrowserWindowConstructorOptions, app, ipcMain } from "electron";
 import type { Settings } from "../@types/settings.js";
 import { getConfig, getConfigLocation, setConfigBulk } from "../common/config.js";
-import { getLang } from "../common/lang.js";
+import { getLang, getRawLang } from "../common/lang.js";
 
 let setupWindow: BrowserWindow;
 export async function createSetupWindow(): Promise<void> {
@@ -13,7 +13,7 @@ export async function createSetupWindow(): Promise<void> {
         const windowOptions: BrowserWindowConstructorOptions = {
             width: 800,
             height: 600,
-            title: "Legcord Setup",
+            title: getLang("setup-windowTitle"),
             darkTheme: true,
             icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
             resizable: false,
@@ -61,6 +61,9 @@ export async function createSetupWindow(): Promise<void> {
         });
         ipcMain.handle("setup-getLang", (_event, toGet: string) => {
             return getLang(toGet);
+        });
+        ipcMain.handle("setup-getRawLang", () => {
+            return getRawLang();
         });
         ipcMain.on("setup-restart", () => {
             app.relaunch();

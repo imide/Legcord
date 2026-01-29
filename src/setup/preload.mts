@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld("setup", {
         ipcRenderer.invoke("setup-getLang", toGet).then((result: string) => {
             return result;
         }),
+    getRawLang: () => ipcRenderer.invoke("setup-getRawLang") as Promise<Record<string, string>>,
 });
 
 if (ipcRenderer.sendSync("setup-getOS") !== "darwin") {
@@ -34,6 +35,8 @@ declare global {
             saveSettings: (settings: any) => void;
             restart: () => void;
             os: string;
+            getLang: (toGet: string) => Promise<string>;
+            getRawLang: () => Promise<Record<string, string>>;
         };
     }
 }

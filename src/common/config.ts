@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "no
 import { dirname, join } from "node:path";
 import { app, dialog } from "electron";
 import type { Settings } from "../@types/settings.js";
+import { getLang } from "./lang.js";
 import { getWindowStateLocation } from "./windowState.js";
 export let firstRun: boolean;
 
@@ -205,10 +206,7 @@ export function checkIfConfigIsBroken(): void {
         console.error(e);
         console.log("Detected a corrupted config");
         setup();
-        dialog.showErrorBox(
-            "Oops, something went wrong.",
-            "Legcord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues.",
-        );
+        dialog.showErrorBox(getLang("config-corrupted-title"), getLang("config-corrupted-message"));
     }
     try {
         const windowData = readFileSync(getWindowStateLocation(), "utf-8");

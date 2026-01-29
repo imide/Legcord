@@ -49,7 +49,7 @@ export function SettingsPage() {
                     { label: store.i18n["settings-theme-default"], value: "default" },
                     { label: store.i18n["settings-theme-native"], value: "native" },
                     { label: store.i18n["settings-theme-overlay"], value: "overlay" },
-                    { label: "Legacy", value: "legacy" },
+                    { label: store.i18n["settings-theme-legacy"], value: "legacy" },
                 ]}
             />
             <DropdownItem
@@ -145,9 +145,9 @@ export function SettingsPage() {
                 note={store.i18n["settings-channel-desc"]}
                 link="https://support.discord.com/hc/en-us/articles/360035675191-Discord-Testing-Clients"
                 options={[
-                    { label: "Stable", value: "stable" },
-                    { label: "Canary", value: "canary" },
-                    { label: "PTB", value: "ptb" },
+                    { label: store.i18n["settings-channel-stable"], value: "stable" },
+                    { label: store.i18n["settings-channel-canary"], value: "canary" },
+                    { label: store.i18n["settings-channel-ptb"], value: "ptb" },
                 ]}
             />
             <SwitchItem
@@ -223,7 +223,7 @@ export function SettingsPage() {
                 {store.i18n["settings-spellcheck"]}
             </SwitchItem>
             <Header class={classes.category} tag={HeaderTags.H5}>
-                Power Management
+                {store.i18n["settings-category-powerManagement"]}
             </Header>
             <DropdownItem
                 value={settings.performanceMode}
@@ -254,7 +254,7 @@ export function SettingsPage() {
                 {store.i18n["settings-sleepInBackground"]}
             </SwitchItem>
             <Header class={classes.category} tag={HeaderTags.H5}>
-                arRPC
+                {store.i18n["settings-category-arrpc"]}
             </Header>
             <SwitchItem
                 note={store.i18n["settings-invitewebsocket-desc"]}
@@ -391,8 +391,8 @@ export function SettingsPage() {
                 note={store.i18n["settings-audio-desc"]}
                 link="https://www.electronjs.org/docs/latest/api/session#sessetdisplaymediarequesthandlerhandler-opts"
                 options={[
-                    { label: "Loopback", value: "loopback" },
-                    { label: "Loopback with mute", value: "loopbackWithMute" },
+                    { label: store.i18n["settings-audio-loopback"], value: "loopback" },
+                    { label: store.i18n["settings-audio-loopbackWithMute"], value: "loopbackWithMute" },
                 ]}
             />
             <SwitchItem

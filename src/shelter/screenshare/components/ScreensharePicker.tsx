@@ -66,9 +66,10 @@ export const ScreensharePicker = (props: {
         setSource(props.sources[0].id);
         setName(props.sources[0].name);
     }
+    const t = store.i18n;
     function startScreenshare() {
         if (source() === "") {
-            showToast("Please select a source", "error");
+            showToast(t["screenshare-selectSource"], "error");
         }
         console.log(source(), name(), audio());
         if (audioSource() !== undefined && audio()) {
@@ -92,7 +93,7 @@ export const ScreensharePicker = (props: {
 
     return (
         <ModalRoot size={ModalSizes.MEDIUM} style="max-height: 90vh;">
-            <ModalHeader close={closeAndSave}>Screenshare</ModalHeader>
+            <ModalHeader close={closeAndSave}>{t["screenshare-title"]}</ModalHeader>
             <ModalBody>
                 <div class={classes.sources}>
                     <For each={props.sources}>
@@ -172,7 +173,7 @@ export const ScreensharePicker = (props: {
                             }}
                             limitHeight
                             options={[
-                                { label: "Venmic disabled", value: "Venmic disabled" },
+                                { label: t["screenshare-venmicDisabled"], value: "Venmic disabled" },
                                 ...(props.audioSources?.map((s) => ({
                                     label: s["node.name"],
                                     value: s["node.name"],
@@ -182,7 +183,11 @@ export const ScreensharePicker = (props: {
                     </Show>
                 </div>
             </ModalBody>
-            <ModalConfirmFooter confirmText="Share" onConfirm={startScreenshare} close={closeAndSave} />
+            <ModalConfirmFooter
+                confirmText={t["screenshare-share"]}
+                onConfirm={startScreenshare}
+                close={closeAndSave}
+            />
         </ModalRoot>
     );
 };

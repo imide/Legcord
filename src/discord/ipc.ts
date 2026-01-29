@@ -81,12 +81,12 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("openImportPicker", () => {
         dialog
             .showOpenDialog({
-                title: "Select a theme you want to import",
-                buttonLabel: "Import",
+                title: getLang("dialog-importTheme-title"),
+                buttonLabel: getLang("dialog-importTheme-button"),
                 properties: ["openFile", "multiSelections"],
                 filters: [
-                    { name: "Discord styles", extensions: ["scss", "css"] },
-                    { name: "All Files", extensions: ["*"] },
+                    { name: getLang("dialog-importTheme-discordStyles"), extensions: ["scss", "css"] },
+                    { name: getLang("dialog-importTheme-allFiles"), extensions: ["*"] },
                 ],
             })
             .then((result) => {
@@ -289,7 +289,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         dialog
             .showOpenDialog({
                 properties: ["openFile"],
-                filters: [{ name: "Icons", extensions: ["ico", "png", "icns"] }],
+                filters: [{ name: getLang("dialog-customIcon-filters"), extensions: ["ico", "png", "icns"] }],
             })
             .then((result) => {
                 if (result.canceled) return;

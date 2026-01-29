@@ -5,6 +5,7 @@ import classes from "./ThemesCard.module.css";
 
 const {
     ui: { Header, Switch, HeaderTags, showToast },
+    plugin: { store },
 } = shelter;
 
 export const ThemesCard = (props: { theme: ThemeManifest }) => {
@@ -36,8 +37,8 @@ export const ThemesCard = (props: { theme: ThemeManifest }) => {
             refreshThemes();
         }, 1000);
         showToast({
-            title: "Success!",
-            content: "Theme successfully updated!",
+            title: store.i18n["themes-success"],
+            content: store.i18n["themes-updated"],
             duration: 3000,
         });
     }
@@ -53,7 +54,7 @@ export const ThemesCard = (props: { theme: ThemeManifest }) => {
                     <Header tag={HeaderTags.H2} class={classes.title}>
                         {props.theme.name}
                     </Header>
-                    <Header tag={HeaderTags.H3}>by</Header>
+                    <Header tag={HeaderTags.H3}>{store.i18n["themes-by"]}</Header>
                     <Header class={classes.eyebrow} tag={HeaderTags.EYEBROW}>
                         {props.theme.author}
                     </Header>
@@ -63,17 +64,17 @@ export const ThemesCard = (props: { theme: ThemeManifest }) => {
                 </div>
                 <Header tag={HeaderTags.H5}>{props.theme.description}</Header>
             </div>
-            <button title="Delete" type="button" onClick={removeTheme} class={classes.btn}>
-                <img class={classes.icon} alt="Edit" src="legcord://assets/Trash.png" />
+            <button title={store.i18n["themes-delete"]} type="button" onClick={removeTheme} class={classes.btn}>
+                <img class={classes.icon} alt={store.i18n["themes-delete"]} src="legcord://assets/Trash.png" />
             </button>
-            <button title="Edit" type="button" onClick={editTheme} class={classes.btn}>
-                <img class={classes.icon} alt="Edit" src="legcord://assets/Edit.png" />
+            <button title={store.i18n["themes-edit"]} type="button" onClick={editTheme} class={classes.btn}>
+                <img class={classes.icon} alt={store.i18n["themes-edit"]} src="legcord://assets/Edit.png" />
             </button>
-            <button title="Update" type="button" onClick={updateTheme} class={classes.btn}>
-                <img class={classes.icon} alt="Update" src="legcord://assets/UpgradeArrow.png" />
+            <button title={store.i18n["themes-update"]} type="button" onClick={updateTheme} class={classes.btn}>
+                <img class={classes.icon} alt={store.i18n["themes-update"]} src="legcord://assets/UpgradeArrow.png" />
             </button>
-            <button title="Open" type="button" onClick={openThemesFolder} class={classes.btn}>
-                <img class={classes.icon} alt="Open" src="legcord://assets/Folder.png" />
+            <button title={store.i18n["themes-open"]} type="button" onClick={openThemesFolder} class={classes.btn}>
+                <img class={classes.icon} alt={store.i18n["themes-open"]} src="legcord://assets/Folder.png" />
             </button>
         </div>
     );

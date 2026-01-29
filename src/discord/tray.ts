@@ -3,6 +3,7 @@ import { Menu, Tray, app, nativeImage } from "electron";
 import { getConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
 import { setForceQuit } from "../common/forceQuit.js";
+import { getLang } from "../common/lang.js";
 import { getDisplayVersion } from "../common/version.js";
 import { mainWindows } from "./window.js";
 export let tray: Tray;
@@ -31,7 +32,7 @@ export function createTray() {
     tray = new Tray(trayImg);
     const contextMenu = Menu.buildFromTemplate([
         {
-            label: `Legcord ${getDisplayVersion()}`,
+            label: `${getLang("menu-legcord")} ${getDisplayVersion()}`,
             icon: trayImg,
             enabled: false,
         },
@@ -39,7 +40,7 @@ export function createTray() {
             type: "separator",
         },
         {
-            label: "Open Legcord",
+            label: getLang("tray-openLegcord"),
             click() {
                 mainWindows.forEach((mainWindow) => {
                     mainWindow.show();
@@ -47,7 +48,7 @@ export function createTray() {
             },
         },
         {
-            label: "Open Settings",
+            label: getLang("tray-openSettings"),
             click() {
                 mainWindows.forEach((mainWindow) => {
                     mainWindow.show();
@@ -65,7 +66,7 @@ export function createTray() {
             },
         },
         {
-            label: "Support Discord Server",
+            label: getLang("tray-supportServer"),
             click() {
                 mainWindows.forEach((mainWindow) => {
                     navigateTo(mainWindow, "/invite/TnhxcqynZ2");
@@ -76,7 +77,7 @@ export function createTray() {
             type: "separator",
         },
         {
-            label: "Restart Legcord",
+            label: getLang("tray-restartLegcord"),
             click() {
                 app.relaunch();
                 setForceQuit(true);
@@ -84,7 +85,7 @@ export function createTray() {
             },
         },
         {
-            label: "Quit Legcord",
+            label: getLang("tray-quitLegcord"),
             click() {
                 setForceQuit(true);
                 app.quit();
@@ -93,7 +94,7 @@ export function createTray() {
     ]);
     tray.setContextMenu(contextMenu);
 
-    tray.setToolTip("Legcord");
+    tray.setToolTip(getLang("tray-tooltip"));
     tray.on("click", () => {
         mainWindows.forEach((mainWindow) => {
             mainWindow.show();

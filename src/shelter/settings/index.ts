@@ -27,11 +27,11 @@ function restartRequired(payload: { event: string; properties: { origin_pane: st
         if (payload.properties.origin_pane === "legcord-settings") {
             if (isRestartRequired) {
                 openConfirmationModal({
-                    header: () => "Restart required",
-                    body: () => "You need to restart to apply these changes.",
+                    header: () => store.i18n["settings-restartRequired"],
+                    body: () => store.i18n["settings-restartRequiredBody"],
                     type: "danger",
-                    confirmText: "Restart",
-                    cancelText: "I'll do it later",
+                    confirmText: store.i18n["settings-restart"],
+                    cancelText: store.i18n["settings-restartLater"],
                 }).then(
                     () => window.legcord.restart(),
                     () => console.log("restart skipped"),

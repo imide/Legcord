@@ -25,9 +25,10 @@ export function RegisteredGamesPage() {
             <AddDetectableModal close={close} executable={selectedDetectable()} />
         ));
     }
+    const t = shelter.plugin.store.i18n;
     return (
         <>
-            <Header tag={HeaderTags.H1}>Registered Games</Header>
+            <Header tag={HeaderTags.H1}>{t["games-registeredGames"]}</Header>
             <Divider mt mb />
             <div class={classes.addBox}>
                 <Dropdown
@@ -44,11 +45,11 @@ export function RegisteredGamesPage() {
                     }}
                     options={[
                         ...(processList()?.map((p) => ({ label: p[1], value: p[1] })) ?? []),
-                        { label: "Refresh list", value: "refresh" },
+                        { label: t["games-refreshList"], value: "refresh" },
                     ]}
                 />
                 <Button size={ButtonSizes.MEDIUM} onClick={addNewGame}>
-                    Add
+                    {t["games-add"]}
                 </Button>
             </div>
             <For each={detectables()}>{(detectable) => <div>{detectable.name}</div>}</For>

@@ -14,6 +14,7 @@ import contextMenu from "electron-context-menu";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
+import { getLang } from "../common/lang.js";
 import { initQuickCss, injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
 import { init } from "../main.js";
@@ -34,7 +35,7 @@ contextMenu({
     showSearchWithGoogle: false,
     prepend: (_defaultActions, parameters) => [
         {
-            label: "Search with Google",
+            label: getLang("contextMenu-searchGoogle"),
             // Only show it when right-clicking text
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
@@ -42,7 +43,7 @@ contextMenu({
             },
         },
         {
-            label: "Search with DuckDuckGo",
+            label: getLang("contextMenu-searchDuckDuckGo"),
             // Only show it when right-clicking text
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
@@ -146,12 +147,12 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         } else {
             const options: MessageBoxOptions = {
                 type: "question",
-                buttons: ["Yes, please", "No, I don't"],
+                buttons: [getLang("dialog-openUrl-yes"), getLang("dialog-openUrl-no")],
                 defaultId: 1,
-                title: url,
-                message: `Do you want to open ${url}?`,
-                detail: "This url was detected to not use normal browser protocols. It could mean that this url leads to a local program on your computer. Please check if you recognise it, before proceeding!",
-                checkboxLabel: "Remember my answer and ignore this warning for future sessions",
+                title: getLang("dialog-openUrl-title"),
+                message: getLang("dialog-openUrl-message").replace("{url}", url),
+                detail: getLang("dialog-openUrl-detail"),
+                checkboxLabel: getLang("dialog-openUrl-checkbox"),
                 checkboxChecked: false,
             };
 
@@ -225,25 +226,26 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
     passedWindow.webContents.on("page-title-updated", (e, title) => {
         const legcordSuffix = " - Legcord"; /* identify */
+        const unreadMessages = getLang("title-unreadMessages");
 
         // FIXME - This is a bit of a mess. I'm not sure how to clean it up.
         if (process.platform === "win32") {
             if (title.startsWith("•"))
                 return passedWindow.setOverlayIcon(
                     nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-11.ico")),
-                    "You have some unread messages.",
+                    unreadMessages,
                 );
             if (title.startsWith("(")) {
                 const pings = Number.parseInt(/\((\d+)\)/.exec(title)![1]);
                 if (pings > 9) {
                     return passedWindow.setOverlayIcon(
                         nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-10.ico")),
-                        "You have some unread messages.",
+                        unreadMessages,
                     );
                 } else {
                     return passedWindow.setOverlayIcon(
                         nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/badge-${pings}.ico`)),
-                        "You have some unread messages.",
+                        unreadMessages,
                     );
                 }
             }

@@ -25,13 +25,15 @@ export const KeybindCard = (props: { keybind: Keybind }) => {
     return (
         <div class={classes.card}>
             <div class={classes.info}>
-                <Header tag={HeaderTags.H2}>{props.keybind.action}</Header>
+                <Header tag={HeaderTags.H2}>
+                    {store.i18n[`keybind-${props.keybind.action}`] ?? props.keybind.action}
+                </Header>
                 <Header class={classes.eyebrow} tag={HeaderTags.EYEBROW}>
                     {props.keybind.accelerator}
                 </Header>
             </div>
             <div class={classes.btnContainer}>
-                <button title="Delete" type="button" onClick={removeKeybind} class={classes.btn}>
+                <button title={store.i18n["keybind-delete"]} type="button" onClick={removeKeybind} class={classes.btn}>
                     <IconBin />
                 </button>
             </div>
