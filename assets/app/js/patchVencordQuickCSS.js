@@ -3,6 +3,22 @@
 
 if (window.VencordNative) {
     VencordNative.quickCss.openEditor = function openEditor() {
-        window.legcord.themes.openQuickCss()
+        shelter.ui.openConfirmationModal({
+            header: () => "Vencord QuickCSS is not compatible",
+            body: () => `Vencord’s QuickCSS editor is not supported in Legcord. Legcord uses its own Quick CSS editor instead which can be found in it's respective themes section.
+                Would you like to import your existing Vencord CSS into Legcord?`,
+            type: "danger",
+            confirmText: "Import CSS",
+            cancelText: "Cancel"
+            }).then(    
+            async () => {
+                const css = await VencordNative.quickCss.get();
+                window.legcord.themes.importQuickCss(css);
+                await VencordNative.quickCss.set("");
+                window.legcord.themes.openQuickCss()
+            },
+            () => console.log("Cancel.")
+        );
+        
     }
 }

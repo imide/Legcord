@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Game } from "arrpc";
@@ -69,6 +69,11 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         } else {
             openCssEditor(quickCssPath);
         }
+    });
+    ipcMain.on("importQuickCss", (_event, css: string) => {
+        let currentCss = readFileSync(quickCssPath, "utf-8");
+        currentCss += `\n/* Imported CSS */\n${css}`;
+        writeFileSync(quickCssPath, currentCss, "utf-8");
     });
     ipcMain.on("openThemesFolder", () => {
         shell.showItemInFolder(themesPath);
