@@ -2,6 +2,10 @@
 // fixes the white window bug
 
 if (window.VencordNative) {
+    Vencord.Settings.useQuickCss = false;
+    let settings = VencordNative.settings.get()
+    settings.useQuickCss = false;
+    VencordNative.settings.set(settings)
     VencordNative.quickCss.openEditor = function openEditor() {
         shelter.ui.openConfirmationModal({
             header: () => "Vencord QuickCSS is not compatible",
@@ -14,7 +18,6 @@ if (window.VencordNative) {
             async () => {
                 const css = await VencordNative.quickCss.get();
                 window.legcord.themes.importQuickCss(css);
-                await VencordNative.quickCss.set("");
                 window.legcord.themes.openQuickCss()
             },
             () => console.log("Cancel.")
