@@ -60,6 +60,7 @@ const defaults: Settings = {
     smoothScroll: true,
     autoScroll: false,
     useSystemCssEditor: false,
+    extendedPluginAbilities: false,
 };
 
 const safeMode: Settings = {
@@ -68,6 +69,7 @@ const safeMode: Settings = {
     windowStyle: "native",
     hardwareAcceleration: false,
     disableHttpCache: true,
+    extendedPluginAbilities: false,
 };
 
 export function checkForDataFolder(): void {

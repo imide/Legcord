@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Game } from "arrpc";
@@ -24,7 +24,23 @@ const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
+const pluginStoragePath = path.join(userDataPath, "/plugin-storage/");
 const quickCssPath = path.join(userDataPath, "/quickCss.css");
+
+/** Sanitize plugin id to safe dir name (alphanumeric, dash, underscore only). */
+function sanitizePluginId(pluginId: string): string {
+    return pluginId.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 64) || "default";
+}
+
+/** Resolve relative path for a plugin; returns null if path escapes plugin dir. */
+function resolvePluginFilePath(pluginId: string, relativePath: string): string | null {
+    const safeId = sanitizePluginId(pluginId);
+    const baseDir = path.resolve(pluginStoragePath, safeId);
+    const resolved = path.resolve(baseDir, path.normalize(relativePath));
+    const relative = path.relative(baseDir, resolved);
+    if (relative.startsWith("..") || path.isAbsolute(relative)) return null;
+    return resolved;
+}
 
 function ifExistsRead(path: string): string | undefined {
     if (existsSync(path)) return readFileSync(path, "utf-8");
@@ -317,4 +333,55 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("removeDetectable", (_event, id: string) => {
         removeDetectable(id);
     });
+
+    // Plugin storage API (gated by extendedPluginAbilities)
+    ipcMain.handle(
+        "pluginWriteFile",
+        async (
+            _event,
+            pluginId: string,
+            relativePath: string,
+            data: string,
+        ): Promise<{ ok: true } | { ok: false; error: string }> => {
+            if (!getConfig("extendedPluginAbilities")) {
+                return { ok: false, error: "EXTENSION_DISABLED" };
+            }
+            if (typeof pluginId !== "string" || typeof relativePath !== "string" || typeof data !== "string") {
+                return { ok: false, error: "INVALID_ARGS" };
+            }
+            const resolved = resolvePluginFilePath(pluginId, relativePath);
+            if (!resolved) return { ok: false, error: "INVALID_PATH" };
+            try {
+                mkdirSync(path.dirname(resolved), { recursive: true });
+                writeFileSync(resolved, data, "utf-8");
+                return { ok: true };
+            } catch (err) {
+                return { ok: false, error: err instanceof Error ? err.message : "UNKNOWN" };
+            }
+        },
+    );
+    ipcMain.handle(
+        "pluginReadFile",
+        async (
+            _event,
+            pluginId: string,
+            relativePath: string,
+        ): Promise<{ ok: true; data: string } | { ok: false; error: string }> => {
+            if (!getConfig("extendedPluginAbilities")) {
+                return { ok: false, error: "EXTENSION_DISABLED" };
+            }
+            if (typeof pluginId !== "string" || typeof relativePath !== "string") {
+                return { ok: false, error: "INVALID_ARGS" };
+            }
+            const resolved = resolvePluginFilePath(pluginId, relativePath);
+            if (!resolved) return { ok: false, error: "INVALID_PATH" };
+            try {
+                if (!existsSync(resolved)) return { ok: false, error: "NOT_FOUND" };
+                const data = readFileSync(resolved, "utf-8");
+                return { ok: true, data };
+            } catch (err) {
+                return { ok: false, error: err instanceof Error ? err.message : "UNKNOWN" };
+            }
+        },
+    );
 }

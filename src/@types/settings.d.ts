@@ -70,4 +70,5 @@ export interface Settings {
     windowsLegacyScanning: boolean;
     scanInterval: number;
     modCache?: Record<ValidMods, string>;
+    extendedPluginAbilities: boolean;
 }

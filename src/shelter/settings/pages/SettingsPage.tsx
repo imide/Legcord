@@ -39,6 +39,13 @@ export function SettingsPage() {
             >
                 Equicord
             </SwitchItem>
+            <SwitchItem
+                note={store.i18n["settings-extendedPluginAbilities-desc"]}
+                value={settings.extendedPluginAbilities}
+                onChange={(e: boolean) => setConfig("extendedPluginAbilities", e)}
+            >
+                {store.i18n["settings-extendedPluginAbilities"]}
+            </SwitchItem>
             <DropdownItem
                 value={settings.windowStyle}
                 onChange={(v) => setConfig("windowStyle", v as Settings["windowStyle"], true)}

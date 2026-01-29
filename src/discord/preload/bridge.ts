@@ -102,6 +102,30 @@ contextBridge.exposeInMainWorld("legcord", {
         removeDetectable: (id: string) => ipcRenderer.send("removeDetectable", id),
         getDetectables: () => ipcRenderer.sendSync("getDetectables") as Game[],
     },
+    fs: {
+        /**
+         * Write a file in this plugin's scoped storage (e.g. "cache/deleted-messages.json").
+         * Only works when the user has enabled "Extended plugin abilities" in Legcord settings.
+         * @param pluginId - Your plugin id (alphanumeric, dash, underscore only)
+         * @param relativePath - Path relative to plugin storage (no ".." allowed)
+         * @returns { ok: true } or { ok: false, error: "EXTENSION_DISABLED" | "INVALID_PATH" | ... }
+         */
+        writeFile: (pluginId: string, relativePath: string, data: string) =>
+            ipcRenderer.invoke("pluginWriteFile", pluginId, relativePath, data) as Promise<
+                { ok: true } | { ok: false; error: string }
+            >,
+        /**
+         * Read a file from this plugin's scoped storage.
+         * Only works when the user has enabled "Extended plugin abilities" in Legcord settings.
+         * @param pluginId - Your plugin id
+         * @param relativePath - Path relative to plugin storage
+         * @returns { ok: true, data: string } or { ok: false, error: "EXTENSION_DISABLED" | "NOT_FOUND" | ... }
+         */
+        readFile: (pluginId: string, relativePath: string) =>
+            ipcRenderer.invoke("pluginReadFile", pluginId, relativePath) as Promise<
+                { ok: true; data: string } | { ok: false; error: string }
+            >,
+    },
 } as unknown as LegcordWindow);
 
 ipcRenderer.on("rpc", (_event, data: object) => {

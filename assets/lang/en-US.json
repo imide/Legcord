@@ -223,6 +223,8 @@
     "settings-channel-ptb": "PTB",
     "settings-category-powerManagement": "Power Management",
     "settings-category-arrpc": "arRPC",
+    "settings-extendedPluginAbilities": "Extended plugin abilities",
+    "settings-extendedPluginAbilities-desc": "Allows plugins to read and write files in a scoped folder on your computer (e.g. for caching deleted messages). Only enable for plugins you trust—they can store data locally. Data is stored per plugin in Legcord's plugin-storage folder.",
     "settings-audio-loopback": "Loopback",
     "settings-audio-loopbackWithMute": "Loopback with mute",
     "keybind-addKeybind": "Add a keybind",
