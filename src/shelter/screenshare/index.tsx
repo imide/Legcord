@@ -57,6 +57,7 @@ function onStreamEnd(dispatch: StreamDispatch) {
 
 export function onLoad() {
     log("Legcord Screenshare Module");
+    store.i18n = window.legcord.translations;
     window.legcord.screenshare.getSources(async (_event: Electron.IpcRendererEvent, sources: IPCSources[]) => {
         let audioSources: Node[] | undefined;
         if (window.legcord.platform === "linux") {

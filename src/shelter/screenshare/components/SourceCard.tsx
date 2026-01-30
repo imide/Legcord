@@ -5,7 +5,7 @@ import classes from "./SourceCard.module.css";
 export interface IPCSources {
     id: string;
     name: string;
-    thumbnail: NativeImage;
+    thumbnail: HTMLCanvasElement;
 }
 interface SourceCardProps {
     source: IPCSources;
