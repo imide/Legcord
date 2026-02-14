@@ -38,10 +38,10 @@ const tracker = {
 };
 
 const trackSwitch = (key: string, value?: string) => tracker.switches.set(key, value ?? true);
-const trackEnableFeatures = (features: string[]) => features.forEach(f => tracker.enableFeatures.add(f));
-const trackDisableFeatures = (features: string[]) => features.forEach(f => tracker.disableFeatures.add(f));
-const trackEnableBlinkFeatures = (features: string[]) => features.forEach(f => tracker.enableBlinkFeatures.add(f));
-const trackDisableBlinkFeatures = (features: string[]) => features.forEach(f => tracker.disableBlinkFeatures.add(f));
+const trackEnableFeatures = (features: string[]) => features.forEach((f) => tracker.enableFeatures.add(f));
+const trackDisableFeatures = (features: string[]) => features.forEach((f) => tracker.disableFeatures.add(f));
+const trackEnableBlinkFeatures = (features: string[]) => features.forEach((f) => tracker.enableBlinkFeatures.add(f));
+const trackDisableBlinkFeatures = (features: string[]) => features.forEach((f) => tracker.disableBlinkFeatures.add(f));
 
 export function getAppliedFlags(): AppliedFlagsOutput {
     return {

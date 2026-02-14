@@ -1,6 +1,6 @@
-import { powerMonitor, app } from "electron";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { app, powerMonitor } from "electron";
 import isDev from "electron-is-dev";
 import { getConfig } from "./config.js";
 

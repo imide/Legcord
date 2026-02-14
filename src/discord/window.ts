@@ -369,6 +369,7 @@ export function createWindow() {
                 browserWindowOptions.titleBarStyle = "hidden";
                 browserWindowOptions.titleBarOverlay = false;
             }
+            break;
         case "native":
             browserWindowOptions.frame = true;
             break;

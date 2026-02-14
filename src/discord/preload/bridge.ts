@@ -4,8 +4,8 @@ import type { Keybind } from "../../@types/keybind.js";
 import type { LegcordWindow } from "../../@types/legcordWindow.d.ts";
 import type { Settings } from "../../@types/settings.js";
 import type { ThemeManifest } from "../../@types/themeManifest.js";
-import type { venmicListObject } from "../venmic.js";
 import type { AppliedFlagsOutput } from "../../main.js";
+import type { venmicListObject } from "../venmic.js";
 let windowCallback: (arg0: object) => void;
 
 interface IPCSources {
