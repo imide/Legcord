@@ -297,7 +297,14 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         setForceQuit(true);
     });
     passedWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (details.url.includes("ws://127.0.0.1:")) return callback({ cancel: true });
+        // Lune Dev exceptions, https://github.com/uwu/shelter/blob/8d4ca369bf01abf348df9d4e111d534800c7a38c/packages/shelter/src/devmode/index.tsx#L24
+        if (
+            details.url.includes("ws://127.0.0.1:") &&
+            !details.url.includes("127.0.0.1:1211") &&
+            !details.url.includes("127.0.0.1:1112")
+        ) {
+            return callback({ cancel: true });
+        }
         return callback({});
     });
     passedWindow.on("focus", () => {
