@@ -33,6 +33,7 @@ export function RegisteredGamesPage() {
     function blacklistGame(name: string, id: number) {
         window.legcord.rpc.blacklistGame(name, id);
         setBlacklistVersion((v) => v + 1);
+        setLastDetected((list) => filterBlacklisted(list));
     }
 
     function unblacklistGame(id: number) {
@@ -40,12 +41,24 @@ export function RegisteredGamesPage() {
         setBlacklistVersion((v) => v + 1);
     }
 
+    function filterBlacklisted(list: DetectedGame[]) {
+        const returnList: DetectedGame[] = [];
+        list.forEach((game) => {
+            if (!getBlacklist().some((g) => g.id === Number(game.id))) {
+                console.log(`game ${game.name} (${game.id}) is not blacklisted, adding to list...`);
+                console.log(getBlacklist());
+                returnList.push(game);
+            }
+        });
+        return returnList;
+    }
+
     onMount(() => {
         refreshDetectables();
         const rpc = window.legcordRPC;
         if (rpc) {
-            setLastDetected(rpc.lastDetectedGames ?? []);
-            rpc.onLastDetectedUpdate = (list) => setLastDetected(list ?? []);
+            setLastDetected(filterBlacklisted(rpc.lastDetectedGames ?? []));
+            rpc.onLastDetectedUpdate = (list) => setLastDetected(filterBlacklisted(list ?? []));
             onCleanup(() => {
                 if (rpc) rpc.onLastDetectedUpdate = null;
             });
@@ -128,7 +141,9 @@ export function RegisteredGamesPage() {
                     <For each={lastDetected()}>
                         {(game) => (
                             <li class={classes.gameRow}>
-                                <span class={classes.gameName}>{game.name}</span>
+                                <span class={classes.gameName}>
+                                    {game.name} ({game.id})
+                                </span>
                                 <Button
                                     size={ButtonSizes.SMALL}
                                     onClick={() => blacklistGame(game.name, game.id)}
@@ -158,7 +173,9 @@ export function RegisteredGamesPage() {
                     <For each={blacklisted()}>
                         {(game) => (
                             <li class={classes.gameRow}>
-                                <span class={classes.gameName}>{game.name}</span>
+                                <span class={classes.gameName}>
+                                    {game.name} ({game.id})
+                                </span>
                                 <Button size={ButtonSizes.SMALL} onClick={() => unblacklistGame(game.id)}>
                                     {t["games-removeFromBlacklist"]}
                                 </Button>

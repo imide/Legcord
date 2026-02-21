@@ -29,8 +29,12 @@ async function listen(msg: {
     rpc.onLastDetectedUpdate?.(rpc.lastDetectedGames);
 
     const blacklist = window.legcord.rpc.getBlacklist();
-    if (blacklist.some((g) => g.id === appId)) return;
-
+    if (blacklist.some((g) => g.id === Number(appId))) {
+        // @ts-expect-error
+        msg.activity = null; // clear activity to prevent blacklisted game from showing up in status
+        FluxDispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg });
+        return console.log(`Game ${gameName} (${appId}) is blacklisted, skipping...`);
+    }
     if (
         msg.activity?.assets?.large_image?.startsWith("https://") ??
         msg.activity?.assets?.small_image?.startsWith("https://")

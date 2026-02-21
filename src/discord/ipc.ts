@@ -9,8 +9,8 @@ import type { Settings } from "../@types/settings.js";
 import type { ThemeManifest } from "../@types/themeManifest.js";
 import {
     blacklistGame as blacklistGameAdd,
-    getBlacklist,
     unblacklistGame as blacklistGameRemove,
+    getBlacklist,
 } from "../common/blacklistGame.js";
 import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
 import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
