@@ -30,7 +30,7 @@ async function listen(msg: {
 
     const raw = window.legcord.settings.getConfig().rpcActivityBlacklist ?? [];
     const blacklist = Array.isArray(raw) ? raw.map((x) => Number(x)).filter((n) => !Number.isNaN(n)) : [];
-    if (blacklist.includes(appId)) return;
+    if (blacklist.includes(Number(appId))) return console.log(`activity ${appId} is blacklisted, skipping...`);
 
     if (
         msg.activity?.assets?.large_image?.startsWith("https://") ??
