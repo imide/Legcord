@@ -43,7 +43,7 @@
         "@uwu/lune": "^1.6.2",
         "@uwu/shelter-defs": "^1.5.1",
         "babel-preset-solid": "^1.9.3",
-        "electron": "40.4.1",
+        "electron": "40.6.0",
         "electron-builder": "26.0.20",
         "lucide-solid": "^0.475.0",
         "rolldown": "1.0.0-rc.2",

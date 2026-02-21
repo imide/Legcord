@@ -237,6 +237,7 @@
     "keybind-action": "Action",
     "keybind-mute": "Mute",
     "keybind-deafen": "Deafen",
+    "keybind-pushToTalk": "Push to talk",
     "keybind-leaveCall": "Leave call",
     "keybind-navigateForward": "Navigate forward",
     "keybind-navigateBack": "Navigate back",
