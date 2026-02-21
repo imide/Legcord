@@ -21,14 +21,16 @@ async function listen(msg: {
     if (!msg.activity.name) msg.activity.name = gameName;
 
     const rpc = window.legcordRPC;
-    rpc.lastDetectedGames = [gameName, ...(rpc.lastDetectedGames || []).filter((n: string) => n !== gameName)].slice(
+    const entry = { name: gameName, id: appId };
+    rpc.lastDetectedGames = [entry, ...(rpc.lastDetectedGames || []).filter((g) => g.id !== appId)].slice(
         0,
         LAST_DETECTED_MAX,
     );
     rpc.onLastDetectedUpdate?.(rpc.lastDetectedGames);
 
-    const blacklist: string[] = window.legcord.settings.getConfig().rpcActivityBlacklist ?? [];
-    if (blacklist.includes(gameName)) return;
+    const raw = window.legcord.settings.getConfig().rpcActivityBlacklist ?? [];
+    const blacklist = Array.isArray(raw) ? raw.map((x) => Number(x)).filter((n) => !Number.isNaN(n)) : [];
+    if (blacklist.includes(appId)) return;
 
     if (
         msg.activity?.assets?.large_image?.startsWith("https://") ??
@@ -64,8 +66,8 @@ async function listen(msg: {
 
 export function onLoad() {
     window.legcordRPC = {
-        lastDetectedGames: [] as string[],
-        onLastDetectedUpdate: null as ((list: string[]) => void) | null,
+        lastDetectedGames: [],
+        onLastDetectedUpdate: null,
         listen,
     };
 }

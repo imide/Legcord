@@ -98,9 +98,14 @@ export interface LegcordWindow {
     };
 }
 
+export interface DetectedGame {
+    name: string;
+    id: number;
+}
+
 export interface LegcordRPC {
-    lastDetectedGames: string[];
-    onLastDetectedUpdate: ((list: string[]) => void) | null;
+    lastDetectedGames: DetectedGame[];
+    onLastDetectedUpdate: ((list: DetectedGame[]) => void) | null;
     listen: (msg: {
         activity: {
             assets: { large_image: string | null; small_image: string | null };

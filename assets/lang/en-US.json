@@ -288,6 +288,7 @@
     "games-blacklisted": "Blacklisted games",
     "games-blacklistedEmpty": "No blacklisted games.",
     "games-removeFromBlacklist": "Remove from blacklist",
+    "games-application": "Application",
     "screenshare-selectSource": "Please select a source",
     "screenshare-venmicDisabled": "Venmic disabled",
     "screenshare-share": "Share",

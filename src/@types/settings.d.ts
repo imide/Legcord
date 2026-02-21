@@ -72,6 +72,6 @@ export interface Settings {
     scanInterval: number;
     modCache?: Record<ValidMods, string>;
     extendedPluginAbilities: boolean;
-    /** Game names to hide from Discord rich presence activity. */
-    rpcActivityBlacklist: string[];
+    /** Application IDs to hide from Discord rich presence activity. */
+    rpcActivityBlacklist: number[];
 }
