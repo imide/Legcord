@@ -5,7 +5,6 @@ import { sleep } from "../../../common/sleep.js";
 import { AddDetectableModal } from "../components/AddDetectableModal.jsx";
 import { DetectableCard } from "../components/DetectableCard.jsx";
 import { Dropdown } from "../components/Dropdown.jsx";
-import { refreshSettings, setConfig } from "../settings.js";
 import classes from "./RegisteredGames.module.css";
 
 const {
@@ -28,25 +27,16 @@ export function RegisteredGamesPage() {
     }
 
     function getBlacklist(): DetectedGame[] {
-        const raw = shelter.plugin.store.settings?.rpcActivityBlacklist ?? [];
-        return Array.isArray(raw) ? raw.filter((g) => g && typeof g.id === "number" && typeof g.name === "string") : [];
+        return window.legcord.rpc.getBlacklist();
     }
 
-    function blacklistGame(game: DetectedGame) {
-        const list = getBlacklist();
-        const entry = { name: String(game.name), id: Number(game.id) };
-        if (list.some((g) => g.id === entry.id)) return;
-        setConfig("rpcActivityBlacklist", [...list.map((g) => ({ name: g.name, id: g.id })), entry]);
-        refreshSettings();
+    function blacklistGame(name: string, id: number) {
+        window.legcord.rpc.blacklistGame(name, id);
         setBlacklistVersion((v) => v + 1);
     }
 
     function unblacklistGame(id: number) {
-        const next = getBlacklist()
-            .filter((g) => g.id !== id)
-            .map((g) => ({ name: g.name, id: g.id }));
-        setConfig("rpcActivityBlacklist", next);
-        refreshSettings();
+        window.legcord.rpc.unblacklistGame(id);
         setBlacklistVersion((v) => v + 1);
     }
 
@@ -141,7 +131,7 @@ export function RegisteredGamesPage() {
                                 <span class={classes.gameName}>{game.name}</span>
                                 <Button
                                     size={ButtonSizes.SMALL}
-                                    onClick={() => blacklistGame(game)}
+                                    onClick={() => blacklistGame(game.name, game.id)}
                                     disabled={blacklisted().some((g) => g.id === game.id)}
                                 >
                                     {t["games-blacklist"]}

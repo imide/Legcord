@@ -101,6 +101,9 @@ contextBridge.exposeInMainWorld("legcord", {
         addDetectable: (detectable: Game) => ipcRenderer.send("addDetectable", detectable),
         removeDetectable: (id: string) => ipcRenderer.send("removeDetectable", id),
         getDetectables: () => ipcRenderer.sendSync("getDetectables") as Game[],
+        getBlacklist: () => ipcRenderer.sendSync("getRpcBlacklist") as { name: string; id: number }[],
+        blacklistGame: (name: string, id: number) => ipcRenderer.sendSync("blacklistGame", name, id),
+        unblacklistGame: (id: number) => ipcRenderer.sendSync("unblacklistGame", id),
     },
     fs: {
         /**

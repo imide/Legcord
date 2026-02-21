@@ -7,6 +7,11 @@ import isDev from "electron-is-dev";
 import type { Keybind } from "../@types/keybind.js";
 import type { Settings } from "../@types/settings.js";
 import type { ThemeManifest } from "../@types/themeManifest.js";
+import {
+    blacklistGame as blacklistGameAdd,
+    getBlacklist,
+    unblacklistGame as blacklistGameRemove,
+} from "../common/blacklistGame.js";
 import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
 import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
@@ -243,6 +248,17 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("setConfig", (event, key: keyof Settings, value: Settings[keyof Settings]) => {
         setConfig(key, value);
+        event.returnValue = undefined;
+    });
+    ipcMain.on("getRpcBlacklist", (event) => {
+        event.returnValue = getBlacklist();
+    });
+    ipcMain.on("blacklistGame", (event, name: string, id: number) => {
+        blacklistGameAdd(name, id);
+        event.returnValue = undefined;
+    });
+    ipcMain.on("unblacklistGame", (event, id: number) => {
+        blacklistGameRemove(id);
         event.returnValue = undefined;
     });
     ipcMain.on("addKeybind", (_event, keybind: Keybind) => {

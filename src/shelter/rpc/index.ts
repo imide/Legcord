@@ -28,8 +28,7 @@ async function listen(msg: {
     );
     rpc.onLastDetectedUpdate?.(rpc.lastDetectedGames);
 
-    const raw = window.legcord.settings.getConfig().rpcActivityBlacklist ?? [];
-    const blacklist = Array.isArray(raw) ? raw.filter((g) => g && typeof g.id === "number") : [];
+    const blacklist = window.legcord.rpc.getBlacklist();
     if (blacklist.some((g) => g.id === appId)) return;
 
     if (

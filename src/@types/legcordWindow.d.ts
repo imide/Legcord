@@ -83,6 +83,9 @@ export interface LegcordWindow {
         addDetectable: (e: Game) => void;
         removeDetectable: (id: string) => void;
         getDetectables: () => GameList;
+        getBlacklist: () => DetectedGame[];
+        blacklistGame: (name: string, id: number) => void;
+        unblacklistGame: (id: number) => void;
     };
     /** Plugin storage API. Requires user to enable "Extended plugin abilities" in Legcord settings. */
     fs: {
