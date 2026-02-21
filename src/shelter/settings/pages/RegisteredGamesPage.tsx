@@ -1,9 +1,10 @@
 import type { GameList, ProcessInfo } from "arrpc";
-import { For, Show, createSignal, onMount } from "solid-js";
+import { For, Show, createSignal, onCleanup, onMount } from "solid-js";
 import { sleep } from "../../../common/sleep.js";
 import { AddDetectableModal } from "../components/AddDetectableModal.jsx";
 import { DetectableCard } from "../components/DetectableCard.jsx";
 import { Dropdown } from "../components/Dropdown.jsx";
+import { refreshSettings, setConfig } from "../settings.js";
 import classes from "./RegisteredGames.module.css";
 
 const {
@@ -14,6 +15,8 @@ export function RegisteredGamesPage() {
     const [processList, setProcessList] = createSignal<ProcessInfo[]>();
     const [detectables, setDetectables] = createSignal<GameList>([]);
     const [selectedDetectable, setSelectedDetectable] = createSignal("refresh");
+    const [lastDetected, setLastDetected] = createSignal<string[]>([]);
+    const [blacklistVersion, setBlacklistVersion] = createSignal(0);
 
     function refreshDetectables() {
         window.legcord.rpc.refreshProcessList();
@@ -23,8 +26,33 @@ export function RegisteredGamesPage() {
         });
     }
 
+    function getBlacklist(): string[] {
+        return shelter.plugin.store.settings?.rpcActivityBlacklist ?? [];
+    }
+
+    function blacklistGame(name: string) {
+        const list = getBlacklist();
+        if (list.includes(name)) return;
+        setConfig("rpcActivityBlacklist", [...list, name]);
+        refreshSettings();
+        setBlacklistVersion((v) => v + 1);
+    }
+
+    function unblacklistGame(name: string) {
+        setConfig(
+            "rpcActivityBlacklist",
+            getBlacklist().filter((n) => n !== name),
+        );
+        refreshSettings();
+        setBlacklistVersion((v) => v + 1);
+    }
+
     onMount(() => {
         refreshDetectables();
+        setLastDetected(window.legcord.rpc.getLastDetectedGames?.() ?? []);
+        const handler = (e: CustomEvent<string[]>) => setLastDetected(e.detail ?? []);
+        window.addEventListener("legcord-lastDetectedGamesUpdate", handler as EventListener);
+        onCleanup(() => window.removeEventListener("legcord-lastDetectedGamesUpdate", handler as EventListener));
     });
 
     function addNewGame() {
@@ -40,6 +68,10 @@ export function RegisteredGamesPage() {
     }
 
     const t = shelter.plugin.store.i18n;
+    const blacklisted = () => {
+        blacklistVersion();
+        return getBlacklist();
+    };
 
     return (
         <>
@@ -81,6 +113,62 @@ export function RegisteredGamesPage() {
                 <For each={detectables()}>
                     {(detectable) => <DetectableCard detectable={detectable} onRemove={refreshDetectables} />}
                 </For>
+            </Show>
+
+            <Header tag={HeaderTags.H3} class={classes.sectionHeader}>
+                {t["games-lastDetected"]}
+            </Header>
+            <Divider mt mb />
+            <Show
+                when={lastDetected().length > 0}
+                fallback={
+                    <Header tag={HeaderTags.H5} class={classes.empty}>
+                        {t["games-lastDetectedEmpty"]}
+                    </Header>
+                }
+            >
+                <ul class={classes.gameList}>
+                    <For each={lastDetected()}>
+                        {(name) => (
+                            <li class={classes.gameRow}>
+                                <span class={classes.gameName}>{name}</span>
+                                <Button
+                                    size={ButtonSizes.SMALL}
+                                    onClick={() => blacklistGame(name)}
+                                    disabled={blacklisted().includes(name)}
+                                >
+                                    {t["games-blacklist"]}
+                                </Button>
+                            </li>
+                        )}
+                    </For>
+                </ul>
+            </Show>
+
+            <Header tag={HeaderTags.H3} class={classes.sectionHeader}>
+                {t["games-blacklisted"]}
+            </Header>
+            <Divider mt mb />
+            <Show
+                when={blacklisted().length > 0}
+                fallback={
+                    <Header tag={HeaderTags.H5} class={classes.empty}>
+                        {t["games-blacklistedEmpty"]}
+                    </Header>
+                }
+            >
+                <ul class={classes.gameList}>
+                    <For each={blacklisted()}>
+                        {(name) => (
+                            <li class={classes.gameRow}>
+                                <span class={classes.gameName}>{name}</span>
+                                <Button size={ButtonSizes.SMALL} onClick={() => unblacklistGame(name)}>
+                                    {t["games-removeFromBlacklist"]}
+                                </Button>
+                            </li>
+                        )}
+                    </For>
+                </ul>
             </Show>
         </>
     );

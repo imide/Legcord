@@ -4,7 +4,14 @@ const {
     flux: { dispatcher: FluxDispatcher },
 } = shelter;
 
+const LAST_DETECTED_MAX = 5;
+let lastDetectedGames: string[] = [];
+
 export function onLoad() {
+    (window.legcord.rpc as { getLastDetectedGames?: () => string[] }).getLastDetectedGames = () => [
+        ...lastDetectedGames,
+    ];
+
     window.legcord.rpc.listen(
         async (msg: {
             activity: {
@@ -13,6 +20,22 @@ export function onLoad() {
                 name: string;
             };
         }) => {
+            if (!msg.activity) return;
+
+            const appId = msg.activity.application_id;
+            const app = await fetchApp(appId);
+            const gameName = msg.activity.name || app.name;
+            if (!msg.activity.name) msg.activity.name = gameName;
+
+            lastDetectedGames = [gameName, ...lastDetectedGames.filter((n) => n !== gameName)].slice(
+                0,
+                LAST_DETECTED_MAX,
+            );
+            window.dispatchEvent(new CustomEvent("legcord-lastDetectedGamesUpdate", { detail: lastDetectedGames }));
+
+            const blacklist: string[] = window.legcord.settings.getConfig().rpcActivityBlacklist ?? [];
+            if (blacklist.includes(gameName)) return;
+
             if (
                 msg.activity?.assets?.large_image?.startsWith("https://") ??
                 msg.activity?.assets?.small_image?.startsWith("https://")
@@ -41,12 +64,7 @@ export function onLoad() {
                         msg.activity.assets.small_image,
                     );
             }
-            if (msg.activity) {
-                const appId = msg.activity.application_id;
-                const app = await fetchApp(appId);
-                if (!msg.activity.name) msg.activity.name = app.name;
-                console.log("RPC activity update", msg.activity);
-            }
+            console.log("RPC activity update", msg.activity);
             FluxDispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg }); // set RPC status
         },
     );

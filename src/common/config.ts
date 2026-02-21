@@ -62,6 +62,7 @@ const defaults: Settings = {
     useSystemCssEditor: false,
     extendedPluginAbilities: false,
     quickCss: true,
+    rpcActivityBlacklist: [],
 };
 
 const safeMode: Settings = {

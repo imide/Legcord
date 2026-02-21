@@ -105,8 +105,6 @@ export const KeybindMaker = (props: { close: () => void }) => {
                     </Show>
                 </span>
                 <div class={classes.grabBox}>
-                    {/* FIXME -  I have no idea what this `disabled` tag is, its not in the typedefs 
-                    // @ts-expect-error*/}
                     <TextBox disabled value={accelerator()} onInput={setAccelerator} />
                     {recording() ? (
                         <Button
