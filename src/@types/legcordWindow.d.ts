@@ -71,15 +71,13 @@ export interface LegcordWindow {
         enableQuickCss: () => void;
     };
     rpc: {
-        listen: (
-            callback: (msg: {
-                activity: {
-                    assets: { large_image: string | null; small_image: string | null };
-                    application_id: number;
-                    name: string;
-                };
-            }) => void,
-        ) => void;
+        listen: (msg: {
+            activity: {
+                assets: { large_image: string | null; small_image: string | null };
+                application_id: number;
+                name: string;
+            };
+        }) => void;
         getProcessList: () => ProcessInfo[];
         refreshProcessList: () => void;
         addDetectable: (e: Game) => void;

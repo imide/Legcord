@@ -6,7 +6,6 @@ import type { Settings } from "../../@types/settings.js";
 import type { ThemeManifest } from "../../@types/themeManifest.js";
 import type { AppliedFlagsOutput } from "../../main.js";
 import type { venmicListObject } from "../venmic.js";
-let windowCallback: (arg0: object) => void;
 
 interface IPCSources {
     id: string;
@@ -97,9 +96,6 @@ contextBridge.exposeInMainWorld("legcord", {
         disableQuickCss: () => ipcRenderer.send("disableQuickCss"),
     },
     rpc: {
-        listen: (callback: () => void) => {
-            windowCallback = callback;
-        },
         refreshProcessList: () => ipcRenderer.send("refreshProcessList"),
         getProcessList: () => ipcRenderer.sendSync("getProcessList"),
         addDetectable: (detectable: Game) => ipcRenderer.send("addDetectable", detectable),
@@ -135,5 +131,6 @@ contextBridge.exposeInMainWorld("legcord", {
 // biome-ignore lint/suspicious/noExplicitAny: FIX-ME
 ipcRenderer.on("rpc", (_event: any, data: object) => {
     console.log(data);
-    windowCallback(data);
+    // @ts-expect-error
+    window.legcordRPC.listen(data);
 });
