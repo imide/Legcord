@@ -241,8 +241,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         console.log(`=== Chrome Flags === ${JSON.stringify(flags)}`);
         event.returnValue = flags;
     });
-    ipcMain.on("setConfig", (_event, key: keyof Settings, value: string) => {
+    ipcMain.on("setConfig", (event, key: keyof Settings, value: Settings[keyof Settings]) => {
         setConfig(key, value);
+        event.returnValue = undefined;
     });
     ipcMain.on("addKeybind", (_event, keybind: Keybind) => {
         const keybinds = getConfig("keybinds");

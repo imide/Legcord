@@ -34,17 +34,18 @@ export function RegisteredGamesPage() {
 
     function blacklistGame(game: DetectedGame) {
         const list = getBlacklist();
-        if (list.some((g) => g.id === game.id)) return;
-        setConfig("rpcActivityBlacklist", [...list, game]);
+        const entry = { name: String(game.name), id: Number(game.id) };
+        if (list.some((g) => g.id === entry.id)) return;
+        setConfig("rpcActivityBlacklist", [...list.map((g) => ({ name: g.name, id: g.id })), entry]);
         refreshSettings();
         setBlacklistVersion((v) => v + 1);
     }
 
     function unblacklistGame(id: number) {
-        setConfig(
-            "rpcActivityBlacklist",
-            getBlacklist().filter((g) => g.id !== id),
-        );
+        const next = getBlacklist()
+            .filter((g) => g.id !== id)
+            .map((g) => ({ name: g.name, id: g.id }));
+        setConfig("rpcActivityBlacklist", next);
         refreshSettings();
         setBlacklistVersion((v) => v + 1);
     }

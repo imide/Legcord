@@ -26,7 +26,7 @@ contextBridge.exposeInMainWorld("legcord", {
     },
     settings: {
         getConfig: () => ipcRenderer.sendSync("getEntireConfig") as Settings,
-        setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value),
+        setConfig: (key: string, value: unknown) => ipcRenderer.sendSync("setConfig", key, value),
         addKeybind: (keybind: Keybind) => ipcRenderer.send("addKeybind", keybind),
         toggleKeybind: (id: string) => ipcRenderer.send("toggleKeybind", id),
         removeKeybind: (id: string) => ipcRenderer.send("removeKeybind", id),
