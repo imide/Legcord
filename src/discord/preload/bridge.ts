@@ -127,10 +127,3 @@ contextBridge.exposeInMainWorld("legcord", {
             >,
     },
 } as unknown as LegcordWindow);
-
-// biome-ignore lint/suspicious/noExplicitAny: FIX-ME
-ipcRenderer.on("rpc", (_event: any, data: object) => {
-    console.log(data);
-    // @ts-expect-error
-    window.legcordRPC.listen(data);
-});
