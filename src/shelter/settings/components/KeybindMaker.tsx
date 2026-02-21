@@ -132,7 +132,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
                     options={[
                         { label: t["keybind-mute"], value: "mute" },
                         { label: t["keybind-deafen"], value: "deafen" },
-                        { label: t["keybind-pushToTalk"], value: "pushToTalk" },
+                        // { label: t["keybind-pushToTalk"], value: "pushToTalk" }, disabled for now since it requires additional logic to work properly
                         { label: t["keybind-leaveCall"], value: "leaveCall" },
                         { label: t["keybind-navigateForward"], value: "navigateForward" },
                         { label: t["keybind-navigateBack"], value: "navigateBack" },
