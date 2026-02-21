@@ -27,15 +27,15 @@ export function RegisteredGamesPage() {
         });
     }
 
-    function getBlacklist(): number[] {
+    function getBlacklist(): DetectedGame[] {
         const raw = shelter.plugin.store.settings?.rpcActivityBlacklist ?? [];
-        return Array.isArray(raw) ? raw.map((x) => Number(x)).filter((n) => !Number.isNaN(n)) : [];
+        return Array.isArray(raw) ? raw.filter((g) => g && typeof g.id === "number" && typeof g.name === "string") : [];
     }
 
-    function blacklistGame(id: number) {
+    function blacklistGame(game: DetectedGame) {
         const list = getBlacklist();
-        if (list.includes(id)) return;
-        setConfig("rpcActivityBlacklist", [...list, id]);
+        if (list.some((g) => g.id === game.id)) return;
+        setConfig("rpcActivityBlacklist", [...list, game]);
         refreshSettings();
         setBlacklistVersion((v) => v + 1);
     }
@@ -43,7 +43,7 @@ export function RegisteredGamesPage() {
     function unblacklistGame(id: number) {
         setConfig(
             "rpcActivityBlacklist",
-            getBlacklist().filter((bid) => bid !== id),
+            getBlacklist().filter((g) => g.id !== id),
         );
         refreshSettings();
         setBlacklistVersion((v) => v + 1);
@@ -140,8 +140,8 @@ export function RegisteredGamesPage() {
                                 <span class={classes.gameName}>{game.name}</span>
                                 <Button
                                     size={ButtonSizes.SMALL}
-                                    onClick={() => blacklistGame(game.id)}
-                                    disabled={blacklisted().includes(game.id)}
+                                    onClick={() => blacklistGame(game)}
+                                    disabled={blacklisted().some((g) => g.id === game.id)}
                                 >
                                     {t["games-blacklist"]}
                                 </Button>
@@ -165,18 +165,14 @@ export function RegisteredGamesPage() {
             >
                 <ul class={classes.gameList}>
                     <For each={blacklisted()}>
-                        {(id) => {
-                            const name =
-                                lastDetected().find((g) => g.id === id)?.name ?? `${t["games-application"]} (${id})`;
-                            return (
-                                <li class={classes.gameRow}>
-                                    <span class={classes.gameName}>{name}</span>
-                                    <Button size={ButtonSizes.SMALL} onClick={() => unblacklistGame(id)}>
-                                        {t["games-removeFromBlacklist"]}
-                                    </Button>
-                                </li>
-                            );
-                        }}
+                        {(game) => (
+                            <li class={classes.gameRow}>
+                                <span class={classes.gameName}>{game.name}</span>
+                                <Button size={ButtonSizes.SMALL} onClick={() => unblacklistGame(game.id)}>
+                                    {t["games-removeFromBlacklist"]}
+                                </Button>
+                            </li>
+                        )}
                     </For>
                 </ul>
             </Show>

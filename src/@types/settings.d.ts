@@ -1,4 +1,5 @@
 import type { Keybind } from "./keybind.js";
+import type { DetectedGame } from "./legcordWindow.js";
 
 export type ValidMods = "vencord" | "equicord" | "custom" | "shelter";
 
@@ -73,5 +74,5 @@ export interface Settings {
     modCache?: Record<ValidMods, string>;
     extendedPluginAbilities: boolean;
     /** Application IDs to hide from Discord rich presence activity. */
-    rpcActivityBlacklist: number[];
+    rpcActivityBlacklist: DetectedGame[];
 }

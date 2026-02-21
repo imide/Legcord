@@ -29,8 +29,8 @@ async function listen(msg: {
     rpc.onLastDetectedUpdate?.(rpc.lastDetectedGames);
 
     const raw = window.legcord.settings.getConfig().rpcActivityBlacklist ?? [];
-    const blacklist = Array.isArray(raw) ? raw.map((x) => Number(x)).filter((n) => !Number.isNaN(n)) : [];
-    if (blacklist.includes(Number(appId))) return console.log(`activity ${appId} is blacklisted, skipping...`);
+    const blacklist = Array.isArray(raw) ? raw.filter((g) => g && typeof g.id === "number") : [];
+    if (blacklist.some((g) => g.id === appId)) return;
 
     if (
         msg.activity?.assets?.large_image?.startsWith("https://") ??
