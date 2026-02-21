@@ -133,6 +133,8 @@
     "settings-smoothScroll-desc": "Toggle smooth scrolling",
     "settings-autoScroll": "Allow auto-scroll",
     "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)",
+    "settings-quickCss": "Quick CSS",
+    "settings-quickCss-desc": "Quickly edit your CSS in a simple text editor. Changes are applied immediately after saving the file.",
     "settings-category-lookAndFeel": "Look and feel",
     "settings-category-mods": "Mods",
     "settings-category-behaviour": "Behaviour",

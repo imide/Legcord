@@ -62,6 +62,7 @@ export interface Settings {
     popoutPiP: boolean;
     sleepInBackground: boolean;
     useSystemCssEditor: boolean;
+    quickCss: boolean;
     autoScroll: boolean;
     additionalArguments: string;
     noBundleUpdates: boolean;

@@ -93,6 +93,8 @@ contextBridge.exposeInMainWorld("legcord", {
         folder: (id: string) => ipcRenderer.send("openThemeFolder", id),
         openQuickCss: () => ipcRenderer.send("openQuickCss"),
         importQuickCss: (css: string) => ipcRenderer.send("importQuickCss", css),
+        enableQuickCss: () => ipcRenderer.send("enableQuickCss"),
+        disableQuickCss: () => ipcRenderer.send("disableQuickCss"),
     },
     rpc: {
         listen: (callback: () => void) => {

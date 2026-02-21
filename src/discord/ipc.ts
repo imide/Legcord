@@ -10,7 +10,7 @@ import type { ThemeManifest } from "../@types/themeManifest.js";
 import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
 import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
-import { installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
+import { disableQuickCss, initQuickCss, installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
 import { getDisplayVersion, getVersion } from "../common/version.js";
 import { openCssEditor } from "../cssEditor/main.js";
 import { getAppliedFlags } from "../main.js";
@@ -80,6 +80,14 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
 
     // theming
+    ipcMain.on("enableQuickCss", () => {
+        console.log("Enabling quick CSS");
+        initQuickCss(passedWindow);
+    });
+    ipcMain.on("disableQuickCss", () => {
+        console.log("Disabling quick CSS");
+        disableQuickCss(passedWindow);
+    });
     ipcMain.on("openQuickCss", () => {
         if (getConfig("useSystemCssEditor")) {
             void shell.openPath(quickCssPath);

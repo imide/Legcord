@@ -67,6 +67,8 @@ export interface LegcordWindow {
         edit: (id: string) => void;
         folder: (id: string) => void;
         importQuickCss: (css: string) => void;
+        disableQuickCss: () => void;
+        enableQuickCss: () => void;
     };
     rpc: {
         listen: (

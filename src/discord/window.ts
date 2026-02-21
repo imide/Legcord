@@ -218,7 +218,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             }
         });
     }
-    initQuickCss(passedWindow);
+
     passedWindow.setTouchBar(mainTouchBar);
     app.on("open-url", (_event, url) => {
         navigateTo(passedWindow, url.replace("discord://-", ""));
