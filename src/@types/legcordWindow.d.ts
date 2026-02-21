@@ -83,8 +83,6 @@ export interface LegcordWindow {
         addDetectable: (e: Game) => void;
         removeDetectable: (id: string) => void;
         getDetectables: () => GameList;
-        /** Last 5 detected game names (from activity). Set by shelter rpc module. */
-        getLastDetectedGames?: () => string[];
     };
     /** Plugin storage API. Requires user to enable "Extended plugin abilities" in Legcord settings. */
     fs: {
@@ -98,4 +96,22 @@ export interface LegcordWindow {
             relativePath: string,
         ) => Promise<{ ok: true; data: string } | { ok: false; error: string }>;
     };
+}
+
+export interface LegcordRPC {
+    lastDetectedGames: string[];
+    onLastDetectedUpdate: ((list: string[]) => void) | null;
+    listen: (msg: {
+        activity: {
+            assets: { large_image: string | null; small_image: string | null };
+            application_id: number;
+            name: string;
+        };
+    }) => void;
+}
+
+declare global {
+    interface Window {
+        legcordRPC?: LegcordRPC;
+    }
 }

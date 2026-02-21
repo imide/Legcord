@@ -5,7 +5,6 @@ const {
 } = shelter;
 
 const LAST_DETECTED_MAX = 5;
-let lastDetectedGames: string[] = [];
 
 async function listen(msg: {
     activity: {
@@ -14,15 +13,19 @@ async function listen(msg: {
         name: string;
     };
 }) {
-    if (!msg.activity) return;
+    if (!msg.activity || !window.legcordRPC) return;
 
     const appId = msg.activity.application_id;
     const app = await fetchApp(appId);
     const gameName = msg.activity.name || app.name;
     if (!msg.activity.name) msg.activity.name = gameName;
 
-    lastDetectedGames = [gameName, ...lastDetectedGames.filter((n) => n !== gameName)].slice(0, LAST_DETECTED_MAX);
-    window.dispatchEvent(new CustomEvent("legcord-lastDetectedGamesUpdate", { detail: lastDetectedGames }));
+    const rpc = window.legcordRPC;
+    rpc.lastDetectedGames = [gameName, ...(rpc.lastDetectedGames || []).filter((n: string) => n !== gameName)].slice(
+        0,
+        LAST_DETECTED_MAX,
+    );
+    rpc.onLastDetectedUpdate?.(rpc.lastDetectedGames);
 
     const blacklist: string[] = window.legcord.settings.getConfig().rpcActivityBlacklist ?? [];
     if (blacklist.includes(gameName)) return;
@@ -60,6 +63,9 @@ async function listen(msg: {
 }
 
 export function onLoad() {
-    // @ts-expect-error
-    window.legcordRPC = { listen };
+    window.legcordRPC = {
+        lastDetectedGames: [] as string[],
+        onLastDetectedUpdate: null as ((list: string[]) => void) | null,
+        listen,
+    };
 }

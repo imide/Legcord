@@ -49,10 +49,14 @@ export function RegisteredGamesPage() {
 
     onMount(() => {
         refreshDetectables();
-        setLastDetected(window.legcord.rpc.getLastDetectedGames?.() ?? []);
-        const handler = (e: CustomEvent<string[]>) => setLastDetected(e.detail ?? []);
-        window.addEventListener("legcord-lastDetectedGamesUpdate", handler as EventListener);
-        onCleanup(() => window.removeEventListener("legcord-lastDetectedGamesUpdate", handler as EventListener));
+        const rpc = window.legcordRPC;
+        if (rpc) {
+            setLastDetected(rpc.lastDetectedGames ?? []);
+            rpc.onLastDetectedUpdate = (list) => setLastDetected(list ?? []);
+            onCleanup(() => {
+                if (rpc) rpc.onLastDetectedUpdate = null;
+            });
+        }
     });
 
     function addNewGame() {
