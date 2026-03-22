@@ -57,6 +57,7 @@ const defaults: Settings = {
     spellcheckLanguage: ["en-US"],
     sleepInBackground: false,
     noBundleUpdates: false,
+    automaticUpdates: false,
     additionalArguments: "",
     customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),
     smoothScroll: true,
@@ -225,6 +226,7 @@ export function checkIfConfigIsBroken(): void {
         writeFileSync(getWindowStateLocation(), "{}", "utf-8");
         console.log("Detected a corrupted window config");
     }
+    handleAutomaticUpdates(configCache!);
 }
 
 export function setup(): void {
@@ -236,4 +238,10 @@ export function setup(): void {
 
 export function setFirstRun(value: boolean): void {
     firstRun = value;
+}
+
+export function handleAutomaticUpdates(settings: Settings): void {
+    if (settings.automaticUpdates) {
+        require("../updater.js");
+    }
 }

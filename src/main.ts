@@ -16,7 +16,6 @@ import {
     setFirstRun,
     setup,
 } from "./common/config.js";
-import "./updater.js";
 import { getPreset } from "./common/flags.js";
 import { setLang } from "./common/lang.js";
 
@@ -102,6 +101,17 @@ export async function init(): Promise<void> {
         setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
         await createSetupWindow();
     }
+}
+export function handleRestart(exit_code = 0): void {
+    // workaround for squashfs on appimage restarts
+    const options: { execPath?: string; args?: string[] } = {};
+    if (process.env.APPIMAGE) {
+        options.args = process.argv;
+        options.args.unshift("--appimage-extract-and-run"); // the holy line code
+        options.execPath = process.env.APPIMAGE;
+    }
+    app.relaunch(options);
+    app.exit(exit_code);
 }
 args();
 if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {

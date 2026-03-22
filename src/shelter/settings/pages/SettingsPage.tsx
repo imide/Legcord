@@ -86,9 +86,17 @@ export function SettingsPage() {
                     </Show>
                 }
                 options={[
-                    { label: store.i18n["settings-transparency-universal"], value: "universal" },
+                    {
+                        label: store.i18n["settings-transparency-universal"],
+                        value: "universal",
+                    },
                     ...(window.legcord.platform === "win32" || window.legcord.platform === "darwin"
-                        ? [{ label: store.i18n["settings-transparency-modern"], value: "modern" }]
+                        ? [
+                              {
+                                  label: store.i18n["settings-transparency-modern"],
+                                  value: "modern",
+                              },
+                          ]
                         : []),
                     { label: store.i18n["settings-none"], value: "none" },
                 ]}
@@ -118,14 +126,35 @@ export function SettingsPage() {
                 note={store.i18n["settings-trayIcon-desc"]}
                 options={[
                     { label: store.i18n["settings-trayIcon-dynamic"], value: "dynamic" },
-                    { label: store.i18n["settings-trayIcon-disabled"], value: "disabled" },
+                    {
+                        label: store.i18n["settings-trayIcon-disabled"],
+                        value: "disabled",
+                    },
                     { label: store.i18n["settings-trayIcon-normal"], value: "dsc-tray" },
-                    { label: store.i18n["settings-trayIcon-classic"], value: "clsc-dsc-tray" },
-                    { label: store.i18n["settings-trayIcon-colored-plug"], value: "ac_plug_colored" },
-                    { label: store.i18n["settings-trayIcon-white-plug"], value: "ac_white_plug" },
-                    { label: store.i18n["settings-trayIcon-white-plug-alt"], value: "ac_white_plug_hollow" },
-                    { label: store.i18n["settings-trayIcon-black-plug"], value: "ac_black_plug" },
-                    { label: store.i18n["settings-trayIcon-black-plug-alt"], value: "ac_black_plug_hollow" },
+                    {
+                        label: store.i18n["settings-trayIcon-classic"],
+                        value: "clsc-dsc-tray",
+                    },
+                    {
+                        label: store.i18n["settings-trayIcon-colored-plug"],
+                        value: "ac_plug_colored",
+                    },
+                    {
+                        label: store.i18n["settings-trayIcon-white-plug"],
+                        value: "ac_white_plug",
+                    },
+                    {
+                        label: store.i18n["settings-trayIcon-white-plug-alt"],
+                        value: "ac_white_plug_hollow",
+                    },
+                    {
+                        label: store.i18n["settings-trayIcon-black-plug"],
+                        value: "ac_black_plug",
+                    },
+                    {
+                        label: store.i18n["settings-trayIcon-black-plug-alt"],
+                        value: "ac_black_plug_hollow",
+                    },
                 ]}
             />
             <SwitchItem
@@ -240,7 +269,10 @@ export function SettingsPage() {
                 link="https://github.com/Legcord/Legcord/blob/dev/src/common/flags.ts"
                 options={[
                     { label: store.i18n["settings-prfmMode-dynamic"], value: "dynamic" },
-                    { label: store.i18n["settings-prfmMode-performance"], value: "performance" },
+                    {
+                        label: store.i18n["settings-prfmMode-performance"],
+                        value: "performance",
+                    },
                     { label: store.i18n["settings-prfmMode-battery"], value: "battery" },
                     { label: store.i18n["settings-none"], value: "none" },
                 ]}
@@ -398,7 +430,10 @@ export function SettingsPage() {
                 link="https://www.electronjs.org/docs/latest/api/session#sessetdisplaymediarequesthandlerhandler-opts"
                 options={[
                     { label: store.i18n["settings-audio-loopback"], value: "loopback" },
-                    { label: store.i18n["settings-audio-loopbackWithMute"], value: "loopbackWithMute" },
+                    {
+                        label: store.i18n["settings-audio-loopbackWithMute"],
+                        value: "loopbackWithMute",
+                    },
                 ]}
             />
             <SwitchItem
@@ -424,6 +459,13 @@ export function SettingsPage() {
                     {store.i18n["settings-vaapi"]}
                 </SwitchItem>
             </Show>
+            <SwitchItem
+                note={store.i18n["settings-automaticClientUpdates-desc"]}
+                value={settings.automaticUpdates}
+                onChange={(e: boolean) => setConfig("automaticUpdates", e, true)}
+            >
+                {store.i18n["settings-automaticClientUpdates"]}
+            </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-disableHttpCache-desc"]}
                 value={settings.disableHttpCache}
