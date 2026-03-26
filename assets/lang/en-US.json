@@ -330,5 +330,8 @@
     "backup-restoreConfirm": "Restore",
     "backup-restoreCancel": "Cancel",
     "backup-restoreDoneTitle": "Restore complete",
-    "backup-restoreDoneBody": "Your data has been restored. Restart Legcord for all changes to take effect."
+    "backup-restoreDoneBody": "Your data has been restored. Restart Legcord for all changes to take effect.",
+    "supportBanner-title": "Support the Project",
+    "supportBanner-subtitle": "Help us continue developing Legcord. Your support keeps the project alive and lets us ship more features.",
+    "supportBanner-donate": "Donate"
 }

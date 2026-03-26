@@ -36,7 +36,7 @@ export const AboutPopup = (props: { close: () => void }) => {
     });
 
     return (
-        <ModalRoot size={ModalSizes.MEDIUM}>
+        <ModalRoot size={ModalSizes.MEDIUM} class={classes.modal}>
             <ModalHeader close={props.close}>About Legcord</ModalHeader>
             <ModalBody>
                 <div class={classes.aboutContainer}>

@@ -3,59 +3,62 @@
     background: linear-gradient(135deg, #4a69bd 0%, #1e3799 100%);
     border-radius: 12px;
     margin: 16px;
-    padding: 20px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    padding: 14px 16px 16px;
     box-shadow: 0 4px 20px rgba(74, 105, 189, 0.3);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.supportBanner.hidden {
-    display: none;
+.bannerTopRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.topRowTitle {
+    margin: 0;
+    color: white;
+    font-size: 17px;
+    font-weight: 650;
+    text-align: center;
+    flex: 1;
 }
 
 .infoButton {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
     color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .infoButton:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
 }
 
 .supportBannerContent {
-    flex: 1;
     color: white;
     text-align: center;
-    padding: 0 60px;
 }
 
 .supportBannerContent h3 {
-    margin: 0 0 8px 0;
-    font-size: 18px;
+    margin: 0 0 4px 0;
+    font-size: 17px;
     font-weight: 600;
     color: white;
 }
 
 .supportBannerContent p {
-    margin: 0 0 16px 0;
+    margin: 0 0 10px 0;
     font-size: 14px;
     line-height: 1.4;
     color: rgba(255, 255, 255, 0.9);
@@ -63,58 +66,41 @@
 
 .donateButton {
     background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
-    padding: 12px 32px;
-    font-size: 16px;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 16px;
+    transition: all 0.2s ease;
 }
 
 .donateButton:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.donateButton:active {
-    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.28);
+    transform: translateY(-1px);
 }
 
 .dismissButton {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.6);
-    border-radius: 4px;
-    padding: 4px 12px;
-    font-size: 12px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
     cursor: pointer;
     transition: all 0.2s ease;
-    text-decoration: none;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .dismissButton:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.24);
+    transform: translateY(-1px);
 }
 
 .dismissButton:active {
-    transform: scale(0.95);
+    transform: translateY(0);
 }
 
 /* About Popup Styles */
@@ -240,7 +226,7 @@
 .contributorsSection {
     padding: 0;
     background: var(--background-secondary);
-    border: 1px solid var(--background-modifier-accent);
+    border: 1px solid var(--background-accent);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -380,4 +366,7 @@
     border: 1px solid rgba(240, 71, 71, 0.2);
     border-radius: 8px;
     margin: 16px;
+}
+.modal {
+    max-height: 500px !important;
 }
