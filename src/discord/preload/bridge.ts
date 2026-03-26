@@ -105,6 +105,11 @@ contextBridge.exposeInMainWorld("legcord", {
         blacklistGame: (name: string, id: number) => ipcRenderer.sendSync("blacklistGame", name, id),
         unblacklistGame: (id: number) => ipcRenderer.sendSync("unblacklistGame", id),
     },
+    backup: {
+        save: (data: string) =>
+            ipcRenderer.invoke("backupSave", data) as Promise<{ ok: true } | { ok: false; error: string }>,
+        restore: () => ipcRenderer.invoke("backupRestore") as Promise<string>,
+    },
     fs: {
         /**
          * Write a file in this plugin's scoped storage (e.g. "cache/deleted-messages.json").

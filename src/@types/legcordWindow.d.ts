@@ -87,6 +87,10 @@ export interface LegcordWindow {
         blacklistGame: (name: string, id: number) => void;
         unblacklistGame: (id: number) => void;
     };
+    backup: {
+        save(data: string): Promise<{ ok: true } | { ok: false; error: string }>;
+        restore(): Promise<string>;
+    };
     /** Plugin storage API. Requires user to enable "Extended plugin abilities" in Legcord settings. */
     fs: {
         writeFile: (

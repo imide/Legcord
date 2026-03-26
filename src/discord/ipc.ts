@@ -1,4 +1,3 @@
-import { execFile } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -8,6 +7,12 @@ import isDev from "electron-is-dev";
 import type { Keybind } from "../@types/keybind.js";
 import type { Settings } from "../@types/settings.js";
 import type { ThemeManifest } from "../@types/themeManifest.js";
+import {
+    type BackupSavePayload,
+    applyBackupFromMap,
+    buildBackupZipBuffer,
+    readBackupZipToMap,
+} from "../common/backup.js";
 import {
     blacklistGame as blacklistGameAdd,
     unblacklistGame as blacklistGameRemove,
@@ -433,4 +438,71 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             }
         },
     );
+
+    ipcMain.handle(
+        "backupSave",
+        async (_event, payloadStr: unknown): Promise<{ ok: true } | { ok: false; error: string }> => {
+            try {
+                if (typeof payloadStr !== "string") return { ok: false, error: "INVALID_ARGS" };
+                const payload = JSON.parse(payloadStr) as BackupSavePayload;
+                if (!payload.includes || typeof payload.clientMods !== "object") {
+                    return { ok: false, error: "INVALID_BACKUP" };
+                }
+                const zipBuf = buildBackupZipBuffer(payload, {
+                    userDataPath,
+                    themesPath,
+                    pluginsPath,
+                    pluginStoragePath,
+                    quickCssPath,
+                    getConfigLocation,
+                });
+                const result = await dialog.showSaveDialog({
+                    title: getLang("backup-dialogSave-title"),
+                    defaultPath: path.join(
+                        app.getPath("documents"),
+                        `legcord-backup-${new Date().toISOString().slice(0, 10)}.zip`,
+                    ),
+                    filters: [{ name: "ZIP", extensions: ["zip"] }],
+                });
+                if (result.canceled || !result.filePath) return { ok: false, error: "CANCELLED" };
+                let filePath = result.filePath;
+                if (!filePath.toLowerCase().endsWith(".zip")) filePath += ".zip";
+                writeFileSync(filePath, zipBuf);
+                return { ok: true };
+            } catch (err) {
+                console.error(err);
+                return { ok: false, error: err instanceof Error ? err.message : "UNKNOWN" };
+            }
+        },
+    );
+
+    ipcMain.handle("backupRestore", async (): Promise<string> => {
+        try {
+            const result = await dialog.showOpenDialog({
+                title: getLang("backup-dialogOpen-title"),
+                properties: ["openFile"],
+                filters: [{ name: "ZIP", extensions: ["zip"] }],
+            });
+            if (result.canceled || !result.filePaths[0]) {
+                return JSON.stringify({ ok: false, error: "CANCELLED" });
+            }
+            const buf = readFileSync(result.filePaths[0]);
+            const map = readBackupZipToMap(buf);
+            const { clientMods } = applyBackupFromMap(map, {
+                userDataPath,
+                themesPath,
+                pluginsPath,
+                pluginStoragePath,
+                quickCssPath,
+                getConfigLocation,
+            });
+            return JSON.stringify({ ok: true, clientMods });
+        } catch (err) {
+            console.error(err);
+            return JSON.stringify({
+                ok: false,
+                error: err instanceof Error ? err.message : "UNKNOWN",
+            });
+        }
+    });
 }

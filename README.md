@@ -176,7 +176,7 @@ Legcord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 ## Where can I translate this?
 
-- Translations are done using our [Weblate page](https://hosted.weblate.org/projects/Legcord/Legcord/).
+- Translations are done using our [Weblate page](https://hosted.weblate.org/projects/armcord/).
 
 # Credits
 

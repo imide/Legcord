@@ -15,7 +15,7 @@ import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { getLang } from "../common/lang.js";
-import { initQuickCss, injectThemesMain } from "../common/themes.js";
+import { injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
 import { init } from "../main.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";

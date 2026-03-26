@@ -1,5 +1,6 @@
 import { Show } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
+import { BackupSection } from "../components/BackupSection.jsx";
 import { DropdownItem } from "../components/DropdownItem.jsx";
 import { TextBoxItem } from "../components/TextBoxItem.jsx";
 import { setConfig, toggleMod } from "../settings.js";
@@ -15,6 +16,7 @@ const settings = store.settings as Settings;
 export function SettingsPage() {
     return (
         <>
+            <BackupSection />
             <Header class={classes.category} tag={HeaderTags.H5}>
                 {store.i18n["settings-category-mods"]}
             </Header>
