@@ -62,12 +62,23 @@ async function cacheCheck(mod: ValidMods) {
 }
 
 export async function fetchMods() {
-    if (getConfig("noBundleUpdates")) return;
     if (typeof getConfig("mods") === "string") {
         setConfig("mods", [getConfig("mods") as unknown as ValidMods]); // pre 3.3.2
     }
-    await cacheCheck("shelter");
+    const rawDisabledUpdates = getConfig("noBundleUpdates");
+    const disabledUpdates = Array.isArray(rawDisabledUpdates)
+        ? rawDisabledUpdates
+        : rawDisabledUpdates
+          ? ["shelter", "vencord", "equicord", "custom"]
+          : [];
+    if (!Array.isArray(rawDisabledUpdates)) {
+        setConfig("noBundleUpdates", disabledUpdates as ValidMods[]);
+    }
+    if (!disabledUpdates.includes("shelter")) {
+        await cacheCheck("shelter");
+    }
     getConfig("mods").forEach(async (mod) => {
+        if (disabledUpdates.includes(mod)) return;
         if (mod === "custom") {
             await downloadMod(mod);
         }

@@ -301,7 +301,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         if (
             details.url.includes("ws://127.0.0.1:") &&
             !details.url.includes("127.0.0.1:1211") &&
-            !details.url.includes("127.0.0.1:1112")
+            !details.url.includes("127.0.0.1:1112") &&
+            !details.url.includes("127.0.0.1:6888")
         ) {
             return callback({ cancel: true });
         }

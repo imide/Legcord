@@ -202,6 +202,9 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     if (getConfig("transparency") === undefined) setConfig("transparency", "none");
     if (getConfig("windowStyle") === "transparent") setConfig("windowStyle", "default");
     if (getConfig("windowStyle") === "rebrand") setConfig("windowStyle", "default");
+    if (typeof getConfig("noBundleUpdates") === "boolean") {
+        setConfig("noBundleUpdates", getConfig("noBundleUpdates") ? ["shelter", "vencord", "equicord", "custom"] : []);
+    }
     // @ts-expect-error old types
     if (getConfig("performanceMode") === "vaapi") setConfig("vaapi", true);
     if (typeof getConfig("tray") === "boolean") {

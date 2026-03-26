@@ -56,7 +56,7 @@ const defaults: Settings = {
     vaapi: platform() === "linux",
     spellcheckLanguage: ["en-US"],
     sleepInBackground: false,
-    noBundleUpdates: false,
+    noBundleUpdates: [],
     automaticUpdates: false,
     additionalArguments: "",
     customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),

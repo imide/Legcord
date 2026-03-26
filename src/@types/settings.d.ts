@@ -66,7 +66,7 @@ export interface Settings {
     quickCss: boolean;
     autoScroll: boolean;
     additionalArguments: string;
-    noBundleUpdates: boolean;
+    noBundleUpdates: ValidMods[];
     automaticUpdates: boolean;
     overlayButtonColor: string;
     processScanning: boolean;

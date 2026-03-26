@@ -94,6 +94,8 @@
     "settings-additionalArguments-desc": "Additional arguments are extra commands that you can pass to Legcord. They can be used to enable or disable features, or to fix issues.",
     "settings-mod": "Client mod",
     "settings-mod-desc1": "Client mods are programs that allow you customize your Discord experience. They can change appearance of the client, modify behaviours or add new features!",
+    "settings-mod-shelter": "Shelter",
+    "settings-mod-custom": "Custom",
     "settings-mod-vencord": "Lightweight, and easy to use client mod. Features a built-in store for plugins.",
     "settings-mod-equicord": "Forked and born from vencord contributors, featuring a pretty plugin-rich client.",
     "settings-prfmMode": "Performance mode",
