@@ -137,7 +137,9 @@ function applyClientModsFromRestore(raw: unknown): void {
         const shelterData = cm.shelter as { plugins?: unknown; enabledPlugins?: unknown };
         console.log("Restoring shelter plugins", shelterData);
         if (shelterData.plugins && typeof shelterData.plugins === "object") {
-            for (const [id, data] of Object.entries(shelterData.plugins as Record<string, {src: string; update: boolean}>)) {
+            for (const [id, data] of Object.entries(
+                shelterData.plugins as Record<string, { src: string; update: boolean }>,
+            )) {
                 shelter.plugins.addRemotePlugin(id, data.src, data.update);
             }
         }
