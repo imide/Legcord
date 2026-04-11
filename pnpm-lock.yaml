@@ -12,8 +12,8 @@ importers:
         specifier: ^0.5.16
         version: 0.5.16
       arrpc:
-        specifier: https://github.com/Legcord/arrpc.git#0605ca72fda920919e4e75e80945512b9fb347f1
-        version: https://codeload.github.com/Legcord/arrpc/tar.gz/0605ca72fda920919e4e75e80945512b9fb347f1
+        specifier: https://github.com/Legcord/arrpc.git#efe7589762470d32b9ba10d529be5acc23cd0e19
+        version: https://codeload.github.com/Legcord/arrpc/tar.gz/efe7589762470d32b9ba10d529be5acc23cd0e19
       electron-context-menu:
         specifier: ^4.0.4
         version: 4.1.2
@@ -1216,8 +1216,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/0605ca72fda920919e4e75e80945512b9fb347f1:
-    resolution: {tarball: https://codeload.github.com/Legcord/arrpc/tar.gz/0605ca72fda920919e4e75e80945512b9fb347f1}
+  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/efe7589762470d32b9ba10d529be5acc23cd0e19:
+    resolution: {tarball: https://codeload.github.com/Legcord/arrpc/tar.gz/efe7589762470d32b9ba10d529be5acc23cd0e19}
     version: 3.5.0
     hasBin: true
 
@@ -2082,8 +2082,8 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
-  koffi@2.15.1:
-    resolution: {integrity: sha512-mnc0C0crx/xMSljb5s9QbnLrlFHprioFO1hkXyuSuO/QtbpLDa0l/uM21944UfQunMKmp3/r789DTDxVyyH6aA==}
+  koffi@2.15.6:
+    resolution: {integrity: sha512-WQBpM5uo74UQ17UpsFN+PUOrQQg4/nYdey4SGVluQun2drYYfePziLLWdSmFb4wSdWlJC1aimXQnjhPCheRKuw==}
 
   lazy-val@1.0.5:
     resolution: {integrity: sha512-0/BnGCCfyUMkBpeDgWihanIAF9JmZhHBgUhEqzvf+adhNGLoP6TaiI5oF8oyb3I45P+PcnrqihSf01M0l0G5+Q==}
@@ -4189,9 +4189,9 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/0605ca72fda920919e4e75e80945512b9fb347f1:
+  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/efe7589762470d32b9ba10d529be5acc23cd0e19:
     dependencies:
-      koffi: 2.15.1
+      koffi: 2.15.6
       ws: 8.20.0
     transitivePeerDependencies:
       - bufferutil
@@ -5280,7 +5280,7 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  koffi@2.15.1: {}
+  koffi@2.15.6: {}
 
   lazy-val@1.0.5: {}
 
