@@ -207,6 +207,17 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     }
     // @ts-expect-error old types
     if (getConfig("performanceMode") === "vaapi") setConfig("vaapi", true);
+    // @ts-expect-error old types
+    if (getConfig("legcordCSP") === true) {
+        setConfig("csp", "none");
+        // @ts-expect-error old types
+        setConfig("legcordCSP", undefined);
+        //@ts-expect-error old types
+    } else if (getConfig("legcordCSP") === false) {
+        setConfig("csp", "vanilla");
+        // @ts-expect-error old types
+        setConfig("legcordCSP", undefined);
+    }
     if (typeof getConfig("tray") === "boolean") {
         //@ts-expect-error
         if (getConfig("tray") === true) {

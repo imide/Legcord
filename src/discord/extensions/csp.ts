@@ -1,5 +1,5 @@
 import electron from "electron";
-import { getConfig, setConfig } from "../../common/config.js";
+import { getConfig } from "../../common/config.js";
 
 const LEGCORD_CSP = [
     "default-src 'self'",
@@ -13,11 +13,14 @@ const LEGCORD_CSP = [
     "frame-src 'self' https://*.discord.com https://discord.com https://*.youtube.com https://youtube.com https://*.twitch.tv https://open.spotify.com",
 ].join("; ");
 
-const setupCSP = (): void => {
-    console.log("Setting up Legcord CSP policy...");
+function setupStrictCSP() {
+    console.log("Setting up Strict CSP policy...");
 
     electron.session.defaultSession.webRequest.onHeadersReceived(
-        (details: electron.OnHeadersReceivedListenerDetails, callback: (response: electron.Response) => void) => {
+        (
+            details: electron.OnHeadersReceivedListenerDetails,
+            callback: (headersReceivedResponse: electron.HeadersReceivedResponse) => void,
+        ) => {
             const { responseHeaders, resourceType } = details;
             if (!responseHeaders) return callback({});
 
@@ -31,14 +34,35 @@ const setupCSP = (): void => {
             return callback({ responseHeaders });
         },
     );
-};
+}
+
+function setupNoCSP() {
+    console.log("Setting up CSP unrestricter...");
+
+    electron.session.defaultSession.webRequest.onHeadersReceived(({ responseHeaders, resourceType }, done) => {
+        if (!responseHeaders) return done({});
+
+        if (resourceType === "mainFrame") {
+            (responseHeaders["content-security-policy"] as unknown) = undefined;
+        } else if (resourceType === "stylesheet") {
+            // Fix hosts that don't properly set the css content type, such as
+            // raw.githubusercontent.com
+            responseHeaders["content-type"] = ["text/css"];
+        }
+        return done({ responseHeaders });
+    });
+}
 
 void electron.app.whenReady().then(() => {
-    // NOTE - Awaiting the line above will hang the app.
-    if (getConfig("legcordCSP") === undefined) setConfig("legcordCSP", true);
-    if (getConfig("legcordCSP")) {
-        setupCSP();
-    } else {
-        console.log("Legcord CSP is disabled. The CSP should be managed by a third-party plugin(s).");
+    const cspSetting = getConfig("csp") || "none"; // none is the old default when the setting didn't exist, so we default to that for old configs
+    switch (cspSetting) {
+        case "strict":
+            setupStrictCSP();
+            break;
+        case "none":
+            setupNoCSP();
+            break;
+        default:
+            console.log("Using vanilla CSP policy.");
     }
 });
