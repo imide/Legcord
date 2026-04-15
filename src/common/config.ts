@@ -15,7 +15,7 @@ const defaults: Settings = {
     windowStyle: "default",
     channel: "stable",
     bounceOnPing: false,
-    csp: "strict",
+    csp: "none",
     minimizeToTray: true,
     processScanning: true,
     windowsLegacyScanning: false,
