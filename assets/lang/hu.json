@@ -339,5 +339,9 @@
     "settings-material-mica": "Mica",
     "settings-material-mica-alt": "Mica Alt",
     "settings-material-acrylic": "Akril",
-    "settings-material-none": "None"
+    "settings-material-none": "None",
+    "settings-csp-vanilla": "Vanilla",
+    "settings-csp": "Tartalombiztonsági irányelv",
+    "settings-csp-strict": "Szigorú",
+    "settings-csp-none": "Nincs"
 }

@@ -39,5 +39,6 @@
     "settings-venmic-ignoreInputMedia-desc": "Игнорировать аудио вход из медиаисточников.",
     "settings-venmic-onlySpeakers": "Только динамики",
     "settings-venmic-onlySpeakers-desc": "Использовать только динамики для выбора аудиовыхода.",
-    "settings-audio": "Аудио"
+    "settings-audio": "Аудио",
+    "settings-theme-overlay": "Оверлей"
 }
