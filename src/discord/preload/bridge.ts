@@ -12,6 +12,20 @@ interface IPCSources {
     name: string;
     thumbnail: HTMLCanvasElement;
 }
+interface LegcordPluginInfo {
+    id: string;
+    name: string;
+    version: string;
+    description?: string;
+    author?: string;
+    enabled: boolean;
+    compatible: boolean;
+    compatibilityMessage?: string;
+    compatibleVersions: string[];
+    hasMain: boolean;
+    hasPreload: boolean;
+    hasRenderer: boolean;
+}
 
 contextBridge.exposeInMainWorld("legcord", {
     window: {
@@ -109,6 +123,13 @@ contextBridge.exposeInMainWorld("legcord", {
         save: (data: string) =>
             ipcRenderer.invoke("backupSave", data) as Promise<{ ok: true } | { ok: false; error: string }>,
         restore: () => ipcRenderer.invoke("backupRestore") as Promise<string>,
+    },
+    plugins: {
+        list: () => ipcRenderer.invoke("plugins:list") as Promise<LegcordPluginInfo[]>,
+        setEnabled: (id: string, enabled: boolean) =>
+            ipcRenderer.invoke("plugins:set-enabled", id, enabled) as Promise<{ ok: boolean }>,
+        reload: (id: string) => ipcRenderer.invoke("plugins:reload", id) as Promise<{ ok: boolean }>,
+        openFolder: () => ipcRenderer.send("openRuntimePluginsFolder"),
     },
     fs: {
         /**

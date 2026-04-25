@@ -4,6 +4,7 @@ import "./mods/shelter.mjs";
 import "./mods/vencord.mjs";
 import "./mods/equicord.mjs";
 import "./mods/custom.mjs";
+import "./plugins.mjs";
 import "./patches.mjs";
 import "./newTitlebar.mjs";
 import "./titlebar.mjs";

@@ -38,6 +38,7 @@ export interface BackupManifest extends BackupSavePayload {
 export interface BackupPaths {
     userDataPath: string;
     themesPath: string;
+    extensionsPath: string;
     pluginsPath: string;
     pluginStoragePath: string;
     quickCssPath: string;
@@ -114,7 +115,8 @@ export function buildBackupZipBuffer(payload: BackupSavePayload, paths: BackupPa
         entries.push(...walkFiles(paths.themesPath, "data/themes"));
     }
     if (includes.legcordExtensionPlugins) {
-        entries.push(...walkFiles(paths.pluginsPath, "data/plugins"));
+        entries.push(...walkFiles(paths.extensionsPath, "data/plugins"));
+        entries.push(...walkFiles(paths.pluginsPath, "data/runtime-plugins"));
         entries.push(...walkFiles(paths.pluginStoragePath, "data/plugin-storage"));
     }
     if (includes.modBundles) {
@@ -197,9 +199,21 @@ export function applyBackupFromMap(
         if (name.startsWith("data/plugins/")) {
             if (!inc.legcordExtensionPlugins) continue;
             const rest = name.slice("data/plugins/".length);
-            const dest = resolvePathUnderBaseDir(paths.pluginsPath, rest);
+            const dest = resolvePathUnderBaseDir(paths.extensionsPath, rest);
             if (!dest) {
                 console.warn(`[backup] Skipping unsafe zip path (plugins): ${name}`);
+                continue;
+            }
+            writeFileEnsuringDirs(dest, data);
+            continue;
+        }
+
+        if (name.startsWith("data/runtime-plugins/")) {
+            if (!inc.legcordExtensionPlugins) continue;
+            const rest = name.slice("data/runtime-plugins/".length);
+            const dest = resolvePathUnderBaseDir(paths.pluginsPath, rest);
+            if (!dest) {
+                console.warn(`[backup] Skipping unsafe zip path (runtime-plugins): ${name}`);
                 continue;
             }
             writeFileEnsuringDirs(dest, data);

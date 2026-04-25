@@ -29,12 +29,14 @@ import { isPowerSavingEnabled, setPowerSaving } from "../power.js";
 import constPaths from "../shared/consts/paths.js";
 import { splashWindow } from "../splash/main.js";
 import { refreshGlobalKeybinds } from "./globalKeybinds.js";
+import { getRuntimeEntries, getRuntimeScript, listPlugins, reloadPlugin, setPluginEnabled } from "./plugins/manager.js";
 import { processList, refreshProcessList } from "./rpcProcess.js";
 import { importGuilds, mainTouchBar, setVoiceState, voiceTouchBar } from "./touchbar.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
+const extensionsPath = path.join(userDataPath, "/extensions/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
 const pluginStoragePath = path.join(userDataPath, "/plugin-storage/");
 const quickCssPath = path.join(userDataPath, "/quickCss.css");
@@ -316,6 +318,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         shell.showItemInFolder(themesPath);
     });
     ipcMain.on("openPluginsFolder", () => {
+        shell.showItemInFolder(extensionsPath);
+    });
+    ipcMain.on("openRuntimePluginsFolder", () => {
         shell.showItemInFolder(pluginsPath);
     });
     ipcMain.on("openCrashesFolder", () => {
@@ -366,6 +371,25 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("getProcessList", (event) => {
         event.returnValue = processList;
+    });
+    ipcMain.handle("plugins:list", () => listPlugins());
+    ipcMain.handle("plugins:set-enabled", async (_event, pluginId: string, enabled: boolean) => {
+        if (typeof pluginId !== "string" || typeof enabled !== "boolean") {
+            return { ok: false };
+        }
+        return { ok: await setPluginEnabled(pluginId, enabled) };
+    });
+    ipcMain.handle("plugins:reload", async (_event, pluginId: string) => {
+        if (typeof pluginId !== "string") return { ok: false };
+        return { ok: await reloadPlugin(pluginId) };
+    });
+    ipcMain.handle("plugins:get-runtime-entries", (_event, target: "preload" | "renderer") => {
+        if (target !== "preload" && target !== "renderer") return [];
+        return getRuntimeEntries(target);
+    });
+    ipcMain.handle("plugins:get-runtime-script", (_event, pluginId: string, target: "preload" | "renderer") => {
+        if (typeof pluginId !== "string" || (target !== "preload" && target !== "renderer")) return null;
+        return getRuntimeScript(pluginId, target);
     });
 
     // custom detectables control
@@ -451,6 +475,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
                 const zipBuf = buildBackupZipBuffer(payload, {
                     userDataPath,
                     themesPath,
+                    extensionsPath,
                     pluginsPath,
                     pluginStoragePath,
                     quickCssPath,
@@ -491,6 +516,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             const { clientMods } = applyBackupFromMap(map, {
                 userDataPath,
                 themesPath,
+                extensionsPath,
                 pluginsPath,
                 pluginStoragePath,
                 quickCssPath,

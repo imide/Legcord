@@ -5,6 +5,21 @@ import type { Keybind } from "./keybind.js";
 import type { Settings } from "./settings.js";
 import type { ThemeManifest } from "./themeManifest.js";
 
+export interface LegcordPluginInfo {
+    id: string;
+    name: string;
+    version: string;
+    description?: string;
+    author?: string;
+    enabled: boolean;
+    compatible: boolean;
+    compatibilityMessage?: string;
+    compatibleVersions: string[];
+    hasMain: boolean;
+    hasPreload: boolean;
+    hasRenderer: boolean;
+}
+
 export interface LegcordWindow {
     window: {
         show: () => void;
@@ -90,6 +105,12 @@ export interface LegcordWindow {
     backup: {
         save(data: string): Promise<{ ok: true } | { ok: false; error: string }>;
         restore(): Promise<string>;
+    };
+    plugins: {
+        list: () => Promise<LegcordPluginInfo[]>;
+        setEnabled: (id: string, enabled: boolean) => Promise<{ ok: boolean }>;
+        reload: (id: string) => Promise<{ ok: boolean }>;
+        openFolder: () => void;
     };
     /** Plugin storage API. Requires user to enable "Extended plugin abilities" in Legcord settings. */
     fs: {

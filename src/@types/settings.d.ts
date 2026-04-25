@@ -76,4 +76,5 @@ export interface Settings {
     modCache?: Record<ValidMods, string>;
     extendedPluginAbilities: boolean;
     supportBannerDismissed: boolean;
+    pluginStates?: Record<string, boolean>;
 }

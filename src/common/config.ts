@@ -67,6 +67,7 @@ const defaults: Settings = {
     extendedPluginAbilities: false,
     quickCss: true,
     supportBannerDismissed: false,
+    pluginStates: {},
 };
 
 const safeMode: Settings = {

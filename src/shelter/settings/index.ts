@@ -1,5 +1,6 @@
 /// <reference path="../../../node_modules/@uwu/shelter-defs/dist/shelter-defs/rootdefs.d.ts" />
 import { KeybindsPage } from "./pages/KeybindsPage.jsx";
+import { PluginsPage } from "./pages/PluginsPage.jsx";
 import { RegisteredGamesPage } from "./pages/RegisteredGamesPage.jsx";
 import { SettingsPage } from "./pages/SettingsPage.jsx";
 import { ThemesPage } from "./pages/ThemesPage.jsx";
@@ -18,6 +19,7 @@ const settingsPages = [
     registerSection("header", "Legcord"),
     registerSection("section", "legcord-settings", "Settings", SettingsPage),
     registerSection("section", "legcord-themes", "Themes", ThemesPage),
+    registerSection("section", "legcord-plugins", "Plugins", PluginsPage),
     registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage),
     registerSection("section", "legcord-games", "Games", RegisteredGamesPage),
 ];

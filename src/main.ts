@@ -53,6 +53,7 @@ export function getAppliedFlags(): AppliedFlagsOutput {
 }
 
 import { fetchMods } from "./discord/extensions/modloader.js";
+import { initializePluginSystem } from "./discord/plugins/manager.js";
 import { createWindow } from "./discord/window.js";
 import { createSetupWindow } from "./setup/main.js";
 import { createSplashWindow } from "./splash/main.js";
@@ -176,6 +177,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         preset.disableFeatures.forEach((val) => disableFeatures.add(val));
     }
     await fetchMods();
+    await initializePluginSystem();
     void import("./discord/extensions/plugin.js"); // load chrome extensions
     console.log(`[Config Manager] Current config: ${readFileSync(getConfigLocation(), "utf-8")}`);
 
