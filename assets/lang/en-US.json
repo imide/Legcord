@@ -261,6 +261,7 @@
     "keybind-navigateBack": "Navigate back",
     "keybind-runJavascript": "Run Javascript",
     "keybind-openQuickCss": "Open Quick CSS",
+    "keybind-openSettings": "Open Settings",
     "keybind-globalNote": "Allows you to assign a specific keyboard shortcut that can be used across different applications and programs.",
     "keybind-global": "Global",
     "keybind-enabled": "Enabled",
