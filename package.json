@@ -36,7 +36,6 @@
         "@rolldown-plugin/solid": "^0.0.4",
         "@rollup/plugin-esm-shim": "^0.1.7",
         "@types/adm-zip": "^0.5.8",
-        "@types/minimatch": "^6.0.0",
         "@types/node": "^22.10.1",
         "@types/ws": "^8.5.13",
         "@uwu/lune": "^1.6.2",
