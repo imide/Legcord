@@ -7,9 +7,9 @@
         "node": ">=22"
     },
     "scripts": {
-        "build:dev": "rollup -c --environment BUILD:dev && tsx scripts/copyVenmic.mts",
+        "build:dev": "rollup -c --environment BUILD:dev && node scripts/copyVenmic.mts",
         "build:plugins": "lune ci --repoSubDir src/shelter --to ts-out/plugins",
-        "build": "pnpm build:plugins && rolldown -c rolldown.config.js && tsx scripts/copyVenmic.mts",
+        "build": "pnpm build:plugins && rolldown -c rolldown.config.js && node scripts/copyVenmic.mts",
         "start": "pnpm run build && electron --trace-warnings --ozone-platform-hint=auto ./ts-out/main.js",
         "startThemeManager": "pnpm run build:dev && electron ./ts-out/main.js themes",
         "package": "pnpm run build && electron-builder",
@@ -18,7 +18,7 @@
         "lint:fix": "biome check --write",
         "postinstall": "electron-builder install-app-deps",
         "CIbuild": "pnpm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
-        "updateMeta": "tsx scripts/utils/updateMeta.mts"
+        "updateMeta": "node scripts/utils/updateMeta.mts"
     },
     "repository": {
         "type": "git",
@@ -40,6 +40,7 @@
         "@types/ws": "^8.18.1",
         "@uwu/lune": "^1.6.2",
         "@uwu/shelter-defs": "^1.5.1",
+        "@xmldom/xmldom": "^0.9.10",
         "app-builder-lib": "^26.8.1",
         "babel-preset-solid": "^1.9.12",
         "electron": "42.3.0",
@@ -49,7 +50,6 @@
         "rollup-plugin-copy": "^3.5.0",
         "solid-js": "^1.9.13",
         "solid-motionone": "^1.0.4",
-        "tsx": "^4.22.3",
         "typescript": "^6.0.3",
         "xml-formatter": "^3.7.0"
     },
