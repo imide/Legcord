@@ -141,7 +141,7 @@ Legcord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 ### Compiling
 
- Alternatively, you can run Legcord from source ([NodeJS](https://nodejs.dev) and [pnpm](https://pnpm.io/installation#using-npm)) are required:
+ Alternatively, you can run Legcord from source ([NodeJS v26 and newer](https://nodejs.dev) and [pnpm](https://pnpm.io/installation#using-npm)) are required:
 
  1. Clone Legcord repo: `git clone https://github.com/Legcord/Legcord.git`
  2. Run `pnpm install` to install dependencies
