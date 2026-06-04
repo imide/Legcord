@@ -1,5 +1,5 @@
 import type { Node } from "@vencord/venmic";
-import { ScreensharePicker, patchNavigator } from "./components/ScreensharePicker.jsx";
+import { patchNavigator, ScreensharePicker } from "./components/ScreensharePicker.jsx";
 import type { IPCSources } from "./components/SourceCard.jsx";
 
 const {

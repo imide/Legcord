@@ -1,4 +1,4 @@
-import { For, Show, createSignal, onMount } from "solid-js";
+import { createSignal, For, onMount, Show } from "solid-js";
 import type { LegcordPluginInfo } from "../../../@types/legcordWindow.js";
 import { PluginCard } from "../components/PluginCard.jsx";
 

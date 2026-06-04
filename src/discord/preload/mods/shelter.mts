@@ -1,4 +1,5 @@
 const { ipcRenderer, webFrame } = require("electron");
+
 import type { ModBundle } from "../../../@types/ModBundle.js";
 
 const requiredPlugins: Record<string, [string, { isVisible: boolean; allowedActions: Record<string, true> }]> = {

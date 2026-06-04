@@ -1,5 +1,7 @@
 const { ipcRenderer, webFrame } = require("electron");
+
 import type { ModBundle } from "../../../@types/ModBundle.js";
+
 async function inject() {
     try {
         await ipcRenderer.invoke("getCustomBundle").then(async (bundle: ModBundle) => {

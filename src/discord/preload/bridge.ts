@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
+
 import type { Game } from "arrpc";
 import type { Keybind } from "../../@types/keybind.js";
 import type { LegcordWindow } from "../../@types/legcordWindow.d.ts";

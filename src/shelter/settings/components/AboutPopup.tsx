@@ -1,4 +1,4 @@
-import { For, createSignal, onMount } from "solid-js";
+import { createSignal, For, onMount } from "solid-js";
 import classes from "./SupportBanner.module.css";
 
 const {

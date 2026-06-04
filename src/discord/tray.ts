@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { Menu, Tray, app, nativeImage } from "electron";
+import { app, Menu, nativeImage, Tray } from "electron";
 import { getConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
 import { setForceQuit } from "../common/forceQuit.js";

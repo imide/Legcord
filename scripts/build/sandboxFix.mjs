@@ -6,8 +6,8 @@
 
 // Based on https://github.com/gergof/electron-builder-sandbox-fix/blob/master/lib/index.js
 
-import fs from "fs/promises";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
 import AppImageTarget from "app-builder-lib/out/targets/appimage/AppImageTarget.js";
 
 let isApplied = false;
@@ -25,17 +25,17 @@ export async function applyAppImageSandboxFix() {
     AppImageTarget.default.prototype.build = async function (...args) {
         console.log("Running AppImage builder hook", args);
         const oldPath = args[0];
-        const newPath = oldPath + "-appimage-sandbox-fix";
+        const newPath = `${oldPath}-appimage-sandbox-fix`;
         // just in case
         try {
             await fs.rm(newPath, {
-                recursive: true
+                recursive: true,
             });
         } catch {}
 
         console.log("Copying to apply appimage fix", oldPath, newPath);
         await fs.cp(oldPath, newPath, {
-            recursive: true
+            recursive: true,
         });
         args[0] = newPath;
 
@@ -56,18 +56,18 @@ exec "$SCRIPT_DIR/${this.packager.executableName}.bin" "$([ "$IS_STEAMOS" == 1 ]
                 `.trim();
 
         try {
-            await fs.rename(executable, executable + ".bin");
+            await fs.rename(executable, `${executable}.bin`);
             await fs.writeFile(executable, loaderScript);
             await fs.chmod(executable, 0o755);
         } catch (e) {
-            console.error("failed to create loder for sandbox fix: " + e.message);
+            console.error(`failed to create loder for sandbox fix: ${e.message}`);
             throw new Error("Failed to create loader for sandbox fix");
         }
 
         const ret = await oldBuildMethod.apply(this, args);
 
         await fs.rm(newPath, {
-            recursive: true
+            recursive: true,
         });
 
         return ret;

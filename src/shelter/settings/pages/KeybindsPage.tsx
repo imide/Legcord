@@ -2,6 +2,7 @@ const {
     plugin: { store },
     ui: { Button, Header, HeaderTags, ButtonSizes, Divider, openModal },
 } = shelter;
+
 import { For } from "solid-js";
 import type { Keybind } from "../../../@types/keybind.js";
 import { KeybindCard } from "../components/KeybindCard.jsx";

@@ -13,6 +13,7 @@ import { SettingsPage } from "./pages/SettingsPage.jsx";
 import { ThemesPage } from "./pages/ThemesPage.jsx";
 
 import { isRestartRequired, refreshSettings, refreshThemes } from "./settings.js";
+
 const {
     plugin: { store },
     settings: { registerSection },

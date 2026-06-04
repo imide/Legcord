@@ -7,7 +7,7 @@ module.exports.activate = (api) => {
 
     // Example: patch document title setter for demonstration.
     const descriptor = Object.getOwnPropertyDescriptor(Document.prototype, "title");
-    if (!descriptor || !descriptor.set) return;
+    if (!descriptor?.set) return;
 
     const patchTarget = { setTitle: descriptor.set };
     const unpatch = api.patcher.before("setTitle", patchTarget, (args) => {

@@ -11,7 +11,7 @@
     clear: both;
     height: 30px;
     line-height: 30px;
-    -webkit-app-region: drag !important;
+    -webkit-app-region: drag;
     user-select: none;
     -webkit-user-select: none;
     position: fixed;
@@ -226,11 +226,11 @@
 /* Legcord on macOS */
 
 [legcord-platform="darwin"] .sidebar-1tnWFu {
-    border-top-left-radius: 0px !important;
+    border-top-left-radius: 0px;
 }
 
 [legcord-platform="darwin"] .container__037ed {
-    overflow: unset !important;
+    overflow: unset;
     padding-top: 48px;
     top: -48px;
 }
@@ -256,7 +256,7 @@
 [legcord-platform="darwin"][unFocused] .titlebar #window-controls-container #minimize,
 [legcord-platform="darwin"][unFocused] .titlebar #window-controls-container #maximize,
 [legcord-platform="darwin"][unFocused] .titlebar #window-controls-container #quit {
-    background-color: #d6d6d5 !important;
+    background-color: #d6d6d5;
     pointer-events: none;
     transition: background-color 0.1s ease-in;
 }

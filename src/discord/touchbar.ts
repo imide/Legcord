@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { TouchBar, app, nativeImage } from "electron";
+import { app, nativeImage, TouchBar } from "electron";
 import { navigateTo } from "../common/dom.js";
 import { deafenToggle, leaveCall, muteToggle } from "../common/keybindActions.js";
 import { getLang } from "../common/lang.js";

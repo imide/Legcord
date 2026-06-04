@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readdirSync } from "node:fs";
 import { platform } from "node:os";
 import { app, session } from "electron";
+
 const extensionFolder = `${app.getPath("userData")}/extensions`;
 
 let prefix = "";

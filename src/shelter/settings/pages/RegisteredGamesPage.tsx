@@ -1,5 +1,5 @@
 import type { GameList, ProcessInfo } from "arrpc";
-import { For, Show, createSignal, onCleanup, onMount } from "solid-js";
+import { createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import type { DetectedGame } from "../../../@types/legcordWindow.d.ts";
 import { sleep } from "../../../common/sleep.js";
 import { AddDetectableModal } from "../components/AddDetectableModal.jsx";

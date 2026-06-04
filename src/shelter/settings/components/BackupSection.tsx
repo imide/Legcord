@@ -51,10 +51,7 @@ function getLocalStoragePropertyDescriptor() {
 const pd = getLocalStoragePropertyDescriptor();
 const localStorage = pd?.get?.call(window) ?? window.localStorage;
 
-function BackupOptionsModal(props: {
-    close: () => void;
-    onConfirm: (includes: IncludeOptions) => void;
-}) {
+function BackupOptionsModal(props: { close: () => void; onConfirm: (includes: IncludeOptions) => void }) {
     const t = store.i18n;
     const [includes, setIncludes] = createSignal<IncludeOptions>({ ...defaultIncludes });
 

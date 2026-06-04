@@ -1,4 +1,4 @@
-import { For, createSignal } from "solid-js";
+import { createSignal, For } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
 import type { ThemeManifest } from "../../../@types/themeManifest.js";
 import { ThemesCard } from "../components/ThemesCard.jsx";

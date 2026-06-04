@@ -1,7 +1,7 @@
-import { existsSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { BrowserWindow, app, dialog, ipcMain, shell } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, shell } from "electron";
 import { after, before, instead } from "spitroast/dist/index.mjs";
 import { getConfig, setConfig } from "../../common/config.js";
 
@@ -303,7 +303,7 @@ export function getRuntimeEntries(target: Exclude<PluginTarget, "main">) {
 
 export function getRuntimeScript(pluginId: string, target: Exclude<PluginTarget, "main">) {
     const record = records.get(pluginId);
-    if (!record || !record.enabled || !record.compatible) return null;
+    if (!record?.enabled || !record.compatible) return null;
     const entry = resolvePluginEntry(record, target);
     if (!entry) return null;
     return readFileSync(entry, "utf-8");

@@ -53,6 +53,6 @@ export function toggleMod(mod: ValidMods, enabled: boolean) {
 export function isMinWindowsVersion(major: number, minor: number, build: number) {
     const [sys_major, sys_minor, sys_build] = window.legcord.osRelease
         .split(".")
-        .map((val, _, __) => Number.parseInt(val));
+        .map((val, _, __) => Number.parseInt(val, 10));
     return sys_major >= major && sys_minor >= minor && sys_build >= build;
 }

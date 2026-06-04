@@ -1,8 +1,8 @@
 import { setConfig } from "../settings.js";
 import { AboutPopup } from "./AboutPopup.jsx";
-import classes from "./SupportBanner.module.css";
 import { InfoIcon } from "./icons/InfoIcon.jsx";
 import { DonateIcon, XIcon } from "./icons/QuickActionIcons.jsx";
+import classes from "./SupportBanner.module.css";
 
 const {
     plugin: { store },

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { platform } from "node:os";
 import path from "node:path";
-import { BrowserWindow, type BrowserWindowConstructorOptions, app, ipcMain } from "electron";
+import { app, BrowserWindow, type BrowserWindowConstructorOptions, ipcMain } from "electron";
 import type { Settings } from "../@types/settings.js";
 import { getConfig, getConfigLocation, setConfigBulk } from "../common/config.js";
 import { getLang, getRawLang } from "../common/lang.js";

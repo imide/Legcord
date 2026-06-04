@@ -1,6 +1,6 @@
 import { unlink } from "node:fs";
 import { join } from "node:path";
-import { Menu, Tray, app, nativeImage } from "electron";
+import { app, Menu, nativeImage, Tray } from "electron";
 import { getConfigLocation } from "../common/config.js";
 
 export let tray: Tray;

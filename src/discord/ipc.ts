@@ -1,15 +1,15 @@
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Game } from "arrpc";
-import { type BrowserWindow, app, clipboard, dialog, ipcMain, shell } from "electron";
+import { app, type BrowserWindow, clipboard, dialog, ipcMain, shell } from "electron";
 import isDev from "electron-is-dev";
 import type { Keybind } from "../@types/keybind.js";
 import type { Settings } from "../@types/settings.js";
 import type { ThemeManifest } from "../@types/themeManifest.js";
 import {
-    type BackupSavePayload,
     applyBackupFromMap,
+    type BackupSavePayload,
     buildBackupZipBuffer,
     readBackupZipToMap,
 } from "../common/backup.js";

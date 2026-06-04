@@ -58,7 +58,7 @@ function createApi(pluginId: string, pluginName: string) {
     };
 }
 
-async function executePreloadPluginSource(pluginId: string, source: string, api: ReturnType<typeof createApi>) {
+async function executePreloadPluginSource(_pluginId: string, source: string, api: ReturnType<typeof createApi>) {
     const runner = new Function(
         "api",
         `

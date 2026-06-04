@@ -1,4 +1,4 @@
-import { type Streams, desktopCapturer, ipcMain, session } from "electron";
+import { desktopCapturer, ipcMain, type Streams, session } from "electron";
 import { getConfig } from "../common/config.js";
 import { mainWindows } from "./window.js";
 
@@ -23,7 +23,7 @@ export function registerCustomHandler(): void {
                 if (id === "none") {
                     try {
                         callback({});
-                    } catch (e) {}
+                    } catch (_e) {}
                 } else {
                     console.log(`Audio status: ${audio}`);
                     const result = { id, name };

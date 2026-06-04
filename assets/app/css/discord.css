@@ -11,13 +11,13 @@
 }
 
 div:has(> span [data-list-item-id="guildsnav___app-download-button"]) {
-    display: none !important;
+    display: none;
 }
 
 /* custom keybinds are not supported on web information */
 .container__6436f.info__6436f.browserNotice__740f2 {
     visibility: hidden;
-    display: block !important;
+    display: block;
 }
 .container__6436f.info__6436f.browserNotice__740f2:after {
     content: "You can modify global keybinds using the keybind maker on the left sidebar";

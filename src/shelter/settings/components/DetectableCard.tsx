@@ -7,10 +7,7 @@ const {
     plugin: { store },
 } = shelter;
 
-export const DetectableCard = (props: {
-    detectable: Game;
-    onRemove: () => void;
-}) => {
+export const DetectableCard = (props: { detectable: Game; onRemove: () => void }) => {
     function removeDetectable() {
         openConfirmationModal({
             header: () => store.i18n["games-removeConfirmHeader"],

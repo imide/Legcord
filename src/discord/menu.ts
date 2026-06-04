@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, type MenuItemConstructorOptions, app } from "electron";
+import { app, BrowserWindow, Menu, type MenuItemConstructorOptions } from "electron";
 import type { Keybind, KeybindActions } from "../@types/keybind.js";
 import { getConfig } from "../common/config.js";
 import { setForceQuit } from "../common/forceQuit.js";

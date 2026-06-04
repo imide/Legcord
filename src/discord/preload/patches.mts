@@ -1,5 +1,6 @@
 import { addScript, addStyle, injectJS } from "../../common/dom.js";
 import { sleep } from "../../common/sleep.js";
+
 const { ipcRenderer } = require("electron");
 const version = ipcRenderer.sendSync("displayVersion") as string;
 
@@ -136,7 +137,7 @@ export async function getVirtmic() {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const audioDevice = devices.find(({ label }) => label === "vencord-screen-share");
         return audioDevice?.deviceId;
-    } catch (error) {
+    } catch (_error) {
         return null;
     }
 }

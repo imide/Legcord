@@ -3,6 +3,7 @@ import { app, shell } from "electron";
 import type { Keybind } from "../@types/keybind.js";
 import { mainWindows } from "../discord/window.js";
 import { navigateTo } from "./dom.js";
+
 let isAudioEngineEnabled = false;
 
 export function runAction(keybind: Keybind) {

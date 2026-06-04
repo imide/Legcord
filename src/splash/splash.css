@@ -116,8 +116,8 @@ button {
     border: none;
     border-radius: 5px;
     padding: 8px;
-    -webkit-user-select: all !important;
-    user-select: all !important;
+    -webkit-user-select: all;
+    user-select: all;
     margin: 0 auto;
     margin-top: 10px;
     -webkit-app-region: no-drag;
@@ -125,5 +125,5 @@ button {
     display: none;
 }
 button:hover {
-    cursor: grab !important;
+    cursor: grab;
 }

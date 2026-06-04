@@ -20,7 +20,7 @@
 }
 
 .eyebrow {
-    margin-bottom: 0px !important;
+    margin-bottom: 0px;
     color: var(--text-strong);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -38,7 +38,10 @@
     align-items: center;
     justify-content: center;
 
-    transition: background-color 150ms, color 150ms, border-color 150ms;
+    transition:
+        background-color 150ms,
+        color 150ms,
+        border-color 150ms;
 
     &:hover {
         color: var(--interactive-text-hover);

@@ -1,6 +1,7 @@
 import path from "node:path";
 import Url from "node:url";
-import { net, app, protocol } from "electron";
+import { app, net, protocol } from "electron";
+
 protocol.registerSchemesAsPrivileged([
     {
         scheme: "legcord",

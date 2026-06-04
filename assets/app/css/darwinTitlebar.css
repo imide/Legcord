@@ -1,9 +1,9 @@
 [legcord-platform="darwin"] .sidebar-1tnWFu {
-    border-top-left-radius: 0px !important;
+    border-top-left-radius: 0px;
 }
 
 .platform-osx .wrapper_ef3116 {
-    margin-top: 0px !important;
+    margin-top: 0px;
 }
 
 [legcord-platform="darwin"] #window-controls-container {
@@ -25,7 +25,7 @@
 [legcord-platform="darwin"][unFocused] #window-controls-container #minimize,
 [legcord-platform="darwin"][unFocused] #window-controls-container #maximize,
 [legcord-platform="darwin"][unFocused] #window-controls-container #quit {
-    background-color: #d6d6d5 !important;
+    background-color: #d6d6d5;
     pointer-events: none;
     transition: background-color 0.1s ease-in;
 }
@@ -116,6 +116,6 @@
 }
 
 div[class*="bar__"][class*="hidden__"] {
-    pointer-events: unset !important;
-    visibility: unset !important;
+    pointer-events: unset;
+    visibility: unset;
 }

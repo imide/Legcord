@@ -2,11 +2,11 @@ import { readFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import {
+    app,
     BrowserWindow,
     type BrowserWindowConstructorOptions,
-    type MessageBoxOptions,
-    app,
     dialog,
+    type MessageBoxOptions,
     nativeImage,
     shell,
 } from "electron";
@@ -231,7 +231,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         // Helper to extract ping count from title
         const extractPings = (t: string): number | null => {
             const match = /\((\d+)\)/.exec(t);
-            return match ? Number.parseInt(match[1]) : null;
+            return match ? Number.parseInt(match[1], 10) : null;
         };
 
         // Handle overlay icon/badges based on platform

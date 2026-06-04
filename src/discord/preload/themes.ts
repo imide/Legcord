@@ -1,4 +1,5 @@
 import { addTheme } from "../../common/dom.js";
+
 const { ipcRenderer } = require("electron");
 
 ipcRenderer.on("addTheme", (_event: unknown, name: string, css: string) => {

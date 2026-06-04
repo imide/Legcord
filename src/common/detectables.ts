@@ -1,8 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { app } from "electron";
-
 import type { Game, GameList } from "arrpc";
+import { app } from "electron";
 export function getDetectablesPath() {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");

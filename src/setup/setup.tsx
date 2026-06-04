@@ -11,7 +11,7 @@ import {
     Settings,
     Sparkles,
 } from "lucide-solid";
-import { For, Show, createResource, createSignal } from "solid-js";
+import { createResource, createSignal, For, Show } from "solid-js";
 import { render } from "solid-js/web";
 import { Motion } from "solid-motionone";
 
@@ -36,7 +36,10 @@ const Welcome = ({ onNext, t }: { onNext: () => void; t: () => Record<string, st
 const WindowStyle = ({
     readyToNext,
     t,
-}: { readyToNext: (valid: boolean) => void; t: () => Record<string, string> | undefined }) => {
+}: {
+    readyToNext: (valid: boolean) => void;
+    t: () => Record<string, string> | undefined;
+}) => {
     const [selectedStyle, setSelectedStyle] = createSignal<string | null>(null);
 
     const handleStyleSelect = (styleId: string) => {
@@ -124,7 +127,10 @@ const WindowStyle = ({
 const TraySettings = ({
     readyToNext,
     t,
-}: { readyToNext: (valid: boolean) => void; t: () => Record<string, string> | undefined }) => {
+}: {
+    readyToNext: (valid: boolean) => void;
+    t: () => Record<string, string> | undefined;
+}) => {
     const [selectedOption, setSelectedOption] = createSignal<string | null>(null);
 
     const handleOptionSelect = (optionId: string) => {
@@ -234,7 +240,10 @@ const Finish = ({ restart, t }: { restart: () => void; t: () => Record<string, s
 const ModSelector = ({
     readyToNext,
     t,
-}: { readyToNext: (valid: boolean) => void; t: () => Record<string, string> | undefined }) => {
+}: {
+    readyToNext: (valid: boolean) => void;
+    t: () => Record<string, string> | undefined;
+}) => {
     const [selectedMod, setSelectedMod] = createSignal<string | null>(null);
     const handleModSelect = (optionId: string) => {
         const newValue = selectedMod() === optionId ? null : optionId;
@@ -330,7 +339,7 @@ const ModSelector = ({
               selectedMod() === "shelter"
                   ? "border-purple-500/50 text-purple-400 hover:bg-purple-500/10"
                   : "border-gray-700/30 text-gray-500 hover:border-purple-500/50 hover:text-purple-400 hover:bg-purple-500/10"
-          }`}
+}`}
             >
                 {lang?.["setup-useShelterOnly"] ?? "Use Shelter Only"}
             </Motion.button>

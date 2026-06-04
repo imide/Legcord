@@ -110,7 +110,7 @@ export function SettingsPage() {
                         when={
                             store.settings.transparency !== "none" &&
                             window.legcord.platform === "darwin" &&
-                            Number.parseInt(window.legcord.osRelease) >= 25
+                            Number.parseInt(window.legcord.osRelease, 10) >= 25
                         }
                     >
                         <div

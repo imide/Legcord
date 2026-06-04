@@ -1,5 +1,5 @@
 import type { Node } from "@vencord/venmic";
-import { For, Show, createSignal, onCleanup } from "solid-js";
+import { createSignal, For, onCleanup, Show } from "solid-js";
 import { Dropdown } from "../../settings/components/Dropdown.jsx";
 import { SegmentedControl } from "../../settings/components/SegmentedControl.jsx";
 import classes from "./ScreensharePicker.module.css";
@@ -26,7 +26,7 @@ async function getVirtmic() {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const audioDevice = devices.find(({ label }) => label === "vencord-screen-share");
         return audioDevice?.deviceId;
-    } catch (error) {
+    } catch (_error) {
         return null;
     }
 }

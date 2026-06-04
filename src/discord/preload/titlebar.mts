@@ -1,6 +1,8 @@
 const { ipcRenderer } = require("electron");
+
 import type { Settings } from "../../@types/settings.js";
 import { addStyle } from "../../common/dom.js";
+
 const titlebarHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
           <div id="window-controls-container">

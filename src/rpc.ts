@@ -2,7 +2,7 @@ import { parentPort } from "node:worker_threads";
 // this file is executed in the utility process
 // check window.ts for more details
 // see more here https://www.electronjs.org/docs/latest/api/utility-process
-import RPCServer, { type ServerSettings, type GameList } from "arrpc";
+import RPCServer, { type GameList, type ServerSettings } from "arrpc";
 
 const detectables: GameList = process.env.detectables ? JSON.parse(process.env.detectables) : [];
 const settings: ServerSettings = process.env.settings

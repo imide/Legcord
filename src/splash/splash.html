@@ -7,7 +7,7 @@
             @import url("../css/splash.css");
         </style>
         <script>
-            window.onbeforeunload = function () {
+            window.onbeforeunload = () => {
                 const style = document.createElement("style");
                 style.textContent = "body { display: none; }";
                 document.head.append(style);
@@ -30,7 +30,7 @@
             if (window.navigator.onLine === false) {
                 for (let i = 0; i < 5; i++) {
                     await new Promise((r) => setTimeout(r, 1000));
-                    text.innerHTML = (await internal.getLang("loading_screen_offline")) + (5 - i) + "s";
+                    text.innerHTML = `${(await internal.getLang("loading_screen_offline")) + (5 - i)}s`;
                 }
                 window.internal.restart();
             } else {
@@ -61,7 +61,7 @@
                     } else if (internal.installState === "done") {
                         return true;
                     } else if (internal.installState === "modDownload") {
-                        text.innerHTML = "Updating " + internal.mods;
+                        text.innerHTML = `Updating ${internal.mods}`;
                     } else if (internal.installState === "none") {
                         text.innerHTML = "Nothing to install.";
                         return true;

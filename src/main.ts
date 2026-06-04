@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import { BrowserWindow, app, crashReporter, session, systemPreferences } from "electron";
+import { app, BrowserWindow, crashReporter, session, systemPreferences } from "electron";
 import isDev from "electron-is-dev";
 import "./discord/extensions/csp.js";
 import "./protocol.js";

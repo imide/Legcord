@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { type BrowserWindow, app } from "electron";
+import { app, type BrowserWindow } from "electron";
 import type { ThemeManifest } from "../@types/themeManifest.js";
 import { mainWindows } from "../discord/window.js";
 import { getConfig } from "./config.js";

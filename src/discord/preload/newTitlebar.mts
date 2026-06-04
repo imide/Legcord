@@ -1,4 +1,5 @@
 const { ipcRenderer } = require("electron");
+
 import { addStyle } from "../../common/dom.js";
 import { sleep } from "../../common/sleep.js";
 

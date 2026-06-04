@@ -19,7 +19,7 @@ export function registerGlobalKeybinds() {
 app.on("will-quit", () => {
     try {
         globalShortcut.unregisterAll();
-    } catch (e) {}
+    } catch (_e) {}
 });
 
 export function refreshGlobalKeybinds() {
