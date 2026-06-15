@@ -56,7 +56,7 @@ const defaults: Settings = {
     popoutPiP: false,
     vaapi: platform() === "linux",
     spellcheckLanguage: ["en-US"],
-    sleepInBackground: true,
+    sleepInBackground: false,
     noBundleUpdates: [],
     automaticUpdates: false,
     additionalArguments: "",
